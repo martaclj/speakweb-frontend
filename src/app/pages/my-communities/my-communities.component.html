@@ -1,0 +1,58 @@
+<div class="container mt-5">
+    <div class="d-flex justity-content-between align-items-center mb-4">
+        <h2>Mis Comunidades</h2>
+        <button class="btn btn-outline-primary" routerLink="/home">
+            Buscar más grupos
+        </button>
+    </div>
+
+    @if (isLoading) {
+        <div class="alert alert-info">
+            Cargando tus comunidades...
+        </div>
+    }
+
+    @if (!isLoading && myMemberships.length === 0) {
+        <div class="alert alert-warning text-center">
+            <h4>Aún no perteneces a ninguna comunidad.</h4>
+            <p>Ve al inicio y únete a una para empezar a practicar</p>
+            <a routerLink="/home" class="btn btn-primary mt-2">
+                Ir al Inicio
+            </a>
+        </div>
+    }
+
+    <div class="row">
+        @for (member of myMemberships; track member.id) {
+            <div class="col-md-4 mb-4">
+                <div class="card border-success h-100 shadow-sm">
+                    <div class="card-body">
+
+                        <h5 class="card-title text-success">
+                            {{ member.group.name }}
+                        </h5>
+
+                        <p class="card-text text-muted">
+                            Idiomas {{ member.group.language1.name }} && {{ member.group.language2.name }}
+                        </p>
+
+                        <div class="mb-3">
+                            <strong>Tu rol: </strong>
+                            @if (member.isExpert) {
+                                <span class="badge bg-warning text-dark">Experto / Nativo</span>
+                            } @else {
+                                <span class="badge bg-info text-dark">Aprendiz</span>
+                            }
+                        </div>
+
+                        <button class="btn btn-success w-100">
+                            Entrar al Chat / Eventos
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+
+</div>
