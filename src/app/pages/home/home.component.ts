@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
 import { GroupService } from '../../services/group.service';
+import { Group } from '../../interfaces/group';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +10,13 @@ import { GroupService } from '../../services/group.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   // inyección de dependencias:
   private groupService = inject(GroupService);
   router = inject(Router);
 
-  groupList: any[] = [] // recibo datos del backend
+  groupList: Group[] = [] // recibo datos del backend
 
   ngOnInit(): void {
     this.getGroups();
