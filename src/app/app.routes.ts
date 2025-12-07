@@ -11,10 +11,6 @@ export const routes: Routes = [
     
     // rutas protegidas
     { path: 'home', component: HomeComponent, canActivate: [authGuard] }, 
-    {
-        path: 'my-communities',
-        component: MyCommunitiesComponent,
-        canActivate: [authGuard]
-    }
+    { path: 'my-communities', component: MyCommunitiesComponent, canActivate: [authGuard] }
 
 ];
