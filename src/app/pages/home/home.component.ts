@@ -23,7 +23,7 @@ export class HomeComponent {
 
   // muestra todos los grupos disponibles
   getGroups() {
-    this.groupService.getGroups().subscribe({
+    this.groupService.getAllGroups().subscribe({
       next: (data: any) => {
         console.log("Datos recibidos:", data);
         this.groupList = data; 
