@@ -14,7 +14,6 @@ export class HomeComponent implements OnInit {
 
   // inyección de dependencias:
   private groupService = inject(GroupService);
-  router = inject(Router);
 
   groupList: Group[] = [] // recibo datos del backend
 
@@ -47,13 +46,6 @@ export class HomeComponent implements OnInit {
         alert("Ya estás en ese grupo");
       }
     });
-  }
-
-  // cerrar sesión:
-  logOut() {
-    localStorage.removeItem('speakweb_token'); // borro el token para cerrar sesión
-
-    this.router.navigateByUrl('/login'); // redirige a login
   }
 
 }
