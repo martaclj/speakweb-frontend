@@ -1,0 +1,37 @@
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Grupos Disponibles</h2>
+        <button class="btn btn-outline-danger" routerLink="/login">Cerrar Sesión</button>
+    </div>
+
+    @if (groupList.length === 0) {
+        <div class="alert alert-info text-center">
+            Cargando grupos...
+        </div>
+    }
+
+    <div class="row">
+        @for (group of groupList; track group.id) {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">
+                                {{ group.name }}
+                            </h5>
+                            <p class="card-text text-muted">Intercambio de idiomas</p>
+                            <ul class="list-group list-group-flush mb-3">
+                                <li class="list-group-item">
+                                    <strong> {{ group.language1.name }} </strong>
+                                </li>
+                                                                                            <li class="list-group-item">
+                                    <strong> {{ group.language2.name }} </strong>
+                                </li>
+                            </ul>
+                            <button class="btn btn-primary w-100">Unirme al grupo</button>
+                        </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
