@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Group } from '../interfaces/group';
+import { GroupMember } from '../interfaces/group-member';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +27,16 @@ export class GroupService {
 
   // POST: /api/group-members/join
   // método para unirse a un grupo
-  joinGroup(groupIdreceived: number): Observable<any> {
+  joinGroup(groupId: number): Observable<any> {
     const url = `${this.baseUrl}/group-members/join`;
-    const body = { groupId: groupIdreceived };
+    const body = { groupId: groupId };
 
     return this.http.post(url, body);
+  }
+
+  getMyGroups(): Observable<GroupMember[]> {
+    const url = `${this.baseUrl}/group-members/my-groups`;
+    return this.http.get<GroupMember[]>(url);
   }
 
 }
