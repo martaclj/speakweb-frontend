@@ -34,6 +34,20 @@ export class HomeComponent {
     })
   }
 
+  // unirse a un grupo
+  joinGroup(id: number) {
+    this.groupService.joinGroup(id).subscribe({
+      next: (data) => {
+        console.log("Te has unido al grupo:", data);
+        alert("Bien! Te has unido correctamente!");
+      },
+      error: (error) => {
+        console.error("Error al unirse:", error);
+        alert("Ya estás en ese grupo");
+      }
+    });
+  }
+
   // cerrar sesión:
   logOut() {
     localStorage.removeItem('speakweb_token'); // borro el token para cerrar sesión
