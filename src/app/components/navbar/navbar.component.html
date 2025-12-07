@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-speakweb sticky-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-semibold d-flex align-items-center" routerLink="/home">
+      <img src="logo-speakweb.png" alt="Logo Speakweb" height="36" class="me-2">
+    Speakweb
+    </a>
+    <div class="collapse navbar-collapse">
+
+        @if (authService.isLoggedIn()) {
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" routerLink="/home" routerLinkActive="active">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="/my-communities" routerLinkActive="active">Comunidades</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="/events" routerLinkActive="active">Eventos</a></li>
+        </ul>
+        }
+
+        <ul class="navbar-nav ms-auto">
+            @if (authService.isLoggedIn() && isNotLoginPage()) {
+                <li class="nav-item">
+                    <button class="btn btn-sm btn-outline-light" (click)="onLogOut()">Cerrar Sesión</button>
+                </li>
+            }
+
+            @if (!authService.isLoggedIn()) {
+                <li class="nav-item">
+                    <a class="btn btn-sm btn-primary" routerLink="/register">
+                        Registrarse
+                    </a>
+                </li>
+            }
+        </ul>
+
+    </div>
+  </div>  
+</nav>
