@@ -1,16 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
 
+  // inyección de dependencias:
   http = inject(HttpClient);
+  router = inject(Router);
 
   groupList: any[] = [] // recibo datos del backend
 
@@ -29,6 +32,13 @@ export class HomeComponent {
         alert("No se pueden cargar los datos. Comprobar token");
       }
     })
+  }
+
+  // cerrar sesión:
+  logOut() {
+    localStorage.removeItem('speakweb_token'); // borro el token para cerrar sesión
+
+    this.router.navigateByUrl('/login'); // redirige a login
   }
 
 }
