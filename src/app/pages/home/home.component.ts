@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
+import { GroupService } from '../../services/group.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +12,7 @@ import { Router, RouterLink } from "@angular/router";
 export class HomeComponent {
 
   // inyección de dependencias:
-  http = inject(HttpClient);
+  private groupService = inject(GroupService);
   router = inject(Router);
 
   groupList: any[] = [] // recibo datos del backend
@@ -21,15 +21,15 @@ export class HomeComponent {
     this.getGroups();
   }
 
+  // muestra todos los grupos disponibles
   getGroups() {
-    this.http.get('http://localhost:8080/api/groups').subscribe({
+    this.groupService.getGroups().subscribe({
       next: (data: any) => {
         console.log("Datos recibidos:", data);
-        this.groupList = data;
+        this.groupList = data; 
       },
       error: (error) => {
         console.error("Error al obtener grupos:", error);
-        alert("No se pueden cargar los datos. Comprobar token");
       }
     })
   }

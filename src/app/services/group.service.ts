@@ -16,7 +16,7 @@ export class GroupService {
   constructor() { }
 
   // método get recupero todos los grupos disponibles
-  getAllGroups(): Observable<any[]> {
+  getGroups(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
 
