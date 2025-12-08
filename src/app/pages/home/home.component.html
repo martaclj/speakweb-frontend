@@ -12,13 +12,13 @@
     <div class="row">
         @for (group of groupList; track group.id) {
             <div class="col-md-4 mb-4">
-                <div class="card shadow-sm h-100">
+                <div class="card">
                         <div class="card-body">
                             <h5 class="card-title text-primary">
                                 {{ group.name }}
                             </h5>
                             <p class="card-text text-muted">Intercambio de idiomas</p>
-                            <ul class="list-group list-group-flush mb-3">
+                            <ul class="list-group mb-3">
                                 <li class="list-group-item">
                                     <strong> {{ group.language1.name }} </strong>
                                 </li>
