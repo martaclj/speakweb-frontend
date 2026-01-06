@@ -1,0 +1,18 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.bg-register-image {
+    background: linear-gradient(rgba(3, 150, 166, 0.85), rgba(3, 150, 166, 0.85)), 
+    url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1000&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+}
+
+@media (max-width: 768px) {
+    .bg-register-image {
+        min-height: 250px;
+    }
+}

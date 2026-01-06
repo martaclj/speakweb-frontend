@@ -1,9 +1,11 @@
-<app-navbar></app-navbar>
+<div class="d-flex flex-column min-vh-100">
+  <app-navbar></app-navbar>
 
-<main class="container">
-  <router-outlet />
-</main>
+  <main class="flex-grow-1 d-flex flex-column">
+    <router-outlet />
+  </main>
 
-<footer class="text-center text-muted mt-5 py-3 border-top">
-  &copy; {{ currentYear }} Speakweb - Proyecto Final DAW
-</footer>
+  <footer class="text-center text-muted py-3 border-top bg-light">
+    &copy; {{ currentYear }} Speakweb - Proyecto Final DAW
+  </footer>
+</div>
