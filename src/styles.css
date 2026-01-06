@@ -1,1 +1,73 @@
-/* You can add global styles to this file, and also import other style files */
+/* Variables globales */
+:root {
+    --speakweb-teal: #0396A6; /* color logo */
+    --warm-orange: #FE9A17; /* resaltado */
+    --mustard: #EEC749; /* detalles */
+    --soft-grey: #F0F0F0; /* fondo */
+    --navy-blue: #2D3B4D; /* color texto */
+}
+
+/* css básico */
+body, html {
+    height: 100%;
+    background-color: var(--soft-grey);
+    color: var(--navy-blue);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ajustes a bootstrap para que respete los colores de la paleta de speakweb, y otros ajustes */
+.btn {
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 10px 15px;
+    border: 1px solid #CED4DA;
+}
+
+.form-control:focus {
+    border-color: var(--speakweb-teal);
+    box-shadow: 0 0 0 0.25rem rgba(3, 150, 166, 0.25);
+}
+
+.bg-brand {
+    background-color: var(--speakweb-teal) !important;
+    color: white;
+}
+
+.text-brand {
+    color: var(--speakweb-teal) !important;
+}
+
+.btn.btn-brand {
+    background-color: var(--warm-orange);
+    border: 1px solid var(--warm-orange);
+    color: white;
+}
+
+.btn.btn-brand:hover {
+    background-color: #E5880F;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 1);
+}
+
+.btn.btn-outline-brand {
+    border: 2px solid var(--speakweb-teal);
+    color: var(--speakweb-teal);
+    background: transparent;
+}
+
+.btn.btn-outline-brand:hover {
+    background-color: var(--speakweb-teal);
+    color: white;
+}
+
+/* etiqueta experto */
+.badge-expert {
+    background-color: var(--mustard);
+    color: var(--navy-blue);
+}
