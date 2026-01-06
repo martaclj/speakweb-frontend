@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { GroupService } from '../../services/group.service';
-import { GroupMember } from '../../interfaces/group-member';
+import { GroupService } from '../../../services/group.service';
+import { GroupMember } from '../../../interfaces/group-member';
 import { RouterLink } from "@angular/router";
 
 @Component({

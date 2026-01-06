@@ -1,0 +1,67 @@
+<div class="container mt-4 mb-5">
+
+    @if (isLoading) {
+        <div class="text-center py-5">
+            <div class="spinner-border text-brand" role="status">
+            </div>
+            <p class="mt-2 text-muted">Cargando detalles...</p>
+        </div>
+    }
+
+    @if (!isLoading && group) {
+        <div class="card shadow-sm border-0 mb-4 bg-white rounded-4">
+            <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="text-brand fw-bold mb-0">
+                        {{ group.name }}
+                    </h1>
+                    <p class="text-muted mb-0">
+                        Intercambio {{ group.language1.name }} - {{ group.language2.name }}
+                    </p>
+                </div>
+                <button class="btn btn-outline-brand" routerLink="/home">
+                    Volver
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="card shadow-sm border-0 rounded-4 mb-3">
+                <div class="card-body">
+                    <h5 class="fw-bold text-brand">Resumen</h5>
+                    <p class="small text-muted">
+                        {{ group.description || 'Sin descripción disponible.' }}
+                    </p>
+                    <hr>
+                    <div class="mb-2">
+                        <small class="fw-bold d-block text-secondary">Creador</small>
+                        <span class="small">Admin</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cold-md-6">
+            <h4 class="fw-bold text-brand mb-3">Próximos eventos</h4>
+            <div class="alert alert-light border text-center text-muted">
+                Próximamente: Lista de eventos.
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body">
+                    <h5 class="fw-bold text-brand mb-3">Miembros</h5>
+                </div>
+                <div class="alert alert-light border text-center text-muted small">
+                    Cargando miembros...
+                </div>
+            </div>
+        </div>
+    } @else if (!isLoading && !group) {
+        <div class="alert alert-danger">
+            No se ha encontrado el grupo solicitado.
+        </div>
+    }
+
+</div>

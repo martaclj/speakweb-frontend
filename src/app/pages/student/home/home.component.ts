@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
-import { GroupService } from '../../services/group.service';
-import { Group } from '../../interfaces/group';
+import { GroupService } from '../../../services/group.service';
+import { Group } from '../../../interfaces/group';
 
 @Component({
   selector: 'app-home',

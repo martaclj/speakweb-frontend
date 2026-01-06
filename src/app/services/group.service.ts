@@ -39,4 +39,9 @@ export class GroupService {
     return this.http.get<GroupMember[]>(url);
   }
 
+  getGroupById(id: number): Observable<Group> {
+    const url = `${this.baseUrl}/groups/${id}`;
+    return this.http.get<Group>(url);
+  }
+
 }
