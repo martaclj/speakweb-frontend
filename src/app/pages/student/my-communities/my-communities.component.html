@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <div class="d-flex justity-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Mis Comunidades</h2>
         <button class="btn btn-outline-brand" routerLink="/home">
             Buscar más grupos
@@ -45,9 +45,9 @@
                             }
                         </div>
 
-                        <button class="btn btn-brand text-white w-100">
-                            Entrar al Chat / Eventos
-                        </button>
+                        <a [routerLink]="['/group', member.group.id]" class="btn btn-brand text-white w-100">
+                            Entrar al grupo
+                        </a>
                     </div>
                 </div>
             </div>

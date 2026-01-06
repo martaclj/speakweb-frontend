@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { GroupService } from '../../../services/group.service';
 import { Group } from '../../../interfaces/group';
 
 @Component({
   selector: 'app-group-detail',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './group-detail.component.html',
   styleUrl: './group-detail.component.css'
 })
@@ -34,6 +34,25 @@ export class GroupDetailComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  // función para las banderas de los idiomas
+  getFlagEmoji(code: string): string {
+    if (!code) return '🌏';
+
+    const upperCode = code.toUpperCase();
+
+    const flags: { [key: string]: string } = {
+      'ES': '🇪🇸',
+      'EN': '🇬🇧',
+      'FR': '🇫🇷',
+      'DE': '🇩🇪',
+      'IT': '🇮🇹',
+      'PT': '🇵🇹',
+      'JA': '🇯🇵'
+    }; // ampliar según se vayan necesitando
+
+    return flags[upperCode] || '🌏';
   }
 
 }
