@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <div class="d-flex justity-content-between align-items-center mb-4">
         <h2>Mis Comunidades</h2>
-        <button class="btn btn-outline-primary" routerLink="/home">
+        <button class="btn btn-outline-brand" routerLink="/home">
             Buscar más grupos
         </button>
     </div>
@@ -25,27 +25,27 @@
     <div class="row">
         @for (member of myMemberships; track member.id) {
             <div class="col-md-4 mb-4">
-                <div class="card border-success h-100 shadow-sm">
+                <div class="card border-0 h-100 shadow">
                     <div class="card-body">
 
-                        <h5 class="card-title text-success">
+                        <h5 class="card-title text-brand fw-bold">
                             {{ member.group.name }}
                         </h5>
 
-                        <p class="card-text text-muted">
+                        <p class="card-text text-muted small">
                             Idiomas {{ member.group.language1.name }} & {{ member.group.language2.name }}
                         </p>
 
                         <div class="mb-3">
-                            <strong>Tu rol: </strong>
+                            <strong class="text-secondary">Tu rol: </strong>
                             @if (member.isExpert) {
-                                <span class="badge bg-warning text-dark">Experto / Nativo</span>
+                                <span class="badge badge-expert">Experto / Nativo</span>
                             } @else {
-                                <span class="badge bg-info text-dark">Aprendiz</span>
+                                <span class="badge bg-secondary">Aprendiz</span>
                             }
                         </div>
 
-                        <button class="btn btn-success w-100">
+                        <button class="btn btn-brand text-white w-100">
                             Entrar al Chat / Eventos
                         </button>
                     </div>

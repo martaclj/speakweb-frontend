@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
 @Component({
@@ -12,4 +12,16 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 export class AppComponent {
   title = 'speakweb-frontend';
   currentYear = new Date().getFullYear();
+
+  private router = inject(Router);
+
+  // // función para saber si login o registro y no enseñar footer
+  // showFooter(): boolean {
+  //   const currentUrl = this.router.url;
+  //   if (currentUrl === '/login' || currentUrl === '/register') {
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+  // }
 }

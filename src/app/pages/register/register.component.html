@@ -1,1 +1,64 @@
-<p>register works!</p>
+<div class="d-flex flex-column flex-grow-1">
+
+    <div class="row g-0 flex-grow-1">
+        
+        <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center bg-register-image">
+            <div class="p-5 text-center text-white">
+                <h1 class="display-1 fw-bold mb-3">👋</h1>
+                <h2 class="display-4 fw-bold">Únete a Speakweb</h2>
+                <p class="lead mt-3">
+                    Crea tu cuenta y empieza a conectar con nativos
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-6 bg-white d-flex align-items-center justify-content-center">
+            
+            <div class="w-100 p-5" style="max-width: 550px;">
+                
+                <div class="text-center mb-5">
+                    <h3 class="text-brand fw-bold mb-1">Crear cuenta</h3>
+                    <p class="text-muted small">Rellena el formulario para registrarte</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label class="fw-semibold text-secondary small">Nombre</label>
+                        <input type="text" [(ngModel)]="registerObj.name" 
+                               class="form-control form-control-lg bg-light" placeholder="Tu nombre">
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label class="fw-semibold text-secondary small">Apellidos</label>
+                        <input type="text" [(ngModel)]="registerObj.surname" 
+                               class="form-control form-control-lg bg-light" placeholder="Tus apellidos">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="fw-semibold text-secondary small">Email</label>
+                    <input type="email" [(ngModel)]="registerObj.email" 
+                           class="form-control form-control-lg bg-light" placeholder="usuario@speakweb.com">
+                </div>
+
+                <div class="mb-4">
+                    <label class="fw-semibold text-secondary small">Contraseña</label>
+                    <input type="password" [(ngModel)]="registerObj.password" 
+                           class="form-control form-control-lg bg-light" placeholder="*********">
+                </div>
+
+                <div class="d-grid gap-2 mt-5">
+                    <button class="btn btn-brand w-100 text-white py-3 shadow-sm" (click)="onRegister()">
+                        Registrarme
+                    </button>
+                </div>
+
+                <div class="text-center mt-4">
+                    <span class="text-muted">¿Ya tienes cuenta? </span>
+                    <a routerLink="/login" class="text-brand fw-bold text-decoration-none">
+                        Inicia sesión aquí
+                    </a>
+                </div>
+
+            </div> </div>
+    </div>
+</div>
