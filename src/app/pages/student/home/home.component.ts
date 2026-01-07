@@ -3,11 +3,12 @@ import { Router, RouterLink } from "@angular/router";
 import { GroupService } from '../../../services/group.service';
 import { Group } from '../../../interfaces/group';
 import { FormsModule } from '@angular/forms';
+import { GroupCardComponent } from '../../../components/group-card/group-card.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, GroupCardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
