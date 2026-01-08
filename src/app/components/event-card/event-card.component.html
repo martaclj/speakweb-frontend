@@ -1,0 +1,45 @@
+<div class="card border-0 shadow-sm mb-3 rounded-4 overflow-hidden">
+
+    @if (event.imageUrl) {
+        <div class="position-relative" style="height: 140px;">
+            <img class="w-100 h-100 object-fit-cover" [src]="event.imageUrl" [alt]="event.title">
+        </div>
+    }
+
+    <div class="card-body p-0"> 
+        <div class="d-flex align-items-stretch">
+            
+            <div class="bg-brand text-white p-3 d-flex flex-column align-items-center justify-content-center text-center"
+                 style="min-width: 100px;">
+                <span class="display-6 fw-bold mb-0 lh-1">
+                    {{ getDay(event.startTime) }}
+                </span>
+                <span class="small text-uppercase fw-bold">
+                    {{ getMonth(event.startTime) }}
+                </span>
+            </div>
+
+            <div class="p-3 flex-grow-1 d-flex flex-column justify-content-center">
+                <h5 class="fw-bold text-navy mb-1">{{ event.title }}</h5>
+
+                <div class="text-muted small mb-2">
+                    <span class="text-brand">🕖</span> 
+                    {{ getTime(event.startTime) }}
+                    <span class="mx-1">|</span> 
+                    📍 {{ event.location }}
+                </div>
+
+                <p class="small text-muted mb-3">
+                    {{ event.description }}
+                </p>
+
+                <div>
+                    <button class="btn btn-sm btn-outline-brand rounded-pill px-4" (click)="onRegister()">
+                        Asistiré 👋
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
