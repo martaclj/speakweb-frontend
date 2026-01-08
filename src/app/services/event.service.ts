@@ -38,4 +38,5 @@ export class EventService {
     return this.http.delete(url, { responseType: 'text' }); 
     // responseType: 'text' pq back devuelve una frase
   }
+  
 }
