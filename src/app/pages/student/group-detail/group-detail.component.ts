@@ -2,10 +2,13 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { GroupService } from '../../../services/group.service';
 import { Group } from '../../../interfaces/group';
+import { EventService } from '../../../services/event.service';
+import { GroupEvent } from '../../../interfaces/group-event';
+import { EventCardComponent } from '../../../components/event-card/event-card.component';
 
 @Component({
   selector: 'app-group-detail',
-  imports: [RouterLink],
+  imports: [RouterLink, EventCardComponent],
   templateUrl: './group-detail.component.html',
   styleUrl: './group-detail.component.css'
 })
@@ -13,8 +16,10 @@ export class GroupDetailComponent implements OnInit {
 
   private route = inject(ActivatedRoute);
   private groupService = inject(GroupService);
+  private eventService = inject(EventService);
 
   group?: Group;
+  events: GroupEvent[] = [];
   isLoading: boolean = true;
 
   ngOnInit(): void {
@@ -23,15 +28,29 @@ export class GroupDetailComponent implements OnInit {
 
       if (id) {
         this.loadGroup(id);
+        this.loadEvents(id);
       }
     });
   }
+
   loadGroup(id: number) {
     this.groupService.getGroupById(id).subscribe({
       next: (data) => {
         console.log("Datos del grupo cargados:", data);
         this.group = data;
         this.isLoading = false;
+      }
+    });
+  }
+
+    loadEvents(id: number) {
+    this.eventService.getEventsByGroup(id).subscribe({
+      next: (data) => {
+        console.log("Eventos cargados:", data);
+        this.events = data;
+      },
+      error: (err) => {
+        console.error("Error cargando eventos:", err);
       }
     });
   }

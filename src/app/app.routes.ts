@@ -5,6 +5,7 @@ import { authGuard } from './guards/auth.guard';
 import { MyCommunitiesComponent } from './pages/student/my-communities/my-communities.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { GroupDetailComponent } from './pages/student/group-detail/group-detail.component';
+import { EventDetailComponent } from './pages/student/event-detail/event-detail.component';
 
 export const routes: Routes = [
     // rutas públicas
@@ -15,6 +16,7 @@ export const routes: Routes = [
     // rutas protegidas
     { path: 'home', component: HomeComponent, canActivate: [authGuard] }, 
     { path: 'my-communities', component: MyCommunitiesComponent, canActivate: [authGuard] },
-    { path: 'group/:id', component: GroupDetailComponent, canActivate: [authGuard] }
+    { path: 'group/:id', component: GroupDetailComponent, canActivate: [authGuard] },
+    { path: 'event/:id', component: EventDetailComponent  }
 
 ];

@@ -61,9 +61,14 @@
             
             <div class="col-md-8">
                 <h4 class="fw-bold text-brand mb-3">Próximos Eventos</h4>
-                <div class="alert alert-light border text-center text-muted p-5 rounded-4">
-                    Aquí cargaremos los eventos reales pronto.
-                </div>
+                @if (events.length === 0) {
+                    <div class="alert alert-light border text-center text-muted p-5 rounded-4">
+                        <p class="mb-0">🪫Este grupo no tiene eventos programados.</p>
+                    </div>
+                }
+                @for (event of events; track event.id) {
+                    <app-event-card [event]= "event"></app-event-card>
+                }
             </div>
 
             <div class="col-md-4">
