@@ -14,9 +14,13 @@ export class GroupCardComponent {
   /* para reutilizar componente en home y my-communities
   por defecto 'true' */
   @Input() showJoinButton: boolean = true;
+  @Input() isExpert: boolean = false;
+
+  // para unirse desde la home
   @Output() joinClick = new EventEmitter<number>();
 
   onJoin() {
     this.joinClick.emit(this.group.id);
   }
+
 }
