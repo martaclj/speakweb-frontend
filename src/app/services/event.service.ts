@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { GroupEvent } from '../interfaces/group-event';
+import { NewEvent } from '../interfaces/new-event';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,8 @@ export class EventService {
   }
 
   // POST: /api/events
-  createEvent(eventData: any): Observable<GroupEvent> {
+  // recibe NewEvent (i de Creación) y devuelve GroupEvent (i de Lectura)
+  createEvent(eventData: NewEvent): Observable<GroupEvent> {
     const url = `${this.baseUrl}/events`;
     return this.http.post<GroupEvent>(url, eventData);
   }
