@@ -5,6 +5,7 @@ import { Group } from '../../../interfaces/group';
 import { EventService } from '../../../services/event.service';
 import { GroupEvent } from '../../../interfaces/group-event';
 import { EventCardComponent } from '../../../components/event-card/event-card.component';
+import { GroupMemberService } from '../../../services/group-member.service';
 
 @Component({
   selector: 'app-group-detail',
@@ -17,10 +18,13 @@ export class GroupDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private groupService = inject(GroupService);
   private eventService = inject(EventService);
+  private groupMemberService = inject(GroupMemberService);
 
   group?: Group;
   events: GroupEvent[] = [];
   isLoading: boolean = true;
+
+  canCreateEvent: boolean = false;
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -29,6 +33,20 @@ export class GroupDetailComponent implements OnInit {
       if (id) {
         this.loadGroup(id);
         this.loadEvents(id);
+        this.checkPermissions(id);
+      }
+    });
+  }
+  checkPermissions(groupId: number) {
+    this.groupMemberService.getMyStatusInGroup(groupId).subscribe({
+
+      next: (member: any) => {
+        if (member && member.expert) {
+          this.canCreateEvent = true;
+        }
+      },
+      error: () => {
+        this.canCreateEvent = false;
       }
     });
   }
