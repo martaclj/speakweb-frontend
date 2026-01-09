@@ -1,5 +1,6 @@
 import { Group } from "./group";
 
+// interface de lectura de Evento
 export interface GroupEvent {
     id: number;
     title: string;
