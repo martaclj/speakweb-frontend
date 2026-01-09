@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { GroupService } from '../../../services/group.service';
 import { GroupMember } from '../../../interfaces/group-member';
 import { RouterLink } from "@angular/router";
 import { GroupCardComponent } from '../../../components/group-card/group-card.component';
+import { GroupMemberService } from '../../../services/group-member.service';
 
 @Component({
   selector: 'app-my-communities',
@@ -13,14 +13,14 @@ import { GroupCardComponent } from '../../../components/group-card/group-card.co
 })
 export class MyCommunitiesComponent implements OnInit {
 
-  private groupService = inject(GroupService);
+  private groupMemberService = inject(GroupMemberService);
   
   // lista de mis grupos (comunidades)
   myMemberships: GroupMember[] = [];
   isLoading: boolean = true;
 
   ngOnInit(): void {
-    this.groupService.getMyGroups().subscribe({
+    this.groupMemberService.getMyGroups().subscribe({
       next: (data) => {
         // console.log("Mis comunidades cargadas:", data);
         this.myMemberships = data;
@@ -33,5 +33,23 @@ export class MyCommunitiesComponent implements OnInit {
     });
   }
 
+    // función para las banderas de los idiomas
+  getFlagEmoji(code: string): string {
+    if (!code) return '🌏';
+
+    const upperCode = code.toUpperCase();
+
+    const flags: { [key: string]: string } = {
+      'ES': '🇪🇸',
+      'EN': '🇬🇧',
+      'FR': '🇫🇷',
+      'DE': '🇩🇪',
+      'IT': '🇮🇹',
+      'PT': '🇵🇹',
+      'JA': '🇯🇵'
+    }; // ampliar según se vayan necesitando
+
+    return flags[upperCode] || '🌏';
+  }
 
 }
