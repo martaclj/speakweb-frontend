@@ -6,6 +6,7 @@ import { EventService } from '../../../services/event.service';
 import { GroupEvent } from '../../../interfaces/group-event';
 import { EventCardComponent } from '../../../components/event-card/event-card.component';
 import { GroupMemberService } from '../../../services/group-member.service';
+import { EventParticipantService } from '../../../services/event-participant.service';
 
 @Component({
   selector: 'app-group-detail',
@@ -19,12 +20,14 @@ export class GroupDetailComponent implements OnInit {
   private groupService = inject(GroupService);
   private eventService = inject(EventService);
   private groupMemberService = inject(GroupMemberService);
+  private participantService = inject(EventParticipantService);
 
   group?: Group;
   events: GroupEvent[] = [];
   isLoading: boolean = true;
-
   canCreateEvent: boolean = false;
+  myJoinedEventsId: number[] = []; 
+  // array para guardar los ids de los eventos a los que ya apuntado
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -34,19 +37,7 @@ export class GroupDetailComponent implements OnInit {
         this.loadGroup(id);
         this.loadEvents(id);
         this.checkPermissions(id);
-      }
-    });
-  }
-  checkPermissions(groupId: number) {
-    this.groupMemberService.getMyStatusInGroup(groupId).subscribe({
-
-      next: (member: any) => {
-        if (member && member.expert) {
-          this.canCreateEvent = true;
-        }
-      },
-      error: () => {
-        this.canCreateEvent = false;
+        this.loadMyParticipations();
       }
     });
   }
@@ -71,6 +62,33 @@ export class GroupDetailComponent implements OnInit {
         console.error("Error cargando eventos:", err);
       }
     });
+  }
+
+  checkPermissions(groupId: number) {
+    this.groupMemberService.getMyStatusInGroup(groupId).subscribe({
+
+      next: (member: any) => {
+        if (member && member.expert) {
+          this.canCreateEvent = true;
+        }
+      },
+      error: () => {
+        this.canCreateEvent = false;
+      }
+    });
+  }
+  
+  loadMyParticipations() {
+   this.participantService.getMyEvents().subscribe({
+    next: (data: any[]) => {
+      this.myJoinedEventsId = data.map(p => p.event.id);
+    }
+   }) 
+  }
+
+  // función para el html: saber si apuntado
+  isJoined(eventId: number): boolean {
+    return this.myJoinedEventsId.includes(eventId);
   }
 
   // función para las banderas de los idiomas

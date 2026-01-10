@@ -72,7 +72,8 @@
                     </div>
                 }
                 @for (event of events; track event.id) {
-                    <app-event-card [event]= "event"></app-event-card>
+                    <app-event-card [event]= "event" 
+                    [joined]="isJoined(event.id)"></app-event-card>
                 }
             </div>
 
