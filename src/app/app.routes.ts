@@ -8,6 +8,7 @@ import { GroupDetailComponent } from './pages/student/group-detail/group-detail.
 import { EventDetailComponent } from './pages/student/event-detail/event-detail.component';
 import { MyEventsComponent } from './pages/student/my-events/my-events.component';
 import { CreateEventComponent } from './pages/student/create-event/create-event.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 export const routes: Routes = [
     // rutas públicas
@@ -21,6 +22,6 @@ export const routes: Routes = [
     { path: 'my-events', component: MyEventsComponent, canActivate: [authGuard] },    
     { path: 'group/:id', component: GroupDetailComponent, canActivate: [authGuard] },
     { path: 'event/:id', component: EventDetailComponent, canActivate: [authGuard]  },
-    { path: 'group/:groupId/create-event', component: CreateEventComponent, canActivate: [authGuard] }
-
+    { path: 'group/:groupId/create-event', component: CreateEventComponent, canActivate: [authGuard] },
+    { path: 'profile', component: ProfileComponent }
 ];

@@ -78,12 +78,34 @@
             </div>
 
             <div class="col-md-4">
-                <div class="card shadow-sm border-0 rounded-4">
-                    <div class="card-body">
-                        <h5 class="fw-bold text-brand mb-3">Miembros</h5>
-                        <div class="alert alert-light border text-center text-muted small">
-                            Cargando lista...
+                <div class="card shadow-sm border-0 rounded-4 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold text-brand mb-4">Miembros</h5>
+                       @if (members.length === 0) {
+                        <div class="alert alert-light border text-center text-muted small rounded-3">No hay nadie todavía.</div>
+                       }
+                       <div class="list-group list-group-flush">
+                        @for (member of members; track member.id) {
+                            <!-- posible componente de items de lista para mostrar usuarios -->
+                            <div class="list-group-item border-0 px-2 py-3 d-flex align-items-center">
+                                <div class="flex-shrink-0 me-3">
+                                    <img [src]="member.user?.avatarUrl || 'https://ui-avatars.com/api/?name=' + member.user?.name + '&background=random'" alt="Avatar" class="rounded-circle me-3 object-fit-cover shadow-sm" width="48" height="48">
+                                </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0 text-navy fw-bold">
+                                    {{ member.user?.name }} {{ member.user?.surname }}
+                                </h6>
+
+                                @if (member.expert) {
+                                    <span class="badge bg-warning text-dark border border-light mt-1">🏅Experto</span>
+                                } @else {
+                                    <small class="text-muted">Estudiante</small>
+                                }
+                            </div>
                         </div>
+                        }
+                       </div>
+
                     </div>
                 </div>
             </div>

@@ -28,4 +28,10 @@ export class GroupMemberService {
     return this.http.post(`${this.baseUrl}/join`, { groupId });
   }
 
+  // GET: /api/group-member/group/{groupId}
+  // lista miembros de 1 grupo
+  getMembersByGroup(groupId: number): Observable<GroupMember[]> {
+    return this.http.get<GroupMember[]>(`${this.baseUrl}/group/${groupId}`);
+  }
+
 }

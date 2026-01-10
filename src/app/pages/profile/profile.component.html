@@ -1,0 +1,74 @@
+<div class="container mt-5 mb-5">
+    @if (isLoading) {
+        <div class="text-center py-5">
+            <div class="spinner-border text-brand" role="status"></div>
+            <p class="mt-2 text-muted">Cargando tu perfil...</p>
+        </div>
+    }
+
+    @if (user) {
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow-sm rounded-4 text-center p-4 h-100">
+                    <div class="mb-3 d-flex justify-content-center">
+                        <img [src]="user.avatarUrl || 'https://ui-avatars.com/api/?name=' + user.name + '&background=random'" alt="mi avatar" class="rounded-circle shadow object-fit-cover" width="150" height="150">
+                    </div>
+                    <h4 class="fw-bold text-navy">
+                        {{ user.name }} {{ user.surname }}
+                    </h4>
+                    <p class="text-muted mb-3">
+                        {{ user.email }}
+                    </p>
+                    <hr>
+                    <div class="text-start mt-3">
+                        <p class="small text-muted fw-bold mb-1">SOBRE MÍ</p>
+                        <p class="small text-muted fst-italic">
+                            {{ user.bio || 'Habla un poco sobre tí...' }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm rounded-4 p-4">
+                    <h3 class="fw-bold text-brand mb-4">Editar perfil</h3>
+
+                    <form (ngSubmit)="onSubmit()">
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted">Nombre</label>
+                                <input type="text" class="form-control bg-light" name="name" [(ngModel)]="user.name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted">Apellidos</label>
+                                <input type="text" class="form-control bg-light" name="surname" [(ngModel)]="user.surname" required>
+                            </div>
+                        </div> 
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted">Correo electrónico</label>
+                            <input type="email" class="form-control bg-light text-muted" name="email" [(ngModel)]="user.email" readonly disabled>
+                            <div class="form-text small">El email no se puede cambiar.</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted">Foto de perfil</label>
+                            <input type="url" class="form-control bg-light" name="avatarUrl" [(ngModel)]="user.avatarUrl" placeholder="https://...">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold text-muted">Biografía</label>
+                            <textarea name="bio" class="form-control bg-light" rows="4" [(ngModel)]="user.bio" placeholder="Cuéntanos algo sobre ti..."></textarea>
+                        </div>
+                        
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-light rounded-pill px-4" routerLink="/home">Cancelar</button>
+                            <button type="submit" class="btn btn-brand text-white rounded-pill px-4 shadow-sm">Guardar cambios</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>

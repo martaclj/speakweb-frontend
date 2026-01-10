@@ -7,6 +7,7 @@ import { GroupEvent } from '../../../interfaces/group-event';
 import { EventCardComponent } from '../../../components/event-card/event-card.component';
 import { GroupMemberService } from '../../../services/group-member.service';
 import { EventParticipantService } from '../../../services/event-participant.service';
+import { GroupMember } from '../../../interfaces/group-member';
 
 @Component({
   selector: 'app-group-detail',
@@ -28,6 +29,7 @@ export class GroupDetailComponent implements OnInit {
   canCreateEvent: boolean = false;
   myJoinedEventsId: number[] = []; 
   // array para guardar los ids de los eventos a los que ya apuntado
+  members: GroupMember[] = []; //lista de miembros
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -38,7 +40,16 @@ export class GroupDetailComponent implements OnInit {
         this.loadEvents(id);
         this.checkPermissions(id);
         this.loadMyParticipations();
+        this.loadMembers(id);
       }
+    });
+  }
+  loadMembers(id: number) {
+    this.groupMemberService.getMembersByGroup(id).subscribe({
+      next: (data) => {
+        this.members = data;
+      },
+      error: (err) => console.error("Error cargando miembros", err)
     });
   }
 
