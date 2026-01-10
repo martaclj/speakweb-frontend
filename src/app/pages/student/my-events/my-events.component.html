@@ -28,7 +28,7 @@
     <div class="row">
         @for (event of myEvents; track event.id) {
             <div class="col-md-6 mb-3">
-                <app-event-card [event]="event"></app-event-card>
+                <app-event-card [event]="event" [joined]="true"></app-event-card>
             </div>
         }
     </div>
