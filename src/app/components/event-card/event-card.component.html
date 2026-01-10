@@ -12,10 +12,10 @@
             <div class="bg-brand text-white p-3 d-flex flex-column align-items-center justify-content-center text-center"
                  style="min-width: 100px;">
                 <span class="display-6 fw-bold mb-0 lh-1">
-                    {{ getDay(event.startTime) }}
+                    {{ event.startTime | date:'d' }}
                 </span>
                 <span class="small text-uppercase fw-bold">
-                    {{ getMonth(event.startTime) }}
+                    {{ event.startTime | date:'MMM' | uppercase }}
                 </span>
             </div>
 
@@ -24,7 +24,7 @@
 
                 <div class="text-muted small mb-2">
                     <span class="text-brand">🕖</span> 
-                    {{ getTime(event.startTime) }}
+                    {{ event.startTime | date: 'MMM' | uppercase }}
                     <span class="mx-1">|</span> 
                     📍 {{ event.location }}
                 </div>
@@ -34,9 +34,11 @@
                 </p>
 
                 <div>
-                    <button class="btn btn-sm btn-outline-brand rounded-pill px-4" (click)="onRegister()">
-                        Asistiré 👋
-                    </button>
+                    @if (!joined) {
+                        <button class="btn btn-sm btn-outline-brand rounded-pill px-4" (click)="onRegister()"> Asistiré 👋 </button>
+                    } @else {
+                        <button class="btn btn-sm btn-success text-white rounded-pill px-4" disabled>¡Apuntado!</button>
+                    }
                 </div>
             </div>
         </div>
