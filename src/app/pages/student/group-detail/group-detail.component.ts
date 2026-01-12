@@ -15,7 +15,7 @@ import { GroupMember } from '../../../interfaces/group-member';
   templateUrl: './group-detail.component.html',
   styleUrl: './group-detail.component.css'
 })
-export class GroupDetailComponent implements OnInit {
+export class GroupDetailComponent {
 
   private route = inject(ActivatedRoute);
   private groupService = inject(GroupService);

@@ -10,7 +10,7 @@ import { NewEvent } from '../../../interfaces/new-event';
   templateUrl: './create-event.component.html',
   styleUrl: './create-event.component.css'
 })
-export class CreateEventComponent implements OnInit {
+export class CreateEventComponent {
   private eventService = inject(EventService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
