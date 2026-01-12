@@ -11,7 +11,7 @@ import { EventParticipantService } from '../../../services/event-participant.ser
   templateUrl: './my-events.component.html',
   styleUrl: './my-events.component.css'
 })
-export class MyEventsComponent implements OnInit{
+export class MyEventsComponent {
   private eventService = inject(EventService);
   private participantService = inject(EventParticipantService);
 

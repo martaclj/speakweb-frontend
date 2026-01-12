@@ -11,19 +11,19 @@ import { GroupMemberService } from '../../../services/group-member.service';
   templateUrl: './my-communities.component.html',
   styleUrl: './my-communities.component.css'
 })
-export class MyCommunitiesComponent implements OnInit {
+export class MyCommunitiesComponent {
 
   private groupMemberService = inject(GroupMemberService);
   
   // lista de mis grupos (comunidades)
-  myMemberships: GroupMember[] = [];
+  myGroups: GroupMember[] = [];
   isLoading: boolean = true;
 
   ngOnInit(): void {
     this.groupMemberService.getMyGroups().subscribe({
       next: (data) => {
         // console.log("Mis comunidades cargadas:", data);
-        this.myMemberships = data;
+        this.myGroups = data;
         this.isLoading = false;
       },
       error: (err) => {

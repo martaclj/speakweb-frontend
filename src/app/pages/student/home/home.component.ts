@@ -4,6 +4,7 @@ import { GroupService } from '../../../services/group.service';
 import { Group } from '../../../interfaces/group';
 import { FormsModule } from '@angular/forms';
 import { GroupCardComponent } from '../../../components/group-card/group-card.component';
+import { GroupMemberService } from '../../../services/group-member.service';
 
 @Component({
   selector: 'app-home',
@@ -12,17 +13,20 @@ import { GroupCardComponent } from '../../../components/group-card/group-card.co
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
   // inyección de dependencias:
   private groupService = inject(GroupService);
+  private groupMemberService = inject(GroupMemberService);
 
   groupList: Group[] = [] // recibo datos del backend
   filteredList: Group[] = [];
   searchTerm: string = '';
+  myGroupIds: number[] = []; // guardo ids de grupos dnd ya estoy
 
   ngOnInit(): void {
     this.getGroups();
+    this.checkMyMemberships();
   }
 
   // muestra todos los grupos disponibles
@@ -37,6 +41,20 @@ export class HomeComponent implements OnInit {
         console.error("Error al obtener grupos:", error);
       }
     })
+  }
+
+  checkMyMemberships() {
+    this.groupMemberService.getMyGroups().subscribe ({
+      next: (memberships) => {
+        this.myGroupIds = memberships.map(m => m.group.id);
+      },
+      error: (err) => console.error(err)      
+    });
+  }
+
+  // función para saber si ya soy miembro
+  isMember(groupId: number): boolean {
+    return this.myGroupIds.includes(groupId);
   }
 
   searchGroups() {
@@ -55,6 +73,12 @@ export class HomeComponent implements OnInit {
 
   // unirse a un grupo
   joinGroup(id: number) {
+
+    if (this.isMember(id)) {
+      alert('Ya eres miembro de este grupo!');
+      return;
+    }
+
     this.groupService.joinGroup(id).subscribe({
       next: (data) => {
         console.log("Te has unido al grupo:", data);

@@ -39,7 +39,10 @@
     <div class="row">
         @for (group of filteredList; track group.id) {
             <div class="col-md-4 mb-4">
-                <app-group-card [group]="group" (joinClick)="joinGroup($event)"></app-group-card>
+                <app-group-card 
+                [group]="group" 
+                [showJoinButton]="!isMember(group.id)"
+                (joinClick)="joinGroup($event)"></app-group-card>
             </div>
         }
     </div>
