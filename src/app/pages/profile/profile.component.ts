@@ -22,7 +22,10 @@ export class ProfileComponent {
 
   user?: User;
   myLanguages: UserLanguage[] = [];
+  // variables para guardar idiomas y usar en el select - q no se muestren los q ya tiene el user
+  allSystemLanguages: Language[] = []; // todos los idiomas
   availableLanguages: Language[] = []; // xa select de idiomas disponibles
+
   isLoading: boolean = true;
 
   // variables añadir idiomas
@@ -44,17 +47,34 @@ export class ProfileComponent {
         this.isLoading = false;
       }
     });
-    // Cargo idiomas
-    this.loadMyLanguages();
+    // Cargo todos los idiomas (allSystemLanguages)
+
     // Cargo lista de idiomas - select
     this.languageService.getAllLanguages(). subscribe(data => {
-      this.availableLanguages = data;
-    })
+      this.allSystemLanguages = data;
+      this.loadMyLanguages();
+    });
   }
   loadMyLanguages() {
     this.userLanguageService.getMyLanguages().subscribe({
-      next: (data) => this.myLanguages = data
-    })
+      next: (data) => {
+        this.myLanguages = data
+        // lista con los ids de mis idiomas actuales
+        const myLanguagesIds: number[] = [];
+        for (const item of this.myLanguages) {
+          myLanguagesIds.push(item.language.id);
+        }
+        const filteredList: Language[] = []; // lista filtrada
+
+        for (const systemLang of this.allSystemLanguages) {
+          // si no está en mi lista de ids --> añado a disponible
+          if (!myLanguagesIds.includes(systemLang.id))
+          filteredList.push(systemLang);
+        }
+        this.availableLanguages = filteredList;
+      },
+      error: (err) => console.error(err)
+    });
   }
 
   addLanguage() {
@@ -71,6 +91,7 @@ export class ProfileComponent {
           this.myLanguages.push(newItem);
           alert("Idioma añadido correctamente");
           this.newLang.languageId = 0; // reinicio de formulario
+          this.loadMyLanguages(); // recargo lista para q se filtre el idioma ya añadido y no aparezca como opción
         },
         error: (err) => alert("Error al añadir idioma (¿ya lo tienes?)")
       });
@@ -90,6 +111,19 @@ export class ProfileComponent {
         }
       });
     }
+  }
+
+  deleteLanguage(id: number) {
+    this.userLanguageService.deleteLanguage(id).subscribe({
+      next: () => {
+        alert("Idioma eliminado");
+        this.loadMyLanguages(); // vuelvo a cargar mis idiomas una vez borrado 1
+      },
+      error: (err) => {
+        console.error(err);
+        alert("Error al eliminarlo.");
+      }
+    });
   }
 
 }
