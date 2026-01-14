@@ -22,4 +22,8 @@ export class UserLanguageService {
     return this.http.post<UserLanguage>(this.apiUrl, body);
   }
 
+  deleteLanguage(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
+  }
+
 }

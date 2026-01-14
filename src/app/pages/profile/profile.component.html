@@ -18,8 +18,31 @@
                     </h4>
                     <p class="text-muted mb-3">
                         {{ user.email }}
-                    </p>
-                    <hr>
+                    </p>    
+                    <hr>   
+                    <div class="text-start mb-3">
+                        <p class="small text-muted fw-bold mb-2">MIS IDIOMAS</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            @for (lang of myLanguages; track lang.id) {
+                                <span class="badge border d-flex align-items-center gap-2 py-2 px-3 rounded-pill"
+                                      [class.bg-success-subtle]="lang.type === 'NATIVE'"
+                                      [class.text-success]="lang.type === 'NATIVE'"
+                                      [class.bg-info-subtle]="lang.type !== 'NATIVE'"
+                                      [class.text-info]="lang.type !== 'NATIVE'">
+                                    <span>
+                                        🌐 <strong>{{ lang.language.code }}</strong> 
+                                        @if(lang.type === 'NATIVE') { (Nativo) } @else { ({{ lang.level }}) }
+                                    </span>
+                                    <span class="text-danger fw-bold" style="cursor: pointer;" (click)="deleteLanguage(lang.id)" title="Borrar">×</span>
+                                </span>
+                            }
+                            @if (myLanguages.length === 0) {
+                                <span class="small text-muted fst-italic">No hay idiomas añadidos.</span>
+                            }
+                        </div>
+                    </div>
+
+                    <hr> 
                     <div class="text-start mt-3">
                         <p class="small text-muted fw-bold mb-1">SOBRE MÍ</p>
                         <p class="small text-muted fst-italic">
@@ -31,42 +54,84 @@
 
             <div class="col-md-8">
                 <div class="card border-0 shadow-sm rounded-4 p-4">
-                    <h3 class="fw-bold text-brand mb-4">Editar perfil</h3>
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3 class="fw-bold text-brand m-0">Editar perfil</h3>
+                    </div>
 
                     <form (ngSubmit)="onSubmit()">
-                        
-                        <div class="row mb-3">
+                        <div class="row mb-2">
                             <div class="col-md-6">
-                                <label class="form-label small fw-bold text-muted">Nombre</label>
-                                <input type="text" class="form-control bg-light" name="name" [(ngModel)]="user.name" required>
+                                <label class="form-label small fw-bold text-muted mb-1">Nombre</label>
+                                <input type="text" class="form-control bg-light form-control-sm" name="name" [(ngModel)]="user.name" required>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label small fw-bold text-muted">Apellidos</label>
-                                <input type="text" class="form-control bg-light" name="surname" [(ngModel)]="user.surname" required>
+                                <label class="form-label small fw-bold text-muted mb-1">Apellidos</label>
+                                <input type="text" class="form-control bg-light form-control-sm" name="surname" [(ngModel)]="user.surname" required>
                             </div>
-                        </div> 
-                        <div class="mb-3">
-                            <label class="form-label small fw-bold text-muted">Correo electrónico</label>
-                            <input type="email" class="form-control bg-light text-muted" name="email" [(ngModel)]="user.email" readonly disabled>
-                            <div class="form-text small">El email no se puede cambiar.</div>
+                        </div>   
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted mb-1">Email</label>
+                                <input type="email" class="form-control bg-light text-muted form-control-sm" name="email" [(ngModel)]="user.email" readonly disabled>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted mb-1">Foto URL</label>
+                                <input type="url" class="form-control bg-light form-control-sm" name="avatarUrl" [(ngModel)]="user.avatarUrl" placeholder="https://...">
+                            </div>
                         </div>
                         
                         <div class="mb-3">
-                            <label class="form-label small fw-bold text-muted">Foto de perfil</label>
-                            <input type="url" class="form-control bg-light" name="avatarUrl" [(ngModel)]="user.avatarUrl" placeholder="https://...">
-                        </div>
-                        
-                        <div class="mb-4">
-                            <label class="form-label small fw-bold text-muted">Biografía</label>
-                            <textarea name="bio" class="form-control bg-light" rows="4" [(ngModel)]="user.bio" placeholder="Cuéntanos algo sobre ti..."></textarea>
+                            <label class="form-label small fw-bold text-muted mb-1">Biografía</label>
+                            <textarea name="bio" class="form-control bg-light" rows="2" [(ngModel)]="user.bio" placeholder="Cuéntanos algo..."></textarea>
                         </div>
                         
                         <div class="d-flex justify-content-end gap-2">
-                            <button type="button" class="btn btn-light rounded-pill px-4" routerLink="/home">Cancelar</button>
-                            <button type="submit" class="btn btn-brand text-white rounded-pill px-4 shadow-sm">Guardar cambios</button>
+                            <button type="button" class="btn btn-sm btn-light rounded-pill px-4" routerLink="/home">Cancelar</button>
+                            <button type="submit" class="btn btn-sm btn-brand text-white rounded-pill px-4 shadow-sm">Guardar cambios</button>
                         </div>
-                        
                     </form>
+                    
+                    <hr class="my-4">
+                    <div class="p-3 bg-white border rounded-4 shadow-sm">
+                        <h6 class="fw-bold text-muted mb-3">Añadir nuevo idioma</h6>
+                        <div class="row g-2 align-items-end">
+
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold text-muted mb-1">Idioma</label>
+                                <select class="form-select bg-light form-select-sm" [(ngModel)]="newLang.languageId">
+                                    <option [value]="0">Seleccionar...</option>
+                                    @for (l of availableLanguages; track l.id) {
+                                        <option [value]="l.id">{{ l.name }}</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold text-muted mb-1">Tipo</label>
+                                <select class="form-select bg-light form-select-sm" [(ngModel)]="newLang.type">
+                                    <option value="LEARNER">Estudiante</option>
+                                    <option value="NATIVE">Nativo</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold text-muted mb-1">Nivel</label>
+                                <select class="form-select bg-light form-select-sm" [(ngModel)]="newLang.level" [disabled]="newLang.type === 'NATIVE'">
+                                    <option value="A1">A1</option>
+                                    <option value="A2">A2</option>
+                                    <option value="B1">B1</option>
+                                    <option value="B2">B2</option>
+                                    <option value="C1">C1</option>
+                                    <option value="C2">C2</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <button class="btn btn-sm btn-brand text-white w-100 shadow-sm" (click)="addLanguage()">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
