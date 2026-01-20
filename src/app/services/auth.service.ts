@@ -8,6 +8,8 @@ export class AuthService {
 
   private router = inject(Router);
   private tokenKey = 'speakweb_token';
+  // clave para el rol
+  private roleKey = 'speakweb_role';
 
     constructor() { }
 
@@ -16,10 +18,16 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey) !== null; // hay token??
   }
 
-// cerrar sesión:
+  // es administrador
+  isAdmin(): boolean {
+    const role = localStorage.getItem(this.roleKey);
+    return role === 'ADMIN'; // rol es ADMIN? --> true
+  }
+
+  // cerrar sesión:
   logOut() {
     localStorage.removeItem('speakweb_token'); // borro el token para cerrar sesión
-
+    localStorage.removeItem(this.roleKey); // borro rol
     this.router.navigateByUrl('/login'); // redirige a login
   }
 

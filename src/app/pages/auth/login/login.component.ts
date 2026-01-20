@@ -35,6 +35,9 @@ export class LoginComponent {
         // guardo token en memoria del navegador
         localStorage.setItem('speakweb_token', res.token);
 
+        // guarda el rol para saber si ADMIN o USER. Si admin- verá botón-dashboard
+        localStorage.setItem('speakweb_role', res.role);
+
         // me redirige a la home
         this.router.navigateByUrl('home');
       } else {
