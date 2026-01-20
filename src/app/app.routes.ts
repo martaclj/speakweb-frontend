@@ -9,6 +9,7 @@ import { EventDetailComponent } from './pages/student/event-detail/event-detail.
 import { MyEventsComponent } from './pages/student/my-events/my-events.component';
 import { CreateEventComponent } from './pages/student/create-event/create-event.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
     // rutas públicas
@@ -23,5 +24,8 @@ export const routes: Routes = [
     { path: 'group/:id', component: GroupDetailComponent, canActivate: [authGuard] },
     { path: 'event/:id', component: EventDetailComponent, canActivate: [authGuard]  },
     { path: 'group/:groupId/create-event', component: CreateEventComponent, canActivate: [authGuard] },
-    { path: 'profile', component: ProfileComponent }
+    { path: 'profile', component: ProfileComponent },
+
+    // rutas de admin
+    { path: 'admin', component: AdminDashboardComponent, canActivate: [authGuard] }
 ];

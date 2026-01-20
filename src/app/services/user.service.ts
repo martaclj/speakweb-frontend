@@ -13,14 +13,24 @@ export class UserService {
 
   constructor() { }
 
-  // GET: 
+  // GET: /api/users/profile
   getProfile(): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/profile`);
   }
 
-  // PUT:
+  // PUT: /api/users/profile
   updateProfile(user: User): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/profile`, user);
+  }
+
+  // GET: /api/users
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl);
+  }
+
+  // DELETE: /api/users/**
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
   }
 
 }
