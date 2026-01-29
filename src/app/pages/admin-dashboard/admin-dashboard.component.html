@@ -23,13 +23,13 @@
                         @for (user of users; track user.id) {
                             <tr>
                                 <td class="ps-4">
-                                    <div class="d-flex align-items-center">
+                                    <a [routerLink]="['/profile', user.id]" class="d-flex align-items-center text-decoration-none text-reset" title="Ver perfil público">
                                         <img [src]="user.avatarUrl || 'https://ui-avatars.com/api/?name=' + user.name" class="rounded-circle me-3 object-fit-cover shadow-sm" width="40" height="40">
-                                    </div>
                                     <div>
-                                        <div class="fw-bold text-navy">{{ user.name }} {{ user.surname }}</div>
+                                        <div class="fw-bold text-navy icon-link-hover">{{ user.name }} {{ user.surname }}</div>
                                         <div class="small text-muted">ID: {{ user.id }}</div>
                                     </div>
+                                    </a>
                                 </td>
                                 <td>{{ user.email }}</td>
                                 <td>

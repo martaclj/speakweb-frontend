@@ -88,7 +88,8 @@
                         @for (member of members; track member.id) {
                             <!-- posible componente de items de lista para mostrar usuarios -->
                             <div class="list-group-item border-0 px-2 py-3 d-flex align-items-center">
-                                <div class="flex-shrink-0 me-3">
+                                <a [routerLink]="['/profile', member.user.id]" class="list-group-item border-0 px-2 py-3 d-flex align-items-center text-decoration-none list-group-item-action">
+                                    <div class="flex-shrink-0 me-3">
                                     <img [src]="member.user?.avatarUrl || 'https://ui-avatars.com/api/?name=' + member.user?.name + '&background=random'" alt="Avatar" class="rounded-circle me-3 object-fit-cover shadow-sm" width="48" height="48">
                                 </div>
                             <div class="flex-grow-1">
@@ -102,7 +103,9 @@
                                     <small class="text-muted">Estudiante</small>
                                 }
                             </div>
+                                </a>
                         </div>
+                        
                         }
                        </div>
 

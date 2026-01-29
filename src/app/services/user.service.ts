@@ -28,6 +28,11 @@ export class UserService {
     return this.http.get<User[]>(this.apiUrl);
   }
 
+    // GET: /api/users/{id}
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${id}`);
+  }
+
   // DELETE: /api/users/**
   deleteUser(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
