@@ -2,12 +2,12 @@ import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { environment } from '../../../environments/environment';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { User } from '../../interfaces/user';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [DatePipe],
+  imports: [DatePipe, RouterLink],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })

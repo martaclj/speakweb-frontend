@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { UserLanguage } from '../interfaces/user-language';
 import { Observable } from 'rxjs';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,11 @@ export class UserLanguageService {
 
   getMyLanguages(): Observable<UserLanguage[]> {
     return this.http.get<UserLanguage[]>(this.apiUrl);
+  }
+
+  // GET: /api/user-languages/user/{id}
+  getUserLanguages(userId: number): Observable<UserLanguage[]> {
+    return this.http.get<UserLanguage[]>(`${this.apiUrl}/user/${userId}`);
   }
 
   addLanguage(languageId: number, level: string, type: string): Observable<UserLanguage> {

@@ -1,0 +1,54 @@
+<div class="container mt-5 mb-5">
+    @if (isLoading) {
+        <div class="text-center py-5">
+            <div class="spinner-border text-brand" role="status"></div>
+            <p class="mt-2 text-muted">Cargando perfil...</p>
+        </div>
+    }
+    @if (!isLoading && user) {
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5"><div class="card border-0 shadow-sm rounded-4 text-center p-4">
+                <div class="mb-3 d-flex justify-content-center">
+                    <img [src]="user.avatarUrl || 'https://ui-avatars.com/api/?name=' + user.name + '&background=random'" alt="avatar" class="rounded-circle shadow object-fit-cover" width="150" height="150">
+                </div>
+                <h4 class="fw-bold text-navy">
+                    {{ user.name }} {{ user.surname }}
+                </h4>
+                <div class="text-center mt-3 mb-3">
+                    <div class="text-center mt-3 mb-3">
+                        <div class="d-flex flex-wrap gap-2 justify-content-center">
+                            @for (lang of userLanguages; track lang.id) {
+                                <span class="badge border d-flex align-items-center gap-2 rounded-pill px-3 py-2"
+                                [class.bg-success]="lang.type === 'NATIVE'" [class.bg-info]="lang.type !== 'NATIVE'">
+                                    <strong> {{ lang.language.code }}</strong>
+                                    @if (lang.type === 'NATIVE') {
+                                        (Nativo)
+                                    } @else {
+                                        ({{ lang.level }})
+                                    }
+                                </span>
+                            }
+                            @if (userLanguages.length === 0) {
+                                <span class="small text-muted fst-italic">Este usuario no ha elegido idiomas.</span>
+                            }
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="text-start mt-3 mb-4">
+                        <p class="small text-muted fw-bold mb-1">SOBRE MÍ</p>
+                        <p class="text-muted fst-italic">
+                            {{ user.bio || 'Este usuario no ha escrito nada sobre sí mismo.' }}
+                        </p>
+                    </div>
+                    <button class="btn btn-outline-secondary rounded-pill px-4 w-100">Volver a Comunidad</button>
+                </div>
+            </div></div>
+            @if (!isLoading && !user) {
+                <div class="text-center py-5">
+                    <h3>Usuario no encontrado</h3>
+                    <button class="btn btn-brand text-white mt-3">Volver al inicio</button>
+                </div>
+            }
+        </div>
+    }
+</div>
