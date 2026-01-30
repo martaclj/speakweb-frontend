@@ -27,4 +27,9 @@ export class EventParticipantService {
   getParticipantsByEvent(eventId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/event/${eventId}`);
   }
+
+  // DELETE
+  leaveEvent(eventId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/leave/${eventId}`, { responseType: 'text' });
+  }
 }

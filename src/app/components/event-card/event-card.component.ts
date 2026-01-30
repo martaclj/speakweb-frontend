@@ -32,4 +32,17 @@ export class EventCardComponent {
       }
     });
   }
+
+  onLeave() {
+    if(!confirm('¿Seguro que quieres desapuntarte?')) return;
+
+    this.participantService.leaveEvent(this.event.id).subscribe({
+      next: () => {
+        this.joined = false;
+        alert('Te has desapuntado del evento');
+      },
+      error: (err) => alert('Error al desapuntarte')
+    });
+  }
+
 }

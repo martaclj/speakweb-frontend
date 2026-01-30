@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GroupService } from '../../../services/group.service';
 import { Group } from '../../../interfaces/group';
 import { EventService } from '../../../services/event.service';
@@ -17,6 +17,7 @@ import { GroupMember } from '../../../interfaces/group-member';
 })
 export class GroupDetailComponent {
 
+  private router = inject(Router);
   private route = inject(ActivatedRoute);
   private groupService = inject(GroupService);
   private eventService = inject(EventService);
@@ -102,6 +103,22 @@ export class GroupDetailComponent {
     return this.myJoinedEventsId.includes(eventId);
   }
 
+  leaveGroup() {
+    // si grupo no existe!
+    if (!this.group) 
+      return;
+
+    if (confirm(`¿Seguro que quieres abandonar el grupo ${this.group.name}?`)) {
+      this.groupMemberService.leaveGroup(this.group.id).subscribe({
+        next: () => {
+          alert('Has abandonado el grupo');
+          this.router.navigate(['/home']);
+        }, // si abandona el grupo --> ya no lo ve y vuelve a la Home
+        error: (err) => alert('Error al salir del grupo')
+      });
+    }
+  }
+
   // función para las banderas de los idiomas
   getFlagEmoji(code: string): string {
     if (!code) return '🌏';
@@ -116,7 +133,8 @@ export class GroupDetailComponent {
       'IT': '🇮🇹',
       'PT': '🇵🇹',
       'JA': '🇯🇵'
-    }; // ampliar según se vayan necesitando
+    }; // ampliar
+    // añadir a la database
 
     return flags[upperCode] || '🌏';
   }
