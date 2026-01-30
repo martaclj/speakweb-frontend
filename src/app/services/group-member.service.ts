@@ -34,4 +34,9 @@ export class GroupMemberService {
     return this.http.get<GroupMember[]>(`${this.baseUrl}/group/${groupId}`);
   }
 
+  // DELETE
+  leaveGroup(groupId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/leave/${groupId}`, { responseType: 'text' });
+  }
+
 }

@@ -49,10 +49,14 @@
                             </p>
                         }
                     </div>
-        
-                    <button class="btn btn-outline-brand ms-3" routerLink="/home">
-                        ⬅ Volver
-                    </button>
+                    <div class="d-flex flex-column gap-2 ms-3 align-items-end">
+                        <button class="btn btn-outline-brand ms-3" routerLink="/home">
+                            ⬅ Volver
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger text-nowrap" (click)="leaveGroup()">
+                            x Abandonar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
