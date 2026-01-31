@@ -5,6 +5,7 @@ import { Group } from '../../../interfaces/group';
 import { FormsModule } from '@angular/forms';
 import { GroupCardComponent } from '../../../components/group-card/group-card.component';
 import { GroupMemberService } from '../../../services/group-member.service';
+import { MessagesService } from '../../../services/messages.service';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,8 @@ export class HomeComponent {
   // inyección de dependencias:
   private groupService = inject(GroupService);
   private groupMemberService = inject(GroupMemberService);
+
+  private msgService = inject(MessagesService);
 
   groupList: Group[] = [] // recibo datos del backend
   filteredList: Group[] = [];
@@ -75,18 +78,25 @@ export class HomeComponent {
   joinGroup(id: number) {
 
     if (this.isMember(id)) {
-      alert('Ya eres miembro de este grupo!');
+      // alert('Ya eres miembro de este grupo!');
+      this.msgService.show('Ya eres miembro de este grupo!', 'success');
       return;
     }
 
     this.groupService.joinGroup(id).subscribe({
       next: (data) => {
         console.log("Te has unido al grupo:", data);
-        alert("Bien! Te has unido correctamente!");
+        // alert("Bien! Te has unido correctamente!");
+      this.msgService.show('Bien! Te has unido correctamente!', 'success');
+      // actualizar la lista para que el botón cambie 
+      this.myGroupIds.push(id);
+
       },
       error: (error) => {
         console.error("Error al unirse:", error);
-        alert("Ya estás en ese grupo");
+        // alert("Ya estás en ese grupo");
+      this.msgService.show('Ya formas parte del grupo!', 'danger');
+
       }
     });
   }

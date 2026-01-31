@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { MessagesService } from '../../../services/messages.service';
 
 @Component({
   selector: 'app-register',
@@ -21,21 +22,25 @@ export class RegisterComponent {
 
   http = inject(HttpClient);
   router = inject(Router);
+  private msgService = inject(MessagesService);
 
   onRegister() {
     const url = 'http://localhost:8080/api/auth/register';
 
     this.http.post(url, this.registerObj).subscribe({
       next: (res: any) => {
-        alert("¡Registro correcto! Ya puedes iniciar sesión.");
+        this.msgService.show('Registro correcto! ya puedes iniciar sesión', 'success')
+        // alert("¡Registro correcto! Ya puedes iniciar sesión.");
         this.router.navigateByUrl('/login'); 
       },
       error: (err) => {
         console.error("Error en registro:", err);
         if (err.status === 409) {
-          alert("Ese email ya está registrado.");
+          this.msgService.show('Ese email ya está registrado!', 'danger')
+          // alert("Ese email ya está registrado.");
         } else {
-          alert("Ha ocurrido un error al registrarte.");
+          this.msgService.show('Error al registrarte', 'danger')
+          // alert("Ha ocurrido un error al registrarte.");
         }
       }
     })

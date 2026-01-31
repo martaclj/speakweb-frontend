@@ -20,7 +20,7 @@
                             @for (lang of userLanguages; track lang.id) {
                                 <span class="badge border d-flex align-items-center gap-2 rounded-pill px-3 py-2"
                                 [class.bg-success]="lang.type === 'NATIVE'" [class.bg-info]="lang.type !== 'NATIVE'">
-                                    <strong> {{ lang.language.code }}</strong>
+                                      <strong> {{ lang.language.code }}</strong>
                                     @if (lang.type === 'NATIVE') {
                                         (Nativo)
                                     } @else {
