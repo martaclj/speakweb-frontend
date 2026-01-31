@@ -1,0 +1,10 @@
+@if (text !== '') {
+    <div class="position-fixed top-0 end-0 m-3 msg-container">
+        <div class="alert shadow" role="alert"
+            [class.alert-success]="type === 'success'"
+            [class.alert-danger]="type === 'danger'">
+
+            <strong>Aviso:</strong> {{ text }}
+        </div>
+    </div>
+}

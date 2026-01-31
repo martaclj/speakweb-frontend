@@ -3,6 +3,7 @@ import { Component, inject, Input } from '@angular/core';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { GroupEvent } from '../../interfaces/group-event';
 import { EventParticipantService } from '../../services/event-participant.service';
+import { MessagesService } from '../../services/messages.service';
 
 @Component({
   selector: 'app-event-card',
@@ -16,18 +17,22 @@ export class EventCardComponent {
   @Input() joined: boolean = false;
 
   private participantService = inject(EventParticipantService);
+  private msgService = inject(MessagesService);
 
   onRegister() {
     this.participantService.joinEvent(this.event.id).subscribe({
       next: () => {
         this.joined = true;
+        this.msgService.show('¡Te has apuntado al evento!🎉', 'success');
       },
       error: (err) => {
         console.error(err);
         if (err.error && typeof err.error === 'string' && err.error.includes('ya está apuntado')) {
           this.joined = true;
+        this.msgService.show('¡Ya estabas apuntado!🎉', 'success');
         } else {
-          alert('Error al intentar apuntarse. Inténtalo más tarde.');
+        this.msgService.show('¡Error al apuntarse. Vuelve a intentarlo!', 'danger');
+          // alert('Error al intentar apuntarse. Inténtalo más tarde.');
         }
       }
     });
