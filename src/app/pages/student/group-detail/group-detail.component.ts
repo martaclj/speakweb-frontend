@@ -8,6 +8,7 @@ import { EventCardComponent } from '../../../components/event-card/event-card.co
 import { GroupMemberService } from '../../../services/group-member.service';
 import { EventParticipantService } from '../../../services/event-participant.service';
 import { GroupMember } from '../../../interfaces/group-member';
+import { MessagesService } from '../../../services/messages.service';
 
 @Component({
   selector: 'app-group-detail',
@@ -23,6 +24,8 @@ export class GroupDetailComponent {
   private eventService = inject(EventService);
   private groupMemberService = inject(GroupMemberService);
   private participantService = inject(EventParticipantService);
+
+  private msgService = inject(MessagesService);
 
   group?: Group;
   events: GroupEvent[] = [];
@@ -111,7 +114,8 @@ export class GroupDetailComponent {
     if (confirm(`¿Seguro que quieres abandonar el grupo ${this.group.name}?`)) {
       this.groupMemberService.leaveGroup(this.group.id).subscribe({
         next: () => {
-          alert('Has abandonado el grupo');
+          this.msgService.show('Grupo abandonado', 'success');
+          // alert('Has abandonado el grupo');
           this.router.navigate(['/home']);
         }, // si abandona el grupo --> ya no lo ve y vuelve a la Home
         error: (err) => alert('Error al salir del grupo')

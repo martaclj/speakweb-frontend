@@ -6,6 +6,7 @@ import { GroupEvent } from '../../../interfaces/group-event';
 import { Group } from '../../../interfaces/group';
 import { GroupMemberService } from '../../../services/group-member.service';
 import { EventParticipantService } from '../../../services/event-participant.service';
+import { MessagesService } from '../../../services/messages.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -18,6 +19,8 @@ export class EventDetailComponent {
   private eventService = inject(EventService);
   private groupMemberService = inject(GroupMemberService);
   private participantService = inject(EventParticipantService);
+
+  private msgService = inject(MessagesService);
 
 
   event?: GroupEvent;
@@ -79,12 +82,14 @@ export class EventDetailComponent {
 
     this.participantService.joinEvent(this.event.id).subscribe({
       next: () => {
-        alert('¡Te has apuntado correctamente!');
+        // alert('¡Te has apuntado correctamente!');
+        this.msgService.show('¡Te has apuntado!', 'success');
         this.isJoinedEvent = true;
       },
       error: (err) => {
         console.error(err);
-        alert('Error al apuntarse');
+        // alert('Error al apuntarse');
+        this.msgService.show('Error al apuntarse', 'danger');
       }
     });
   }
