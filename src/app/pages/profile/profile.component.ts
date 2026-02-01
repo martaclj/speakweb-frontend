@@ -7,6 +7,7 @@ import { LanguageService } from '../../services/language.service';
 import { User } from '../../interfaces/user';
 import { UserLanguage } from '../../interfaces/user-language';
 import { Language } from '../../interfaces/language';
+import { MessagesService } from '../../services/messages.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +20,8 @@ export class ProfileComponent {
   userService = inject(UserService);
   userLanguageService = inject(UserLanguageService);
   languageService = inject(LanguageService);
+
+  private msgService = inject(MessagesService);
 
   user?: User;
   myLanguages: UserLanguage[] = [];
@@ -79,7 +82,8 @@ export class ProfileComponent {
 
   addLanguage() {
     if (this.newLang.languageId === 0) {
-      alert("Selecciona un idioma");
+      // alert("Selecciona un idioma");
+      this.msgService.show('Selecciona un idioma', 'success');
       return;
     }
 
@@ -89,11 +93,15 @@ export class ProfileComponent {
       this.newLang.type).subscribe({
         next: (newItem) => {
           this.myLanguages.push(newItem);
-          alert("Idioma añadido correctamente");
+          // alert("Idioma añadido correctamente");
+          this.msgService.show('Idioma añadido', 'success');
           this.newLang.languageId = 0; // reinicio de formulario
           this.loadMyLanguages(); // recargo lista para q se filtre el idioma ya añadido y no aparezca como opción
         },
-        error: (err) => alert("Error al añadir idioma (¿ya lo tienes?)")
+        error: (err) => {
+          this.msgService.show('Error al añadir idioma (¿ya lo tienes?)', 'danger');
+        }
+        // alert("Error al añadir idioma (¿ya lo tienes?)")
       });
   }
 
@@ -103,11 +111,13 @@ export class ProfileComponent {
       this.userService.updateProfile(this.user).subscribe({
         next: (updatedUser) => {
           this.user = updatedUser;
-          alert('¡Datos actualizados correctamente!');
+          // alert('¡Datos actualizados correctamente!');
+          this.msgService.show('Datos actualizados', 'success');
         },
         error: (err) => {
           console.error('Error al guardar:', err);
-          alert('Error al guardar cambios');
+          this.msgService.show('Error al guardar', 'danger');
+          // alert('Error al guardar cambios');
         }
       });
     }
@@ -116,12 +126,14 @@ export class ProfileComponent {
   deleteLanguage(id: number) {
     this.userLanguageService.deleteLanguage(id).subscribe({
       next: () => {
-        alert("Idioma eliminado");
+        // alert("Idioma eliminado");
+        this.msgService.show('Idioma eliminado', 'success');
         this.loadMyLanguages(); // vuelvo a cargar mis idiomas una vez borrado 1
       },
       error: (err) => {
         console.error(err);
-        alert("Error al eliminarlo.");
+        this.msgService.show('Error al eliminar', 'danger');
+        // alert("Error al eliminarlo.");
       }
     });
   }

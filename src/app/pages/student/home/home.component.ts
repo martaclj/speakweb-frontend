@@ -88,7 +88,7 @@ export class HomeComponent {
         console.log("Te has unido al grupo:", data);
         // alert("Bien! Te has unido correctamente!");
       this.msgService.show('Bien! Te has unido correctamente!', 'success');
-      // actualizar la lista para que el botón cambie 
+      // actualizar la lista LOCALMENTE para que el botón cambie 
       this.myGroupIds.push(id);
 
       },

@@ -44,9 +44,12 @@ export class EventCardComponent {
     this.participantService.leaveEvent(this.event.id).subscribe({
       next: () => {
         this.joined = false;
-        alert('Te has desapuntado del evento');
+        // alert('Te has desapuntado del evento');
+        this.msgService.show('Te has desapuntado correctamente', 'success');
       },
-      error: (err) => alert('Error al desapuntarte')
+      error: (err) => {
+        this.msgService.show('Error al desapuntarte', 'danger');
+      }
     });
   }
 

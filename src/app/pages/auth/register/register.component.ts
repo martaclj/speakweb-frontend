@@ -29,17 +29,17 @@ export class RegisterComponent {
 
     this.http.post(url, this.registerObj).subscribe({
       next: (res: any) => {
-        this.msgService.show('Registro correcto! ya puedes iniciar sesión', 'success')
+        this.msgService.show('Registro correcto! ya puedes iniciar sesión', 'success');
         // alert("¡Registro correcto! Ya puedes iniciar sesión.");
         this.router.navigateByUrl('/login'); 
       },
       error: (err) => {
         console.error("Error en registro:", err);
         if (err.status === 409) {
-          this.msgService.show('Ese email ya está registrado!', 'danger')
+          this.msgService.show('Ese email ya está registrado!', 'danger');
           // alert("Ese email ya está registrado.");
         } else {
-          this.msgService.show('Error al registrarte', 'danger')
+          this.msgService.show('Error al registrarte', 'danger');
           // alert("Ha ocurrido un error al registrarte.");
         }
       }
