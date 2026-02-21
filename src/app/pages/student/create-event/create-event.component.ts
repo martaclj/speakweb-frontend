@@ -22,10 +22,11 @@ export class CreateEventComponent {
     title: '',
     description: '',
     startTime: '',
-    location: '',
     imageUrl: '',
-    externalLink: '',
-    groupId: 0
+    groupId: 0,
+    type: 'PRESENTIAL', // valor por defecto
+    location: '',
+    externalLink: ''
   };
 
   ngOnInit(): void {
