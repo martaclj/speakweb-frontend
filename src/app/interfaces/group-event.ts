@@ -6,8 +6,9 @@ export interface GroupEvent {
     title: string;
     description: string;
     startTime: string;
-    location: string;
-    externalLink?: string;
     imageUrl?: string;
     group: Group;
+    type: 'ONLINE' | 'PRESENTIAL'; // Obligatorio
+    location?: string; // Opcional (solo si presencial)
+    externalLink?: string; // Opcional (solo si online)
 }
