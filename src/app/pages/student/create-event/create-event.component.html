@@ -6,7 +6,7 @@
                 <div class="card-body">
                     <div class="text-center mb-4">
                         <h2 class="fw-bold text-navy">Nuevo evento 📅</h2>
-                        <p class="text-muted mb-1" style="font-size: 1.1rem;">Organiza una quedad para tu grupo</p>
+                        <p class="text-muted mb-1" style="font-size: 1.1rem;">Organiza una quedada para tu grupo</p>
                         <p class="text-muted small fst-italic">Puede ser presencial 📍 u online 💻</p>
                     </div>
 
@@ -20,20 +20,37 @@
                             <label class="form-label fw-bold small text-muted">Fecha y hora</label>
                             <input type="datetime-local" class="form-control bg-light" [(ngModel)]="newEvent.startTime" name="startTime" required>
                         </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-bold small text-muted">Lugar</label>
-                            <input type="text" class="form-control bg-light" [(ngModel)]="newEvent.location" name="location" placeholder="Ej: Parque del Retiro, Madrid">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-bold small text-muted">Enlace de la reunión (si es online)</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0">🔗</span>
-                                <input type="url" class="form-control bg-light border-start-0" [(ngModel)]="newEvent.externalLink" name="externalLink" placeholder="https://zoom.us/...">
+                        <!-- Elegir entre online y presential -->
+                         <div class="mb-4 p-3 bg-light rounded-3 border">
+                            <label class="form-label fw-bold small text-navy mb-2">¿Cómo será el evento?</label>
+                            <div class="d-flex gap-4">
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" name="eventType" id="typePresential" value="PRESENTIAL" [(ngModel)]="newEvent.type">
+                                    <label class="form-check-label fw-bold" for="typePresential">📍 Presencial</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" name="eventType" id="typeOnline" value="ONLINE" [(ngModel)]="newEvent.type">
+                                    <label class="form-check-label fw-bold" for="typeOnline">💻 Online</label>
+                                </div>
                             </div>
-                            <div class="form-text small">Deja este campo vacío si el evento es presencial</div>
-                        </div>
+                            
+                         </div>
+                         @if (newEvent.type === 'PRESENTIAL') {
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small text-muted">Lugar</label>
+                                <input type="text" class="form-control bg-light" [(ngModel)]="newEvent.location" name="location" placeholder="Ej: Parque del Retiro, Madrid">
+                            </div>
+                         }
+                         
+                         @if (newEvent.type === 'ONLINE') {
+                                                        <div class="mb-3">
+                                <label class="form-label fw-bold small text-muted">Enlace de la reunión</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0">🔗</span>
+                                    <input type="url" class="form-control bg-light border-start-0" [(ngModel)]="newEvent.externalLink" name="externalLink" placeholder="https://zoom.us/...">
+                                </div>
+                            </div>
+                         }
 
                         <div class="mb-3">
                             <label class="form-label fw-bold small text-muted">Imagen (URL)</label>
