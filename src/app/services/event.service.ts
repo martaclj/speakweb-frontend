@@ -40,5 +40,13 @@ export class EventService {
     return this.http.delete(url, { responseType: 'text' }); 
     // responseType: 'text' pq back devuelve una frase
   }
+
+  // POST: /images/upload --> subir imagen física al servidor
+  uploadImage(file: File): Observable<{imageUrl: string}> {
+    const formData = new FormData();
+    formData.append('file', file);
+    const url = `${this.baseUrl}/images/upload`;
+    return this.http.post<{imageUrl: string}>(url, formData);
+  }
   
 }
