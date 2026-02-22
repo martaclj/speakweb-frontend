@@ -52,11 +52,11 @@
                             </div>
                          }
 
-                        <div class="mb-3">
-                            <label class="form-label fw-bold small text-muted">Imagen (URL)</label>
-                            <input type="url" class="form-control bg-light" [(ngModel)]="newEvent.imageUrl" name="imageUrl" placeholder="https://...">
-                            <div class="form-text small">Pega la URL de una imagen para tu evento (opcional)</div>
-                        </div>
+                         <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted">Imagen del evento (Opcional)</label>
+                            <input type="file" class="form-control bg-light" (change)="onFileSelected($event)" accept="image/png, image/jpeg, image/webp">
+                            <div class="form-text small">Sube una foto desde tu ordenador para ilustrar el evento.</div>
+                         </div>
 
                         <div class="mb-4">
                             <label class="form-label fw-bold small text-muted">Descripción</label>
