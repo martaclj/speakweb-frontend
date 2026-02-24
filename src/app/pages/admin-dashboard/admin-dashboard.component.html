@@ -1,21 +1,47 @@
-<div class="container mt-5 mb-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+<div class="container mt-4 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 p-4 bg-navy text-white rounded-4 shadow-sm" style="background-color: #1a252f;">
         <div>
-            <h2 class="fw-bold text-navy">Panel de Admin</h2>
-            <p class="text-muted">Gestión de usuarios</p>
+            <h2 class="fw-bold mb-1">Centro de control (Admin)</h2>
+            <p class="mb-0 opacity-75">Gestión de usuarios, idiomas y comunidades</p>
         </div>
-        <button class="btn btn-outline-secondary btn-sm" (click)="loadUsers()">Actualizar</button>
+        <button class="btn btn-outline-light rounded-pill px-4" (click)="loadAllData()">
+            Actualizar datos
+        </button>
     </div>
+    <ul class="nav nav-pills mb-4 gap-2 border-bottom pb-3">
+        <li class="nav-item">
+            <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'users'" [class.bg-brand]="activeTab === 'users'" (click)="switchTab('users')">
+                Usuarios ({{ users.length }})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'languages'" [class.bg-brand]="activeTab === 'languages'" (click)="switchTab('languages')">
+                Idiomas ({{ languages.length }})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'groups'" [class.bg-brand]="activeTab === 'groups'" (click)="switchTab('groups')">
+                Comunidades ({{ groups.length }})
+            </button>
+        </li>
+    </ul>
 
-    @if (!isLoading) {
-        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    @if (isLoading) {
+        <div class="text-center py-5">
+            <div class="spinner-border text-brand" role="status"></div>
+        </div>
+    }
+
+    @if (!isLoading && activeTab === 'users') {
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light">
+                    <thead class="bg-light text-muted small text-uppercase">
                         <tr>
-                            <th class="ps-4">Usuario</th>
+                            <th class="ps-4 py-3">Usuarios</th>
                             <th>Email</th>
                             <th>Rol</th>
+                            <th>Reputación</th>
                             <th class="text-end pe-4">Acciones</th>
                         </tr>
                     </thead>
@@ -23,25 +49,110 @@
                         @for (user of users; track user.id) {
                             <tr>
                                 <td class="ps-4">
-                                    <a [routerLink]="['/profile', user.id]" class="d-flex align-items-center text-decoration-none text-reset" title="Ver perfil público">
-                                        <img [src]="user.avatarUrl || 'https://ui-avatars.com/api/?name=' + user.name" class="rounded-circle me-3 object-fit-cover shadow-sm" width="40" height="40">
-                                    <div>
-                                        <div class="fw-bold text-navy icon-link-hover">{{ user.name }} {{ user.surname }}</div>
-                                        <div class="small text-muted">ID: {{ user.id }}</div>
-                                    </div>
+                                    <a [routerLink]="['/profile', user.id]" class="d-flex align-items-center text-decoration-none-text-reset">
+                                        <img [src]="user.avatarUrl || 'https://ui-avatars.com/api/?name=' + user.name" class="rounded-circle me-3 object-fit-cover shadow sm" width="40" height="40">
+                                        <div>
+                                            <div class="fw-bold text-navy">{{ user.name }} {{ user.surname }}</div>
+                                            <div class="small text-muted">ID: {{ user.id }}</div>
+                                        </div>
                                     </a>
                                 </td>
-                                <td>{{ user.email }}</td>
+                                <td> {{ user.email }} </td>
                                 <td>
-                                    @if (user.email.includes('admin')) {
-                                        <span class="badge bg-warning text-dark">ADMIN</span>
+                                    @if (user.role === 'ADMIN') {
+                                        <span class="badge bg-warning text-dark border border-light shadow sm">ADMIN</span>
                                     } @else {
                                         <span class="badge bg-light text-dark border">USER</span>
                                     }
                                 </td>
+                                <td>
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">
+                                        ⭐️ 5 Stars | 0 Reportes
+                                    </span>
+                                </td>
                                 <td class="text-end pe-4">
-                                    <button class="btn btn-sm btn-outline-danger rounded-pill" (click)="deleteUser(user)">
-                                        Dar de baja
+                                    @if (user.role !== 'ADMIN') {
+                                        <button class="btn btn-sm btn-outline-danger rounded-pill px-3" (click)="deleteUser(user)">
+                                            Dar de baja
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+
+    @if (!isLoading && activeTab === 'languages') {
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow-sm rounded-4 p-4 b-light">
+                    <h5 class="fw-bold text-navy mb-3">Añadir Idioma</h5>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">Código (2 letras: ES, EN)</label>
+                        <input type="text" class="form-control" [(ngModel)]="newLangCode" maxlength="2">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">Nombre del idioma</label>
+                        <input type="text" class="form-control" [(ngModel)]="newLangName" placeholder="Ej: Español">
+                    </div>
+                    <button class="btn btn-brand text-white w-100 rounded-pill shadow-sm" (click)="addLanguage()">Guardar idioma</button>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light text-muted small text-uppercase">
+                            <tr>
+                                <th class="ps-4">ID</th>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th class="text-end pe-4">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (lang of languages; track lang.id) {
+                                <tr>
+                                    <td class="ps-4 text-muted">#{{ lang.id }}</td>
+                                    <td><span class="badge bg-secondary rounded-pill"> {{ lang.code }}</span></td>
+                                    <td class="fw-bold">{{ lang.name }}</td>
+                                    <td class="text-end pe-4">
+                                        <button class="btn btn-sm btn-light text-danger rounded-circle" title="borrar idioma" (click)="deleteLanguage(lang.id)">x</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!isLoading && activeTab === 'groups') {
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light text-muted small text-uppercase">
+                        <tr>
+                            <th class="ps-4">Grupo</th>
+                            <th>Idioma 1</th>
+                            <th>Idioma 2</th>
+                            <th class="text-end pe-4">Gestión</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (group of groups; track group.id) {
+                            <tr>
+                                <td class="ps-4 py-3">
+                                    <div class="fw-bold text-navy">{{ group.name }}</div>
+                                </td>
+                                <td><span class="badge bg-light text-dark border">{{ group.language1.name }}</span></td>
+                                <td><span class="badge bg-light text-dark border">{{ group.language2.name }}</span></td>
+                                <td class="text-end pe-4">
+                                    <button class="btn btn-sm btn-outline-brand rounded-pill" [routerLink]="['/group', group.id]">
+                                        Ver Grupo
                                     </button>
                                 </td>
                             </tr>
@@ -50,10 +161,5 @@
                 </table>
             </div>
         </div>
-        <!-- // contador de usuarios -->
-         <div class="mt-3 text-end text-muted small">
-            Total usuarios: {{ users.length }}
-         </div>
     }
-
 </div>
