@@ -19,6 +19,35 @@ export class EventCardComponent {
   private participantService = inject(EventParticipantService);
   private msgService = inject(MessagesService);
 
+  getEventImageUrl(url: string | undefined): string {
+    if(!url) {
+      return ''; // no hay imagen
+    }
+    if (url.startsWith('http')) {
+      return url; // imagen internet
+    }
+    // archivo físico
+    return `http://localhost:8080${url}`;
+  }
+
+  // función para saber si el evento online ya está abierto
+  isEventOpen(): boolean {
+    if (!this.event || !this.event.startTime) {
+      return false;
+    }
+
+    // comprobar la fecha actual
+    const now = new Date();
+    // de String a Date
+    const eventTime = new Date(this.event.startTime);
+
+    // evento se abre 15 minutos antes de la hora
+    const openTime = new Date(eventTime.getTime() - (15 * 60000));
+
+    // comparación de la hora actual y la de apertura
+    return now >= openTime;
+  }
+
   onRegister() {
     this.participantService.joinEvent(this.event.id).subscribe({
       next: () => {
