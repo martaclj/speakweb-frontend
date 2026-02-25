@@ -1,3 +1,90 @@
-<button class="btn btn-light position-absolute top-0 start-0 m-3 shadow-sm rounded-circle p-2"
-    [routerLink]="['/group', event?.group?.id]">
-</button>
+<div class="container mt-5 mb-5 position-relative">    
+    @if (isLoading) {
+        <div class="text-center py-5">
+            <div class="spinner-border text-brand" role="status"></div>
+            <p class="mt-2 text-muted">Cargando evento...</p>
+        </div>
+    }
+
+    @if (!isLoading && event) {
+        <button class="btn btn-light shadow-sm rounded-circle p-2 mb-4" [routerLink]="['/group', event.group?.id]">
+            ⬅ Volver
+        </button>
+
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+            
+            @if (event.imageUrl) {
+                <div style="height: 300px; background-color: #f8f9fa;">
+                    <img [src]="'http://localhost:8080' + event.imageUrl" class="w-100 h-100 object-fit-cover" alt="Imagen del evento" onerror="this.style.display='none'">
+                </div>
+            }
+
+            <div class="card-body p-5">
+                <div class="mb-3">
+                    @if (event.type === 'ONLINE') {
+                        <span class="badge bg-info text-white rounded-pill px-3 py-2">💻 Evento Online</span>
+                    } @else {
+                        <span class="badge bg-success text-white rounded-pill px-3 py-2">📍 Evento Presencial</span>
+                    }
+                </div>
+
+                <h1 class="fw-bold text-navy mb-3">{{ event.title }}</h1>
+                
+                <div class="d-flex flex-wrap gap-4 mb-4 text-muted">
+                    <div class="d-flex align-items-center">
+                        <span class="fs-5 me-2">📅</span>
+                        <strong>{{ event.startTime | date:'dd MMM yyyy, HH:mm' }}</strong>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="fs-5 me-2">📍</span>
+                        <strong>{{ event.location || 'Sala Virtual' }}</strong>
+                    </div>
+                </div>
+
+                <p class="lead text-muted mb-4" style="white-space: pre-line;">{{ event.description }}</p>
+
+                @if (event.type === 'ONLINE' && event.externalLink) {
+                    <div class="p-4 bg-light rounded-4 mb-4 border">
+                        <h6 class="fw-bold text-navy mb-2">Enlace de la reunión:</h6>
+                        <a [href]="event.externalLink" target="_blank" class="btn btn-info text-white rounded-pill shadow-sm px-4">
+                            Entrar a la videollamada
+                        </a>
+                    </div>
+                }
+
+                <hr class="my-4">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+             
+                    <div class="d-flex align-items-center bg-light p-3 rounded-pill border">
+                        @if (event.creator) {
+                            <img [src]="event.creator.avatarUrl || 'https://ui-avatars.com/api/?name=' + event.creator.name" class="rounded-circle me-3 shadow-sm object-fit-cover" width="50" height="50">
+                            <div>
+                                <p class="mb-0 small text-muted lh-1">Organizado por:</p>
+                                <h6 class="mb-0 fw-bold text-navy">{{ event.creator.name }} {{ event.creator.surname }}</h6>
+                            </div>
+                            
+                            <button class="btn btn-sm btn-outline-warning text-dark ms-4 rounded-pill bg-white shadow-sm" (click)="rateCreator()">
+                                ⭐ Valorar Organizador
+                            </button>
+                        } @else {
+                            <div class="text-muted fst-italic">Organizador desconocido</div>
+                        }
+                    </div>
+
+                    <div>
+                        @if (!isJoinedEvent) {
+                            <button class="btn btn-brand text-white px-5 py-2 rounded-pill shadow-sm fw-bold fs-5" (click)="joinEvent()">
+                                👋 ¡Me apunto!
+                            </button>
+                        } @else {
+                            <button class="btn btn-success text-white px-5 py-2 rounded-pill shadow-sm fw-bold fs-5" disabled>
+                                ✅ Ya estás apuntado
+                            </button>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>

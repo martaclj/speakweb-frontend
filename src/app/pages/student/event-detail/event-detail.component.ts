@@ -7,6 +7,7 @@ import { Group } from '../../../interfaces/group';
 import { GroupMemberService } from '../../../services/group-member.service';
 import { EventParticipantService } from '../../../services/event-participant.service';
 import { MessagesService } from '../../../services/messages.service';
+import { RatingService } from '../../../services/rating.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -19,6 +20,7 @@ export class EventDetailComponent {
   private eventService = inject(EventService);
   private groupMemberService = inject(GroupMemberService);
   private participantService = inject(EventParticipantService);
+  private ratingService = inject(RatingService);
 
   private msgService = inject(MessagesService);
 
@@ -90,6 +92,38 @@ export class EventDetailComponent {
         console.error(err);
         // alert('Error al apuntarse');
         this.msgService.show('Error al apuntarse', 'danger');
+      }
+    });
+  }
+
+  rateCreator() {
+    if (!this.event || !this.event.creator) return;
+
+    const scoreStr = prompt(`Del 1 al 5, ¿qué nota le das al organizador (${this.event.creator.name}?`);
+    if (!scoreStr) return;
+
+    const score = parseInt(scoreStr);
+    if (score < 1 || score > 5 || isNaN(score)) {
+      this.msgService.show('La nota debe ser un número del 1 al 5', 'danger');
+      return;
+    }
+
+    const comment = prompt('Añade un breve comentario (opcional):') || '';
+
+    const ratingData = {
+      reviewedUserId: this.event.creator.id,
+      eventId: this.event.id,
+      score: score,
+      comments: comment
+    };
+
+    this.ratingService.createRating(ratingData).subscribe({
+      next: () => {
+        this.msgService.show('Valoración guardada correctamente!', 'success');
+      },
+      error: (err) => {
+        console.error(err); // error del backend
+        this.msgService.show(err.error || 'Error al valorar', 'danger');
       }
     });
   }
