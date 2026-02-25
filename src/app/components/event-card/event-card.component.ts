@@ -4,10 +4,11 @@ import { DatePipe, UpperCasePipe } from '@angular/common';
 import { GroupEvent } from '../../interfaces/group-event';
 import { EventParticipantService } from '../../services/event-participant.service';
 import { MessagesService } from '../../services/messages.service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-event-card',
-  imports: [DatePipe, UpperCasePipe],
+  imports: [DatePipe, UpperCasePipe, RouterLink],
   templateUrl: './event-card.component.html',
   styleUrl: './event-card.component.css'
 })
