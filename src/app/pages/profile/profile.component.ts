@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { UserLanguageService } from '../../services/user-language.service';
 import { LanguageService } from '../../services/language.service';
@@ -8,19 +8,18 @@ import { User } from '../../interfaces/user';
 import { UserLanguage } from '../../interfaces/user-language';
 import { Language } from '../../interfaces/language';
 import { MessagesService } from '../../services/messages.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, DatePipe],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-
   userService = inject(UserService);
   userLanguageService = inject(UserLanguageService);
   languageService = inject(LanguageService);
-
   private msgService = inject(MessagesService);
 
   user?: User;
@@ -31,6 +30,10 @@ export class ProfileComponent {
 
   isLoading: boolean = true;
 
+  // variables para guardas mis valoraciones (las del usuario propio)
+  userRatings: any[] = []; // valoraciones
+  userReports: any[] = []; // denuncias
+
   // variables añadir idiomas
   newLang = {
     languageId: 0,
@@ -39,23 +42,38 @@ export class ProfileComponent {
   };
 
   ngOnInit(): void {
-    // Cargo datos usuario
     this.userService.getProfile().subscribe({
       next: (data) => {
-        console.log('Datos cargados:', data);
+        console.log('Datos del otro usuario cargados:', data);
         this.user = data;
         this.isLoading = false;
+
+        // cargo sus denuncias y valoraciones
+        this.loadMyReviewData(data.id);
       },
       error: (err) => {
         this.isLoading = false;
       }
     });
-    // Cargo todos los idiomas (allSystemLanguages)
 
+    // Cargo todos los idiomas (allSystemLanguages)
     // Cargo lista de idiomas - select
     this.languageService.getAllLanguages(). subscribe(data => {
       this.allSystemLanguages = data;
       this.loadMyLanguages();
+    });
+  }
+
+  loadMyReviewData(userId: any) {
+    // lista de valoraciones
+    this.userService.getUserRatingsDetailed(userId).subscribe({
+      next: (data) => this.userRatings = data,
+      error: (err) => console.error('Error cargando valoraciones', err)      
+    });
+    // lista de reportes
+    this.userService.getUserReportsDetailed(userId).subscribe({
+      next: (data) => this.userReports = data,
+      error: (err) => console.error('Error cargando reportes', err)
     });
   }
   loadMyLanguages() {

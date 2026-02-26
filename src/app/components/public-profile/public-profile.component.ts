@@ -4,10 +4,12 @@ import { UserService } from '../../services/user.service';
 import { UserLanguageService } from '../../services/user-language.service';
 import { UserLanguage } from '../../interfaces/user-language';
 import { User } from '../../interfaces/user';
+import { DatePipe, Location } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-public-profile',
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   templateUrl: './public-profile.component.html',
   styleUrl: './public-profile.component.css'
 })
@@ -15,13 +17,22 @@ export class PublicProfileComponent {
   private route = inject(ActivatedRoute);
   private userService = inject(UserService);
   private userLanguageService = inject(UserLanguageService);
+  private authService = inject(AuthService); // para que pueda ver ratings
+  private location = inject(Location); // botón de volver
 
   user?: User;
   userLanguages: UserLanguage[] = [];
   isLoading: boolean = true;
   userId: number = 0;
 
+  // variables para el admin
+  isAdmin: boolean = false;
+  userRatings: any[] = [];
+  userReports: any[] = [];
+
   ngOnInit(): void {
+    this.isAdmin = this.authService.isAdmin();
+
     this.route.params.subscribe(params => {
       this.userId = +params['id']; // + para convertir sring a nº
       if (this.userId) {
@@ -36,9 +47,33 @@ export class PublicProfileComponent {
       next: (data) => {
         this.user = data;
         this.loadLanguages();
+
+        // si el que ve el perfil es admin --> también ve valoraciones y denuncias
+        if (this.isAdmin) {
+          this.loadAdminData();
+        }
       },
       error: (err) => {
         console.error('Error cargando usuario', err);
+      }
+    });
+  }
+  loadAdminData() {
+    this.userService.getUserRatingsDetailed(this.userId).subscribe({
+      next: (data) => {
+        this.userRatings = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar las valoraciones:', err);
+      }
+    });
+    
+      this.userService.getUserReportsDetailed(this.userId).subscribe({
+      next: (data) => {
+        this.userReports = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar las denuncias:', err);
       }
     });
   }
@@ -55,5 +90,9 @@ export class PublicProfileComponent {
         this.isLoading = false;
       }
     });
+  }
+
+  goBack() {
+    this.location.back(); // devuelve a lugar de dónde vinieras
   }
 }

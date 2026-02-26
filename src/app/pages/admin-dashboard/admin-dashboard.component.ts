@@ -33,6 +33,9 @@ export class AdminDashboardComponent {
   languages: Language[] = [];
   groups: Group[] = [];
 
+  // diccionario nota usuario
+  userReputations: { [userId: number]: any } = {};
+
   // form nuevo idioma
   newLangCode: string = '';
   newLangName: string = '';
@@ -57,6 +60,18 @@ export class AdminDashboardComponent {
     this.userService.getAllUsers().subscribe({
       next: (data) => {
         this.users = data;
+        this.users.forEach(user => {
+          // valor provisional - mientras carga
+          this.userReputations[user.id] = { score: '5.0', count: 0 };
+
+          this.userService.getUserReputation(user.id).subscribe({
+            next: (rep) => {
+              this.userReputations[user.id] = rep;
+            },
+            error: (err) => console.error(`Error cargando reputación de ${user.id}`, err)
+          });
+        });
+
         this.isLoading = false;
       },
       error: (err) => {
@@ -80,8 +95,7 @@ export class AdminDashboardComponent {
           this.loadUsers();
         },
         error: (err) => {
-          // alert('No se pudo eliminar. Tiene eventos asociados!');
-        this.msgService.show('No se puede eliminar. Tiene eventos asociados', 'danger');
+        this.msgService.show('No se puede eliminar.', 'danger');
         }
       });
     }
