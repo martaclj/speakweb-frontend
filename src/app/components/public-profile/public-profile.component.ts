@@ -6,6 +6,8 @@ import { UserLanguage } from '../../interfaces/user-language';
 import { User } from '../../interfaces/user';
 import { DatePipe, Location } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { ReportService } from '../../services/report.service';
+import { MessagesService } from '../../services/messages.service';
 
 @Component({
   selector: 'app-public-profile',
@@ -19,6 +21,8 @@ export class PublicProfileComponent {
   private userLanguageService = inject(UserLanguageService);
   private authService = inject(AuthService); // para que pueda ver ratings
   private location = inject(Location); // botón de volver
+  private reportService = inject(ReportService);
+  private msgService = inject(MessagesService);
 
   user?: User;
   userLanguages: UserLanguage[] = [];
@@ -90,6 +94,34 @@ export class PublicProfileComponent {
         this.isLoading = false;
       }
     });
+  }
+
+  reportUser() {
+    if (!this.user) return;
+
+    const reason = prompt(`¿Por qué deseas denunciar a ${this.user.name}? Indica el motivo:`);
+    if (!reason || reason.trim() === '') {
+      return;
+    }
+
+    const reportData = {
+      reportedUserId: this.userId,
+      reason: reason.trim()
+    };
+
+    this.reportService.createReport(reportData).subscribe({
+      next: () => {
+        this.msgService.show('Denuncia enviada a moderación correctamente', 'success');
+        if (this.isAdmin) {
+          this.loadAdminData();
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        this.msgService.show(err.error || 'Error al enviar la denuncia', 'danger');
+      }
+    })
+
   }
 
   goBack() {
