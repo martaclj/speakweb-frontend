@@ -5,20 +5,21 @@
             <p class="mt-2 text-muted">Cargando tu perfil...</p>
         </div>
     }
-
     @if (user) {
         <div class="row">
             <div class="col-md-4 mb-4">
-                <div class="card border-0 shadow-sm rounded-4 text-center p-4 h-100">
-                    <div class="mb-3 d-flex justify-content-center">
-                        <img [src]="user.avatarUrl || 'https://ui-avatars.com/api/?name=' + user.name + '&background=random'" alt="mi avatar" class="rounded-circle shadow object-fit-cover" width="150" height="150">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                    <div class="text-center">
+                        <div class="mb-3 d-flex justify-content-center">
+                            <img [src]="user.avatarUrl || 'https://ui-avatars.com/api/?name=' + user.name + '&background=random'" alt="mi avatar" class="rounded-circle shadow object-fit-cover" width="150" height="150">
+                        </div>
+                        <h4 class="fw-bold text-navy">
+                            {{ user.name }} {{ user.surname }}
+                        </h4>
+                        <p class="text-muted mb-3">
+                            {{ user.email }}
+                        </p>    
                     </div>
-                    <h4 class="fw-bold text-navy">
-                        {{ user.name }} {{ user.surname }}
-                    </h4>
-                    <p class="text-muted mb-3">
-                        {{ user.email }}
-                    </p>    
                     <hr>   
                     <div class="text-start mb-3">
                         <p class="small text-muted fw-bold mb-2">MIS IDIOMAS</p>
@@ -41,9 +42,9 @@
                             }
                         </div>
                     </div>
-
                     <hr> 
-                    <div class="text-start mt-3">
+                    
+                    <div class="text-start mt-3 mb-4">
                         <p class="small text-muted fw-bold mb-1">SOBRE MÍ</p>
                         <p class="small text-muted fst-italic">
                             {{ user.bio || 'Habla un poco sobre tí...' }}
@@ -51,10 +52,8 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-md-8">
-                <div class="card border-0 shadow-sm rounded-4 p-4">
-                    
+                <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h3 class="fw-bold text-brand m-0">Editar perfil</h3>
                     </div>
@@ -80,23 +79,21 @@
                                 <input type="url" class="form-control bg-light form-control-sm" name="avatarUrl" [(ngModel)]="user.avatarUrl" placeholder="https://...">
                             </div>
                         </div>
-                        
                         <div class="mb-3">
                             <label class="form-label small fw-bold text-muted mb-1">Biografía</label>
                             <textarea name="bio" class="form-control bg-light" rows="2" [(ngModel)]="user.bio" placeholder="Cuéntanos algo..."></textarea>
                         </div>
-                        
+
                         <div class="d-flex justify-content-end gap-2">
                             <button type="button" class="btn btn-sm btn-light rounded-pill px-4" routerLink="/home">Cancelar</button>
                             <button type="submit" class="btn btn-sm btn-brand text-white rounded-pill px-4 shadow-sm">Guardar cambios</button>
                         </div>
                     </form>
                     
-                    <hr class="my-4">
+                    <hr class="my-4">     
                     <div class="p-3 bg-white border rounded-4 shadow-sm">
                         <h6 class="fw-bold text-muted mb-3">Añadir nuevo idioma</h6>
                         <div class="row g-2 align-items-end">
-
                             <div class="col-md-4">
                                 <label class="form-label small fw-bold text-muted mb-1">Idioma</label>
                                 <select class="form-select bg-light form-select-sm" [(ngModel)]="newLang.languageId">
@@ -106,7 +103,6 @@
                                     }
                                 </select>
                             </div>
-
                             <div class="col-md-3">
                                 <label class="form-label small fw-bold text-muted mb-1">Tipo</label>
                                 <select class="form-select bg-light form-select-sm" [(ngModel)]="newLang.type">
@@ -114,7 +110,6 @@
                                     <option value="NATIVE">Nativo</option>
                                 </select>
                             </div>
-
                             <div class="col-md-3">
                                 <label class="form-label small fw-bold text-muted mb-1">Nivel</label>
                                 <select class="form-select bg-light form-select-sm" [(ngModel)]="newLang.level" [disabled]="newLang.type === 'NATIVE'">
@@ -126,13 +121,43 @@
                                     <option value="C2">C2</option>
                                 </select>
                             </div>
-
                             <div class="col-md-2">
                                 <button class="btn btn-sm btn-brand text-white w-100 shadow-sm" (click)="addLanguage()">Añadir</button>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-light">
+                    <h5 class="fw-bold text-navy mb-3">Mi Reputación</h5>
+                    <div class="row">
+                        <div class="col-md-6 border-end">
+                            <p class="small fw-bold text-navy mb-2">
+                                Valoraciones ({{ userRatings.length }})
+                            </p>
+                            @for (r of userRatings; track r.id) {
+                                <div class="bg-white p-2 mb-2 border rounded small shadow-sm">
+                                    <strong>{{ r.score }} ⭐️</strong>: <span class="fst-italic">{{ r.comments }}</span>
+                                </div>
+                            } @empty {
+                                <p class="small text-muted mb-0">Aún no tienes valoraciones</p>
+                            }
+                        </div>
+                        <div class="col-md-6">
+                            <p class="small fw-bold text-danger mb-2">
+                                Avisos ({{ userReports.length }})
+                            </p>
+                            @for (rep of userReports; track rep.id) {
+                                <div class="bg-white p-2 mb-2 border rounded small text-danger shadow-sm">
+                                    🚩 {{ rep.reason }}
+                                </div>
+                            } @empty {
+                                <p class="small text-success mb-0">✔ Historial limpio.</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     }
