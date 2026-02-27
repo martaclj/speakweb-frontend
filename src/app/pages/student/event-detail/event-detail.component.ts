@@ -8,6 +8,7 @@ import { GroupMemberService } from '../../../services/group-member.service';
 import { EventParticipantService } from '../../../services/event-participant.service';
 import { MessagesService } from '../../../services/messages.service';
 import { RatingService } from '../../../services/rating.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -21,7 +22,7 @@ export class EventDetailComponent {
   private groupMemberService = inject(GroupMemberService);
   private participantService = inject(EventParticipantService);
   private ratingService = inject(RatingService);
-
+  private userService = inject(UserService);
   private msgService = inject(MessagesService);
 
 
@@ -29,12 +30,22 @@ export class EventDetailComponent {
   isLoading: boolean = true;
   isGroupMember: boolean = false;
   isJoinedEvent: boolean = false;
+  participants: any[] = [];
+  myUserId: number = 0;
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.userService.getProfile().subscribe({
+      next: (user) => {
+        this.myUserId = user.id;
+      },
+      error: () => {} //
+    });
+
+    this.route.paramMap.subscribe(params => { //
       const id = Number(params.get('id'));
       if (id) {
         this.loadEvent(id);
+        this.loadParticipants(id);
       }
     });
   }
@@ -56,6 +67,16 @@ export class EventDetailComponent {
       }
     });
   }
+
+  loadParticipants(id: number) {
+    this.participantService.getParticipantsByEvent(id).subscribe({
+      next: (data) => {
+        this.participants = data;
+      },
+      error: (err) => {}
+    });
+  }
+
   checkPermissions(groupId: number) {
     this.groupMemberService.getMyGroups().subscribe(myGroups => {
       const found = myGroups.find(m => m.group.id === groupId);
@@ -87,6 +108,11 @@ export class EventDetailComponent {
         // alert('¡Te has apuntado correctamente!');
         this.msgService.show('¡Te has apuntado!', 'success');
         this.isJoinedEvent = true;
+
+        // al apuntarse, se recarga la lista para aparezca la persona
+        if (this.event) {
+        this.loadParticipants(this.event.id);
+        }
       },
       error: (err) => {
         console.error(err);
@@ -96,10 +122,10 @@ export class EventDetailComponent {
     });
   }
 
-  rateCreator() {
-    if (!this.event || !this.event.creator) return;
+  rateUser(userToRate: any) {
+    if (!this.event || !userToRate) return;
 
-    const scoreStr = prompt(`Del 1 al 5, ¿qué nota le das al organizador (${this.event.creator.name}?`);
+    const scoreStr = prompt(`Del 1 al 5, ¿qué nota le das a (${userToRate.name}?`);
     if (!scoreStr) return;
 
     const score = parseInt(scoreStr);
@@ -111,7 +137,7 @@ export class EventDetailComponent {
     const comment = prompt('Añade un breve comentario (opcional):') || '';
 
     const ratingData = {
-      reviewedUserId: this.event.creator.id,
+      reviewedUserId: userToRate.id,
       eventId: this.event.id,
       score: score,
       comments: comment
