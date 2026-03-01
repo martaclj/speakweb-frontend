@@ -8,6 +8,9 @@ import { User } from '../interfaces/user';
   providedIn: 'root'
 })
 export class UserService {
+  uploadImage(selectedFile: File) {
+    throw new Error('Method not implemented.');
+  }
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/users`;
 

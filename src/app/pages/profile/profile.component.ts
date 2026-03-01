@@ -9,6 +9,8 @@ import { UserLanguage } from '../../interfaces/user-language';
 import { Language } from '../../interfaces/language';
 import { MessagesService } from '../../services/messages.service';
 import { DatePipe } from '@angular/common';
+import { ImageService } from '../../services/image.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +22,7 @@ export class ProfileComponent {
   userService = inject(UserService);
   userLanguageService = inject(UserLanguageService);
   languageService = inject(LanguageService);
+  imageService = inject(ImageService);
   private msgService = inject(MessagesService);
 
   user?: User;
@@ -29,6 +32,7 @@ export class ProfileComponent {
   availableLanguages: Language[] = []; // xa select de idiomas disponibles
 
   isLoading: boolean = true;
+  isUploading: boolean = false;
 
   // variables para guardas mis valoraciones (las del usuario propio)
   userRatings: any[] = []; // valoraciones
@@ -40,6 +44,9 @@ export class ProfileComponent {
     level: 'A1',
     type: 'LEARNER'
   };
+
+  // variable para archivo físico
+  selectedFile?: File;
 
   ngOnInit(): void {
     this.userService.getProfile().subscribe({
@@ -100,7 +107,6 @@ export class ProfileComponent {
 
   addLanguage() {
     if (this.newLang.languageId === 0) {
-      // alert("Selecciona un idioma");
       this.msgService.show('Selecciona un idioma', 'success');
       return;
     }
@@ -111,7 +117,6 @@ export class ProfileComponent {
       this.newLang.type).subscribe({
         next: (newItem) => {
           this.myLanguages.push(newItem);
-          // alert("Idioma añadido correctamente");
           this.msgService.show('Idioma añadido', 'success');
           this.newLang.languageId = 0; // reinicio de formulario
           this.loadMyLanguages(); // recargo lista para q se filtre el idioma ya añadido y no aparezca como opción
@@ -121,24 +126,6 @@ export class ProfileComponent {
         }
         // alert("Error al añadir idioma (¿ya lo tienes?)")
       });
-  }
-
-  // para actualización de datos
-  onSubmit() {
-    if (this.user) {
-      this.userService.updateProfile(this.user).subscribe({
-        next: (updatedUser) => {
-          this.user = updatedUser;
-          // alert('¡Datos actualizados correctamente!');
-          this.msgService.show('Datos actualizados', 'success');
-        },
-        error: (err) => {
-          console.error('Error al guardar:', err);
-          this.msgService.show('Error al guardar', 'danger');
-          // alert('Error al guardar cambios');
-        }
-      });
-    }
   }
 
   deleteLanguage(id: number) {
@@ -154,6 +141,53 @@ export class ProfileComponent {
         // alert("Error al eliminarlo.");
       }
     });
+  }
+
+  // para subir imagen perfil
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
+
+  // para actualización de datos - controla si hay foto o no
+  onSubmit() {
+    if (!this.user) return;
+
+    if (this.selectedFile) {
+      this.isUploading = true;
+
+      this.imageService.uploadImage(this.selectedFile).subscribe({
+        next: (response) => {
+          this.user!.avatarUrl = `${environment.serverUrl}${response.imageUrl}`;
+          this.isUploading = false;
+
+          this.saveProfile();
+        },
+        error: (err) => {
+          console.error('Error al subir la imagen', err);
+          this.isUploading = false;
+          this.msgService.show('Error imagen', 'danger');
+        }
+      });
+    } else {
+      this.saveProfile();
+    }
+  }
+  saveProfile() {
+    if (this.user) {
+      this.userService.updateProfile(this.user).subscribe({
+        next: (updatedUser) => {
+          this.user = updatedUser;
+          this.msgService.show('Datos actualizados', 'success');
+        },
+        error: (err) => {
+          console.error('Error al guardar', err);
+          this.msgService.show('Error al guardar', 'danger');
+        },
+      })
+    }
   }
 
 }

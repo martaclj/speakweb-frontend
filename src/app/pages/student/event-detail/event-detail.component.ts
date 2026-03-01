@@ -9,6 +9,7 @@ import { EventParticipantService } from '../../../services/event-participant.ser
 import { MessagesService } from '../../../services/messages.service';
 import { RatingService } from '../../../services/rating.service';
 import { UserService } from '../../../services/user.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-event-detail',
@@ -48,6 +49,12 @@ export class EventDetailComponent {
         this.loadParticipants(id);
       }
     });
+  }
+
+  getImageUrl(url: string | undefined): string {
+    if (!url) return '';
+    if (url.startsWith('http')) return url;
+    return `${environment.serverUrl}${url}`;
   }
 
   loadEvent(id: number) {
