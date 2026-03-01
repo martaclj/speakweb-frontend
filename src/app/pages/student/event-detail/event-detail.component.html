@@ -15,8 +15,7 @@
             
             @if (event.imageUrl) {
                 <div style="height: 300px; background-color: #f8f9fa;">
-                    <img [src]="event.imageUrl.startsWith('http') ? event.imageUrl : 'http://localhost:8080' + event.imageUrl" class="w-100 h-100 object-fit-cover" alt="Imagen del evento" onerror="this.style.display='none'">
-                    <!-- uso de operador ternario para mostrar imagen en bbdd que fue subida por url -->
+                    <img [src]="getImageUrl(event.imageUrl)" onerror="this.style.display='none'" alt="Imagen del evento" class="w-100 h-100 object-fit-cover">
                 </div>
             }
 

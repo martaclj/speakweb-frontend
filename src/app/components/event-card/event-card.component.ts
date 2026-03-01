@@ -5,6 +5,7 @@ import { GroupEvent } from '../../interfaces/group-event';
 import { EventParticipantService } from '../../services/event-participant.service';
 import { MessagesService } from '../../services/messages.service';
 import { RouterLink } from "@angular/router";
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-event-card',
@@ -28,7 +29,7 @@ export class EventCardComponent {
       return url; // imagen internet
     }
     // archivo físico
-    return `http://localhost:8080${url}`;
+    return `${environment.serverUrl}${url}`;
   }
 
   // función para saber si el evento online ya está abierto
