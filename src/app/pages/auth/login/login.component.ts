@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MessagesService } from '../../../services/messages.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class LoginComponent {
 
   onLogin() {
 
-    const url = 'http://localhost:8080/api/auth/login';
+    const url = `${environment.apiUrl}/auth/login`;
 
     // hago la llamada post - me suscribo a la respuesta
     this.http.post(url, this.loginObj).subscribe({
@@ -44,12 +45,10 @@ export class LoginComponent {
         // me redirige a la home
         this.router.navigateByUrl('home');
       } else {
-        // alert("Error: No ha llegado el token");
         this.msgService.show('Error! No ha llegado el token', 'danger');
       }
     },
       error: (err) => {
-        // alert("Usuario o contraseña incorrectos");
         this.msgService.show('Usuario o contraseña incorrectos!', 'danger');
         console.error(err);
       }
