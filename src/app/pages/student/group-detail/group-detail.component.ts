@@ -9,6 +9,7 @@ import { GroupMemberService } from '../../../services/group-member.service';
 import { EventParticipantService } from '../../../services/event-participant.service';
 import { GroupMember } from '../../../interfaces/group-member';
 import { MessagesService } from '../../../services/messages.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-group-detail',
@@ -24,7 +25,7 @@ export class GroupDetailComponent {
   private eventService = inject(EventService);
   private groupMemberService = inject(GroupMemberService);
   private participantService = inject(EventParticipantService);
-
+  private location = inject(Location);
   private msgService = inject(MessagesService);
 
   group?: Group;
@@ -106,6 +107,11 @@ export class GroupDetailComponent {
     return this.myJoinedEventsId.includes(eventId);
   }
 
+  // volver atrás
+  goBack() {
+    this.location.back();
+  }
+
   leaveGroup() {
     // si grupo no existe!
     if (!this.group) 
@@ -115,10 +121,12 @@ export class GroupDetailComponent {
       this.groupMemberService.leaveGroup(this.group.id).subscribe({
         next: () => {
           this.msgService.show('Grupo abandonado', 'success');
-          // alert('Has abandonado el grupo');
           this.router.navigate(['/home']);
         }, // si abandona el grupo --> ya no lo ve y vuelve a la Home
-        error: (err) => alert('Error al salir del grupo')
+        error: (err) => {
+          console.error(err);
+          this.msgService.show('Erro al salir del grupo', 'danger');
+        }
       });
     }
   }
