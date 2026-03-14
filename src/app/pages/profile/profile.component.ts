@@ -8,7 +8,7 @@ import { User } from '../../interfaces/user';
 import { UserLanguage } from '../../interfaces/user-language';
 import { Language } from '../../interfaces/language';
 import { MessagesService } from '../../services/messages.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { ImageService } from '../../services/image.service';
 import { environment } from '../../../environments/environment';
 
@@ -23,6 +23,7 @@ export class ProfileComponent {
   userLanguageService = inject(UserLanguageService);
   languageService = inject(LanguageService);
   imageService = inject(ImageService);
+  private location = inject(Location);
   private msgService = inject(MessagesService);
 
   user?: User;
@@ -107,7 +108,7 @@ export class ProfileComponent {
 
   addLanguage() {
     if (this.newLang.languageId === 0) {
-      this.msgService.show('Selecciona un idioma', 'success');
+      this.msgService.show('Selecciona un idioma', 'danger');
       return;
     }
 
@@ -124,7 +125,6 @@ export class ProfileComponent {
         error: (err) => {
           this.msgService.show('Error al añadir idioma (¿ya lo tienes?)', 'danger');
         }
-        // alert("Error al añadir idioma (¿ya lo tienes?)")
       });
   }
 
@@ -175,6 +175,7 @@ export class ProfileComponent {
       this.saveProfile();
     }
   }
+
   saveProfile() {
     if (this.user) {
       this.userService.updateProfile(this.user).subscribe({
@@ -188,6 +189,10 @@ export class ProfileComponent {
         },
       })
     }
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }
