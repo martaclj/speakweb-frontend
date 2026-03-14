@@ -28,8 +28,10 @@
                 <div class="text-muted small mb-2">
                     <span class="text-brand">🕖</span> 
                     {{ event.startTime | date: 'MMM' | uppercase }}
-                    <span class="mx-1">|</span> 
-                    📍 {{ event.location }}
+                    @if (event.type !== 'ONLINE') {
+                        <span class="mx-1">|</span> 
+                        📍 {{ event.location }}
+                    }
                 </div>
 
                 <p class="small text-muted mb-3">
