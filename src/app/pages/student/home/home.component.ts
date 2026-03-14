@@ -26,6 +26,9 @@ export class HomeComponent {
   filteredList: Group[] = [];
   searchTerm: string = '';
   myGroupIds: number[] = []; // guardo ids de grupos dnd ya estoy
+  // para que el spinner no cargue infinito
+  isLoading: boolean = true;
+  loadError: boolean = false;
 
   ngOnInit(): void {
     this.getGroups();
@@ -39,9 +42,13 @@ export class HomeComponent {
         console.log("Datos recibidos:", data);
         this.groupList = data; 
         this.filteredList = data;
+        this.isLoading = false; // cuando recibe los datos, para spinner
       },
       error: (error) => {
         console.error("Error al obtener grupos:", error);
+        // si se da error, paramos spinner
+        this.isLoading = false;
+        this.loadError = true;
       }
     })
   }

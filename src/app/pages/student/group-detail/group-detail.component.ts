@@ -64,6 +64,10 @@ export class GroupDetailComponent {
         console.log("Datos del grupo cargados:", data);
         this.group = data;
         this.isLoading = false;
+      },
+      error: (err) => {
+        console.error("Error cargando grupo", err);
+        this.isLoading = false;
       }
     });
   }
@@ -125,7 +129,7 @@ export class GroupDetailComponent {
         }, // si abandona el grupo --> ya no lo ve y vuelve a la Home
         error: (err) => {
           console.error(err);
-          this.msgService.show('Erro al salir del grupo', 'danger');
+          this.msgService.show('Error al salir del grupo', 'danger');
         }
       });
     }

@@ -25,7 +25,7 @@ export const routes: Routes = [
     { path: 'group/:id', component: GroupDetailComponent, canActivate: [authGuard] },
     { path: 'event/:id', component: EventDetailComponent, canActivate: [authGuard]  },
     { path: 'group/:groupId/create-event', component: CreateEventComponent, canActivate: [authGuard] },
-    { path: 'profile', component: ProfileComponent },
+    { path: 'profile', component: ProfileComponent, canActivate: [authGuard] }, // redirige a login si no ha iniciado sesión
     { path: 'profile/:id', component: PublicProfileComponent, canActivate: [authGuard] },
 
     // rutas de admin
