@@ -15,6 +15,11 @@ export class EventService {
 
   constructor() { }
 
+  // GET: /api/events/ (todos los eventos - panel admin)
+  getAllEvents(): Observable<GroupEvent[]> {
+    return this.http.get<GroupEvent[]>(`${this.baseUrl}/events`);
+  }
+
   // GET: /api/events/group/{groupId}
   getEventsByGroup(groupId: number): Observable<GroupEvent[]> {
     const url = `${this.baseUrl}/events/group/${groupId}`;
