@@ -10,6 +10,8 @@ import { Group } from '../../interfaces/group';
 import { LanguageService } from '../../services/language.service';
 import { GroupService } from '../../services/group.service';
 import { FormsModule } from '@angular/forms';
+import { DeletedUser } from '../../interfaces/deleted-user';
+import { DeletedUserService } from '../../services/deleted-user.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -22,16 +24,18 @@ export class AdminDashboardComponent {
   private languageService = inject(LanguageService);
   private groupService = inject(GroupService);
   private router = inject(Router);
+  private deletedUserService = inject(DeletedUserService)
   private msgService = inject(MessagesService);
 
   // pestañas
-  activeTab: 'users' | 'languages' | 'groups' = 'users';
+  activeTab: 'users' | 'languages' | 'groups' | 'deleted-users' = 'users';
   isLoading: boolean = true;
 
   // listas de datos
   users: User[] = [];
   languages: Language[] = [];
   groups: Group[] = [];
+  deletedUsers: DeletedUser[] = [];
 
   // diccionario nota usuario
   userReputations: { [userId: number]: any } = {};
@@ -48,9 +52,16 @@ export class AdminDashboardComponent {
     this.loadUsers();
     this.loadLanguages();
     this.loadGroups();
+    this.loadDeletedUsers();
+  }
+  loadDeletedUsers() {
+    this.deletedUserService.getAllDeletedUsers().subscribe({
+      next: (data) => this.deletedUsers = data,
+      error: (err) => console.error('Error al cargar usuarios borrados', err)
+    });
   }
 
-  switchTab(tab: 'users' | 'languages' | 'groups') {
+  switchTab(tab: 'users' | 'languages' | 'groups' | 'deleted-users') {
     this.activeTab = tab;
   }
 
