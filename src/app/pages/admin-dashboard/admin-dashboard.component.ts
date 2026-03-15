@@ -12,6 +12,9 @@ import { GroupService } from '../../services/group.service';
 import { FormsModule } from '@angular/forms';
 import { DeletedUser } from '../../interfaces/deleted-user';
 import { DeletedUserService } from '../../services/deleted-user.service';
+import { EventService } from '../../services/event.service';
+import { GroupEvent } from '../../interfaces/group-event';
+import { NewEvent } from '../../interfaces/new-event';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -25,16 +28,18 @@ export class AdminDashboardComponent {
   private groupService = inject(GroupService);
   private router = inject(Router);
   private deletedUserService = inject(DeletedUserService)
+  private eventService = inject(EventService);
   private msgService = inject(MessagesService);
 
   // pestañas
-  activeTab: 'users' | 'languages' | 'groups' | 'deleted-users' = 'users';
+  activeTab: 'users' | 'languages' | 'groups' | 'events' | 'deleted-users' = 'users';
   isLoading: boolean = true;
 
   // listas de datos
   users: User[] = [];
   languages: Language[] = [];
   groups: Group[] = [];
+  events: GroupEvent[] = [];
   deletedUsers: DeletedUser[] = [];
 
   // diccionario nota usuario
@@ -50,6 +55,16 @@ export class AdminDashboardComponent {
   newGroupLanguage1Id: number = 0;
   newGroupLanguage2Id: number = 0;
 
+  // formulario new event
+  newEventTitle: string = '';
+  newEventDescription: string = '';
+  newEventGroupId: number = 0;
+  newEventType: 'ONLINE' | 'PRESENTIAL' = 'PRESENTIAL';
+  newEventStartTime: string = '';
+  newEventLocation: string = '';
+  newEventExternalLink: string = '';
+
+
   ngOnInit(): void {
     this.loadAllData();
   }
@@ -58,8 +73,10 @@ export class AdminDashboardComponent {
     this.loadUsers();
     this.loadLanguages();
     this.loadGroups();
+    this.loadEvents();
     this.loadDeletedUsers();
   }
+
   loadDeletedUsers() {
     this.deletedUserService.getAllDeletedUsers().subscribe({
       next: (data) => this.deletedUsers = data,
@@ -67,7 +84,7 @@ export class AdminDashboardComponent {
     });
   }
 
-  switchTab(tab: 'users' | 'languages' | 'groups' | 'deleted-users') {
+  switchTab(tab: 'users' | 'languages' | 'groups' | 'events' | 'deleted-users') {
     this.activeTab = tab;
   }
 
@@ -200,6 +217,57 @@ export class AdminDashboardComponent {
         next: () => {
           this.msgService.show('Grupo eliminado', 'success');
           this.loadGroups();
+        },
+        error: () => this.msgService.show('No se puede eliminar', 'danger')
+      });
+    }
+  }
+
+  loadEvents() {
+    this.eventService.getAllEvents().subscribe({
+      next: (data) => this.events = data,
+      error: (err) => console.error('Error cargando events', err)
+    });
+  }
+
+  createEvent() {
+    if (!this.newEventTitle || !this.newEventStartTime) {
+      this.msgService.show('Título y fecha obligatorios', 'danger');
+      return;
+    }
+
+    const newEvent: NewEvent = {
+      title: this.newEventTitle,
+      description: this.newEventDescription,
+      groupId: this.newEventGroupId,
+      type: this.newEventType,
+      startTime: this.newEventStartTime,
+      location: this.newEventType === 'PRESENTIAL' ? this.newEventLocation : undefined,
+      externalLink: this.newEventType === 'ONLINE' ? this.newEventExternalLink : undefined
+    };
+
+    this.eventService.createEvent(newEvent).subscribe({
+      next: () => {
+        this.msgService.show('Evento creada', 'success');
+        this.newEventTitle = '';
+        this.newEventDescription = '';
+        this.newEventGroupId = 0;
+        this.newEventType = 'PRESENTIAL';
+        this.newEventStartTime = '';
+        this.newEventLocation = '';
+        this.newEventExternalLink = '';
+        this.loadEvents();
+      },
+      error: () => this.msgService.show('Error al crear evento', 'danger')
+    });
+  }
+
+  deleteEvent(id: number) {
+    if (confirm('¿Seguro que quieres eliminar este evento?')) {
+      this.eventService.deleteEvent(id).subscribe({
+        next: () => {
+          this.msgService.show('Evento eliminado', 'success');
+          this.loadEvents();
         },
         error: () => this.msgService.show('No se puede eliminar', 'danger')
       });

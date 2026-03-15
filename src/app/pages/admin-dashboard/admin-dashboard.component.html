@@ -25,6 +25,11 @@
             </button>
         </li>
         <li class="nav-item">
+            <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'events'" [class.bg-brand]="activeTab === 'events'" (click)="switchTab('events')">
+                Eventos ({{ events.length }})
+            </button>
+        </li>
+        <li class="nav-item">
             <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'deleted-users'" [class.bg-brand]="activeTab === 'deleted-users'" (click)="switchTab('deleted-users')">
                 Eliminados ({{ deletedUsers.length }})
             </button>
@@ -203,6 +208,100 @@
                 </div>
             </div>
         </div>   
+    }
+
+    @if (!isLoading && activeTab === 'events') {
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow-sm rounded-4 p-4">
+                    <h5 class="fw-bold text-navy mb-3">Añadir Evento</h5>
+                    <div class="mb-3">
+                        <label for="" class="form-label small fw-bold text-muted">Fecha y hora</label>
+                        <input type="datetime-local" class="form-control" [(ngModel)]="newEventStartTime">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">Título</label>
+                        <input type="text" class="form-control" [(ngModel)]="newEventTitle" placeholder="Ej: Conversación básica">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">Descripción (opcional)</label>
+                        <textarea class="form-control" rows="2" [(ngModel)]="newEventDescription"></textarea>
+                    </div>
+                    <div class="mb-e">
+                        <label class="form-label small-fw-bold text-muted">Grupo</label>
+                        <select class="form-select" [(ngModel)]="newEventGroupId">
+                            <option [value]="0">Seleccionar...</option>
+                            @for (g of groups; track g.id) {
+                                <option [value]="g.id">{{ g.name }}</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">Tipo</label>
+                        <select class="form-select" [(ngModel)]="newEventType">
+                            <option value="PRESENTIAL">Presencial</option>
+                            <option value="ONLINE">Online</option>
+                        </select>
+                    </div>
+                    @if (newEventType === 'PRESENTIAL') {
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted">Lugar</label>
+                            <input type="text" class="form-control" [(ngModel)]="newEventLocation" placeholder="Ej: Biblioteca universidad">
+                        </div>
+                    }
+                    @if (newEventType === 'ONLINE') {
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted">Enlace videollamada</label>
+                            <input type="text" class="form-control" [(ngModel)]="newEventExternalLink" placeholder="https://meet.google.com/...">
+                        </div>
+                    }
+                    <button class="btn btn-brand text-white w-100 rounded-pill shadow-sm" (click)="createEvent()">Guardar evento</button>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light text-muted small text-uppercase">
+                            <tr>
+                                <th class="ps-4">Evento</th>
+                                <th>Tipo</th>
+                                <th>Fecha</th>
+                                <th class="text-end pe-4">Gestión</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (event of events; track event.id) {
+                                <tr>
+                                    <td class="ps-4 py-3">
+                                        <div class="fw-bold text-navy">
+                                            {{ event.title }}
+                                        </div>
+                                        <div class="small text-muted">
+                                            ID: {{ event.id }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @if (event.type === 'ONLINE') {
+                                            <span class="badge bg-info text-dark rounded-pill">Online</span>
+                                        } @else {
+                                            <span class="badge bg-light text-dark border rounded-pill">Presencial</span>
+                                        }
+                                    </td>
+                                    <td class="small text-muted">{{ event.startTime | date:'dd/MM/yyyy HH:mm' }}</td>
+                                    <td class="text-end pe-4">
+                                        <button class="btn btn-sm btn-light text-danger rounded-circle" title="Eliminar" (click)="deleteEvent(event.id)">x</button>
+                                    </td>
+                                </tr>
+                            } @empty {
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-4">No hay eventos todavía</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     }
 
     @if (!isLoading && activeTab === 'deleted-users') {
