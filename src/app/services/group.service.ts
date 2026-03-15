@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Group } from '../interfaces/group';
+import { NewGroup } from '../interfaces/new-group';
 import { GroupMember } from '../interfaces/group-member';
 
 @Injectable({
@@ -42,6 +43,16 @@ export class GroupService {
   getGroupById(id: number): Observable<Group> {
     const url = `${this.baseUrl}/groups/${id}`;
     return this.http.get<Group>(url);
+  }
+
+  // POST: /api/groups
+  createGroup(newGroup: NewGroup): Observable<Group> {
+    return this.http.post<Group>(`${this.baseUrl}/groups`, newGroup);
+  }
+
+  // DELETE: /api/groups/{id}
+  deleteGroup(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/groups/${id}`, { responseType: 'text' });
   }
 
 }
