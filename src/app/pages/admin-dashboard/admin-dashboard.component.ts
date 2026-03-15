@@ -40,9 +40,15 @@ export class AdminDashboardComponent {
   // diccionario nota usuario
   userReputations: { [userId: number]: any } = {};
 
-  // form nuevo idioma
+  // xa form nuevo idioma
   newLangCode: string = '';
   newLangName: string = '';
+
+  // form nuevo grupo
+  newGroupName: string = '';
+  newGroupDescription: string = '';
+  newGroupLanguage1Id: number = 0;
+  newGroupLanguage2Id: number = 0;
 
   ngOnInit(): void {
     this.loadAllData();
@@ -162,4 +168,42 @@ export class AdminDashboardComponent {
       error: (err) => console.error('Error cargando grupos', err)
     });
   }
+
+  createGroup() {
+    if (!this.newGroupName) {
+      this.msgService.show('El nombre es obligatorio', 'danger');
+      return;
+    }
+
+    const newGroup = {
+      name: this.newGroupName,
+      description: this.newGroupDescription,
+      language1Id: this.newGroupLanguage1Id,
+      language2Id: this.newGroupLanguage2Id
+    };
+
+    this.groupService.createGroup(newGroup).subscribe({
+      next: () => {
+        this.msgService.show('Comunidad creada', 'success');
+        this.newGroupName = '';
+        this.newGroupDescription = '';
+        this.newGroupLanguage1Id = 0;
+        this.newGroupLanguage2Id = 0;
+        this.loadGroups();
+      }
+    });
+  }
+
+  deleteGroup(id: number) {
+    if (confirm('¿Seguro que quieres eliminar este grupo?')) {
+      this.groupService.deleteGroup(id).subscribe({
+        next: () => {
+          this.msgService.show('Grupo eliminado', 'success');
+          this.loadGroups();
+        },
+        error: () => this.msgService.show('No se puede eliminar', 'danger')
+      });
+    }
+  }
+
 }

@@ -136,36 +136,73 @@
     }
 
     @if (!isLoading && activeTab === 'groups') {
-        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light text-muted small text-uppercase">
-                        <tr>
-                            <th class="ps-4">Grupo</th>
-                            <th>Idioma 1</th>
-                            <th>Idioma 2</th>
-                            <th class="text-end pe-4">Gestión</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (group of groups; track group.id) {
-                            <tr>
-                                <td class="ps-4 py-3">
-                                    <div class="fw-bold text-navy">{{ group.name }}</div>
-                                </td>
-                                <td><span class="badge bg-light text-dark border">{{ group.language1.name }}</span></td>
-                                <td><span class="badge bg-light text-dark border">{{ group.language2.name }}</span></td>
-                                <td class="text-end pe-4">
-                                    <button class="btn btn-sm btn-outline-brand rounded-pill" [routerLink]="['/group', group.id]">
-                                        Ver Grupo
-                                    </button>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow-sm rounded-4 p-4">
+                    <h5 class="fw-bold text-navy mb-3">Añadir Grupo</h5>
+                    <div class="mb-3">
+                        <label for="" class="form-label small fw-bold text-muted">Nombre</label>
+                        <input type="text" class="form-control" [(ngModel)]="newGroupName" placeholder="Ej: Inglés-Español Madrid">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label small fw-bold text-muted">Descripción (opcional)</label>
+                        <textarea rows="" class="form-control" [(ngModel)]="newGroupDescription" placeholder="Breve description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label small fw-bold text-muted mx-2">Idioma 1</label>
+                        <select class="select-control" [(ngModel)]="newGroupLanguage1Id">
+                            <option [value]="0">Selecciona...</option>
+                            @for (l of languages; track l.id) {
+                                <option [value]="l.id">{{ l.name }}</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label small fw-bold text-muted mx-2">Idioma 2</label>
+                        <select class="select-control" [(ngModel)]="newGroupLanguage2Id">
+                            <option [value]="0">Selecciona...</option>
+                            @for (l of languages; track l.id) {
+                                <option [value]="l.id">{{ l.name }}</option>
+                            }
+                        </select>
+                    </div>
+                    <button class="btn btn-brand text-white w-100 rounded-pill shadow-sm" (click)="createGroup()">Guardar Grupo</button>
+                </div>
             </div>
-        </div>
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light text-muted small text-uppercase">
+                            <tr>
+                                <th class="ps-4">Grupo</th>
+                                <th>Idioma 1</th>
+                                <th>Idioma 2</th>
+                                <th class="text-end pe-4">Gestión</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (group of groups; track group.id) {
+                                <tr>
+                                    <td class="ps-4 py-3">
+                                        <div class="fw-bold text-navy">{{ group.name }}</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-light text-dark border">{{ group.language1.name }}</span>
+                                    </td>
+                                                                        <td>
+                                        <span class="badge bg-light text-dark border">{{ group.language2.name }}</span>
+                                    </td>
+                                    <td class="text-end pe-4 d-flex gap-2 justify-content-end">
+                                        <button class="btn btn-sm btn-outline-brand rounded-pill" [routerLink]="['/group', group.id]">Ver</button>
+                                        <button class="btn btn-sm btn-light text-danger rounded-circle" (click)="deleteGroup(group.id)">x</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>   
     }
 
     @if (!isLoading && activeTab === 'deleted-users') {
