@@ -10,7 +10,7 @@ import { MessagesService } from '../../../services/messages.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, FormsModule, GroupCardComponent],
+  imports: [FormsModule, GroupCardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
