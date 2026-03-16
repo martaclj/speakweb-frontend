@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { EventService } from '../../../services/event.service';
 import { GroupEvent } from '../../../interfaces/group-event';
@@ -7,7 +7,6 @@ import { Group } from '../../../interfaces/group';
 import { GroupMemberService } from '../../../services/group-member.service';
 import { EventParticipantService } from '../../../services/event-participant.service';
 import { MessagesService } from '../../../services/messages.service';
-import { RatingService } from '../../../services/rating.service';
 import { UserService } from '../../../services/user.service';
 import { environment } from '../../../../environments/environment';
 
@@ -19,10 +18,10 @@ import { environment } from '../../../../environments/environment';
 })
 export class EventDetailComponent {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private eventService = inject(EventService);
   private groupMemberService = inject(GroupMemberService);
   private participantService = inject(EventParticipantService);
-  private ratingService = inject(RatingService);
   private userService = inject(UserService);
   private msgService = inject(MessagesService);
 
@@ -131,34 +130,7 @@ export class EventDetailComponent {
 
   rateUser(userToRate: any) {
     if (!this.event || !userToRate) return;
-
-    const scoreStr = prompt(`Del 1 al 5, ¿qué nota le das a (${userToRate.name}?`);
-    if (!scoreStr) return;
-
-    const score = parseInt(scoreStr);
-    if (score < 1 || score > 5 || isNaN(score)) {
-      this.msgService.show('La nota debe ser un número del 1 al 5', 'danger');
-      return;
-    }
-
-    const comment = prompt('Añade un breve comentario (opcional):') || '';
-
-    const ratingData = {
-      reviewedUserId: userToRate.id,
-      eventId: this.event.id,
-      score: score,
-      comments: comment
-    };
-
-    this.ratingService.createRating(ratingData).subscribe({
-      next: () => {
-        this.msgService.show('Valoración guardada correctamente!', 'success');
-      },
-      error: (err) => {
-        console.error(err); // error del backend
-        this.msgService.show(err.error || 'Error al valorar', 'danger');
-      }
-    });
+    this.router.navigate(['/rate', userToRate.id, this.event.id]);
   }
 
 }

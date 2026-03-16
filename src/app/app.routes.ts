@@ -11,6 +11,7 @@ import { CreateEventComponent } from './pages/student/create-event/create-event.
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
+import { RateUserComponent } from './pages/student/rate-user/rate-user.component';
 
 export const routes: Routes = [
     // rutas públicas
@@ -27,6 +28,7 @@ export const routes: Routes = [
     { path: 'group/:groupId/create-event', component: CreateEventComponent, canActivate: [authGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [authGuard] }, // redirige a login si no ha iniciado sesión
     { path: 'profile/:id', component: PublicProfileComponent, canActivate: [authGuard] },
+    { path: 'rate/:userId/:eventId', component: RateUserComponent, canActivate: [authGuard] },
 
     // rutas de admin
     { path: 'admin', component: AdminDashboardComponent, canActivate: [authGuard] }
