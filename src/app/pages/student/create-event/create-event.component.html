@@ -1,4 +1,4 @@
-<div class="container mt-5 mb-5">
+<div class="container mt-4 mb-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
             
@@ -63,8 +63,8 @@
                             <textarea name="description" rows="4" class="form-control bg-light" [(ngModel)]="newEvent.description" placeholder="¿Qué vamos a hacer?"></textarea>
                         </div>
 
-                        <div class="d-grip gap-2">
-                            <button type="submit" class="btn btn-brand text-white py-2 rounded-pill shadow-sm">Publicar evento</button>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-brand text-white px-5 py-2 fw-bold shadow-sm">Publicar evento</button>
                             <a [routerLink]="['/group', newEvent.groupId]" class="btn btn-outline-secondary rounded-pill border-0">Cancelar</a>
                         </div>
                     </form>
