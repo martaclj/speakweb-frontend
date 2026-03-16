@@ -1,0 +1,42 @@
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        @if (isLoading) {
+            <div class="text-center py-5">
+                <div class="spinner-border text-brand" role="status"></div>
+            </div>
+        }
+
+        @if (!isLoading && ratedUser) {
+            <div class="card border-0 shadow-lg rounded-4 p-4">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <img [src]="ratedUser.avatarUrl || 'https://ui-avatars.com/api/?name=' + ratedUser.name" alt="avatar image" class="rounded-circle shadow-sm object-fit-cover mb-3" width="80" height="80">
+                        <h2 class="fw-bold text-navy">Valorar a {{ ratedUser.name }}</h2>
+                        <p class="text-muted">¿Qué tal fue la experiencia?</p>
+                    </div>
+
+                    <div class="mb-4 text-center">
+                        <p class="fw-bold small text-muted mb-2">Puntuación</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            @for (star of stars; track star) {
+                                <button class="btn btn-lg fw-bold rounded-circle" [class.btn-warning]="star <= score" [class.btn-outline-secondary]="star > score" style="width: 50px; height: 50px;" (click)="setScore(star)">
+                                    {{ star }}
+                                </button>
+                            }
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small text-muted">Cinebtarui (opcional)</label>
+                        <textarea rows="3" class="form-control bg-light" [(ngModel)]="comment" placeholder="Escribe algo que quieras destacar"></textarea>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-brand text-white rounded pill px-4 shadow-sm" (click)="onSubmit()">Enviar valoración</button>
+                        <button class="btn btn-outline-secondary rounded-pill border-0" (click)="goBack()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
