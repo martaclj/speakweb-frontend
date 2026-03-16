@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-participant-card',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './participant-card.component.html',
   styleUrl: './participant-card.component.css'
 })
