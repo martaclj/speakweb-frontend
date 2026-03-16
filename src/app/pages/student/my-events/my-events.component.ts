@@ -21,6 +21,7 @@ export class MyEventsComponent {
   ngOnInit(): void {
     this.loadMyEvents();
   }
+
   loadMyEvents() {
     this.participantService.getMyEvents().subscribe({
       next: (data: any[]) => {
@@ -33,4 +34,13 @@ export class MyEventsComponent {
       }
     });
   }
+
+  upcomingEvents(): GroupEvent[] {
+    return this.myEvents.filter(e => new Date(e.startTime) >= new Date());
+  }
+
+  pastEvents(): GroupEvent[] {
+    return this.myEvents.filter(e => new Date(e.startTime) < new Date());
+  }
+
 }
