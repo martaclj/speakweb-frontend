@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { environment } from '../../../environments/environment';
@@ -18,7 +18,7 @@ import { NewEvent } from '../../interfaces/new-event';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [DatePipe, RouterLink, FormsModule],
+  imports: [DatePipe, RouterLink, FormsModule, NgClass],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })

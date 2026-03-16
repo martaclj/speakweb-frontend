@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { EventService } from '../../../services/event.service';
@@ -9,14 +9,18 @@ import { EventParticipantService } from '../../../services/event-participant.ser
 import { MessagesService } from '../../../services/messages.service';
 import { UserService } from '../../../services/user.service';
 import { environment } from '../../../../environments/environment';
+import { ParticipantCardComponent } from '../../../components/participant-card/participant-card.component';
 
 @Component({
   selector: 'app-event-detail',
-  imports: [DatePipe, RouterLink],   // DatePipe para facilitar el trabajo con fechas
+  imports: [DatePipe, RouterLink, ParticipantCardComponent],   // DatePipe para facilitar el trabajo con fechas
   templateUrl: './event-detail.component.html',
   styleUrl: './event-detail.component.css'
 })
 export class EventDetailComponent {
+
+  @Input() joined: boolean = false;
+
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private eventService = inject(EventService);
@@ -127,6 +131,28 @@ export class EventDetailComponent {
       }
     });
   }
+
+  leaveEvent() {
+    if (!this.event) return;
+
+    const eventId = this.event.id;
+
+    if(!confirm('¿Seguro que quieres desapuntarte?')) return;
+
+    this.participantService.leaveEvent(eventId).subscribe({
+      next: () => {
+        this.isJoinedEvent = false;
+        // alert('Te has desapuntado del evento');
+        this.msgService.show('Te has desapuntado correctamente', 'success');
+        this.loadParticipants(eventId);
+      },
+      error: (err) => {
+        console.error(err);
+        this.msgService.show('Error al desapuntarte', 'danger');
+      }
+    });
+  }
+
 
   rateUser(userToRate: any) {
     if (!this.event || !userToRate) return;

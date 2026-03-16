@@ -1,0 +1,16 @@
+<div class="card bg-light rounded-4 p-3 text-center h-100"
+    [class]="label ? 'border-warning border-2 shadow' : 'border-0'">
+    @if (label) {
+        <span class="badge bg-warning-text-dark rounded-pill mb-2 px-3">👑 {{ label }}</span>
+    }
+    <img [src]="user.avatarUrl || 'https://ui-avatars.com/api/?name=' + user.name"       
+          class="rounded-circle mx-auto mb-2 object-fit-cover shadow-sm" 
+          width="60" height="60"
+          alt="avatar image">
+    <h6 class="fw-bold text-navy mb-0 text-truncate">{{ user.name }} {{ user.surname }}</h6>
+    @if (canRate) {
+        <button class="btn btn-sm btn-outline-warning text-dark rounded-pill mt-2 bg-white" (click)="rate.emit()">
+            ⭐️ Valora
+        </button>
+    }
+</div>
