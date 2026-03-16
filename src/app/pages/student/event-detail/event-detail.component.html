@@ -82,7 +82,7 @@
                             <app-participant-card
                                 [user]="event.creator"
                                 [label]="'Organizador'"
-                                [canRate]="event.creator.id !== myUserId"
+                                [canRate]="event.creator.id !== myUserId && isPastEvent()"
                                 (rate)="rateUser(event.creator)">
                                 </app-participant-card>
                         </div>
@@ -96,7 +96,7 @@
                             <div class="col-6 col-md-4 col-lg-3">
                               <app-participant-card 
                                 [user]="p.user" 
-                                [canRate]="p.user.id !== myUserId"
+                                [canRate]="p.user.id !== myUserId && isPastEvent()"
                                 (rate)="rateUser(p.user)">
                               </app-participant-card>
                             </div>

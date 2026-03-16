@@ -153,6 +153,10 @@ export class EventDetailComponent {
     });
   }
 
+  isPastEvent(): boolean {
+    if (!this.event) return false;
+    return new Date(this.event.startTime) < new Date();
+  }
 
   rateUser(userToRate: any) {
     if (!this.event || !userToRate) return;
