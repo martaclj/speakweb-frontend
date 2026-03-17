@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Group } from '../../interfaces/group';
+import { getFlagEmoji } from '../../utils/language-aliases';
 
 @Component({
   selector: 'app-group-card',
@@ -21,6 +22,10 @@ export class GroupCardComponent {
 
   onJoin() {
     this.joinClick.emit(this.group.id);
+  }
+
+  getFlag(code: string): string {
+    return getFlagEmoji(code);
   }
 
 }

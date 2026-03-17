@@ -33,23 +33,4 @@ export class MyCommunitiesComponent {
     });
   }
 
-    // función para las banderas de los idiomas
-  getFlagEmoji(code: string): string {
-    if (!code) return '🌏';
-
-    const upperCode = code.toUpperCase();
-
-    const flags: { [key: string]: string } = {
-      'ES': '🇪🇸',
-      'EN': '🇬🇧',
-      'FR': '🇫🇷',
-      'DE': '🇩🇪',
-      'IT': '🇮🇹',
-      'PT': '🇵🇹',
-      'JA': '🇯🇵'
-    }; // ampliar según se vayan necesitando
-
-    return flags[upperCode] || '🌏';
-  }
-
 }

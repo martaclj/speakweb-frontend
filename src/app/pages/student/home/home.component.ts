@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { GroupCardComponent } from '../../../components/group-card/group-card.component';
 import { GroupMemberService } from '../../../services/group-member.service';
 import { MessagesService } from '../../../services/messages.service';
+import { LANGUAGE_ALIASES } from '../../../utils/language-aliases';
 
 @Component({
   selector: 'app-home',
@@ -67,6 +68,7 @@ export class HomeComponent {
     return this.myGroupIds.includes(groupId);
   }
 
+
   searchGroups() {
     if (!this.searchTerm) {
       this.filteredList = this.groupList;
@@ -74,11 +76,17 @@ export class HomeComponent {
     }
     
     const term = this.searchTerm.toLowerCase();
-    this.filteredList = this.groupList.filter(group => 
-      group.name.toLowerCase().includes(term) ||
-      group.language1.name.toLowerCase().includes(term) ||
-      group.language2.name.toLowerCase().includes(term)
-    );
+    const searchedTerms = LANGUAGE_ALIASES[term] || [term];
+
+    this.filteredList = this.groupList.filter(group => {
+      const name = group.name.toLowerCase();
+      const lang1 = group.language1.name.toLowerCase();
+      const lang2 = group.language2.name.toLowerCase();
+
+      return searchedTerms.some(t =>
+        name.includes(t) || lang1.includes(t) || lang2.includes(t)
+      );
+    });
   }
 
   // unirse a un grupo
