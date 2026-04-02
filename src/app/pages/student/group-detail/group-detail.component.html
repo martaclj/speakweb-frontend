@@ -52,10 +52,10 @@
                     <div class="d-flex flex-column gap-2 ms-3 align-items-end">
                         <!-- vuelve al lugar desde el que se entró -->
                         <button class="btn btn-outline-brand ms-3" (click)="goBack()">
-                            ⬅ Volver
+                            <i class="bi bi-box-arrow-left me-1"></i> Volver
                         </button>
                         <button class="btn btn-sm btn-outline-danger text-nowrap" (click)="leaveGroup()">
-                            x Abandonar
+                            <i class="bi bi-box-arrow-right me-1"></i> Abandonar
                         </button>
                     </div>
                 </div>
@@ -68,13 +68,15 @@
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h4 class="fw-bold text-brand mb-0">Próximos Eventos</h4>
                     @if (canCreateEvent) {
-                        <a [routerLink]="['/group', group.id, 'create-event']" class="btn btn-sm btn-brand text-white rounded-pill px-5 py-2 fw-bold fs-5 shadow-sm">+ Crear evento </a>
+                        <a [routerLink]="['/group', group.id, 'create-event']" class="btn btn-sm btn-brand text-white rounded-pill px-5 py-2 fw-bold fs-5 shadow-sm">
+                            <i class="bi bi-plus-circle me-1"></i> Crear evento </a>
                     }
                 </div>
 
                 @if (events.length === 0) {
                     <div class="alert alert-light border text-center text-muted p-5 rounded-4">
-                        <p class="mb-0">🪫Este grupo no tiene eventos programados.</p>
+                        <p class="mb-0">
+                            <i class="bi bi-calendar-x fs-4 me-2 align-middle"></i> Este grupo no tiene eventos programados.</p>
                     </div>
                 }
                 @for (event of events; track event.id) {
@@ -104,7 +106,8 @@
                                 </h6>
 
                                 @if (member.expert) {
-                                    <span class="badge bg-warning text-dark border border-light mt-1">🏅Experto</span>
+                                    <span class="badge bg-warning text-dark border border-light mt-1">
+                                        <i class="bi bi-gem me-1"></i> Experto</span>
                                 } @else {
                                     <small class="text-muted">Estudiante</small>
                                 }
@@ -127,7 +130,10 @@
         <div class="alert alert-danger text-center mt-5">
             No se ha encontrado el grupo solicitado.
             <br>
-            <a routerLink="/home" class="btn btn-outline-danger mt-3">Volver al Inicio</a>
+            <a routerLink="/home" class="btn btn-outline-danger mt-3">
+                <i class="bi bi-house-door me-1"></i>
+                Volver al Inicio</a>
+                <!-- http://localhost:4200/group/8 -->
         </div>
     }
 

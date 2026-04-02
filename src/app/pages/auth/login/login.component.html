@@ -2,8 +2,8 @@
     <div class="row g-0 flex-grow-1">
         
         <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center bg-login-image">
-            <div class="text-center text-white p-5">
-                <h1 class="display-1 fw-bold">🕸️</h1> 
+            <div class="p-5 text-center text-white">
+                <img src="assets/red-transparente.png" alt="Red Speakweb" class="mb-4" style="width: 180px; opacity: 0.85;">
                 <h2 class="display-4 fw-bold">Speakweb</h2>
                 <p class="lead mt-3">Conecta. Practica. Aprende.</p>
             </div>
@@ -18,25 +18,27 @@
                     <p class="text-muted">Introduce tus credenciales para entrar</p>
                 </div>
 
-                <div class="mb-4">
-                    <label class="form-label fw-semibold text-secondary small">Email</label>
-                    <input type="text" [(ngModel)]="loginObj.email" name="email" 
-                           class="form-control form-control-lg bg-light" 
-                           placeholder="usuario@speakweb.com">
-                </div>
+                <form (ngSubmit)="onLogin()">
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-secondary small">Email</label>
+                        <input type="email" [(ngModel)]="loginObj.email" name="email" 
+                               class="form-control form-control-lg bg-light" 
+                               placeholder="usuario@speakweb.com" required>
+                    </div>
 
-                <div class="mb-4">
-                    <label class="form-label fw-semibold text-secondary small">Contraseña</label>
-                    <input type="password" [(ngModel)]="loginObj.password" name="password"
-                           class="form-control form-control-lg bg-light" 
-                           placeholder="******">
-                </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-secondary small">Contraseña</label>
+                        <input type="password" [(ngModel)]="loginObj.password" name="password"
+                               class="form-control form-control-lg bg-light" 
+                               placeholder="******" required>
+                    </div>
 
-                <div class="d-grid gap-2 mt-5">
-                    <button class="btn btn-brand w-100 py-3 text-white shadow-sm" (click)="onLogin()">
-                        Iniciar sesión
-                    </button>
-                </div>
+                    <div class="d-grid gap-2 mt-5">
+                        <button type="submit" class="btn btn-brand w-100 py-3 text-white shadow-sm">
+                            Iniciar sesión
+                        </button>
+                    </div>
+                </form>
 
                 <div class="text-center mt-4">
                     <span class="text-muted">¿No tienes cuenta? </span>
@@ -46,9 +48,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="text-center py-3 text-muted small opacity-50">
-            &copy; 2026 Speakweb - Proyecto Final DAW
-        </div> -->
 
     </div>
 </div>

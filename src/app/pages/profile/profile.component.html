@@ -1,3 +1,4 @@
+<!-- perfil privado -->
 <div class="container mt-4 mb-5">
     @if (isLoading) {
         <div class="text-center py-5">
@@ -31,10 +32,11 @@
                                       [class.bg-info-subtle]="lang.type !== 'NATIVE'"
                                       [class.text-info]="lang.type !== 'NATIVE'">
                                     <span>
-                                        🌐 <strong>{{ lang.language.code }}</strong> 
+                                        <i class="bi bi-globe me-1"></i>
+                                        <strong>{{ lang.language.code }}</strong> 
                                         @if(lang.type === 'NATIVE') { (Nativo) } @else { ({{ lang.level }}) }
                                     </span>
-                                    <span class="text-danger fw-bold" style="cursor: pointer;" (click)="deleteLanguage(lang.id)" title="Borrar">×</span>
+                                    <i class="bi bi-x-circle-fill text-danger ms-1" style="cursor: pointer; font-size: 1.1rem;" (click)="deleteLanguage(lang.id)" title="Borrar"></i>
                                 </span>
                             }
                             @if (myLanguages.length === 0) {
@@ -74,10 +76,6 @@
                                 <label class="form-label small fw-bold text-muted mb-1">Email</label>
                                 <input type="email" class="form-control bg-light text-muted form-control-sm" name="email" [(ngModel)]="user.email" readonly disabled>
                             </div>
-                            <!-- <div class="col-md-6">
-                                <label class="form-label small fw-bold text-muted mb-1">Foto URL</label>
-                                <input type="url" class="form-control bg-light form-control-sm" name="avatarUrl" [(ngModel)]="user.avatarUrl" placeholder="https://...">
-                            </div> -->
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted mb-1">Subir foto de perfil</label>
                                 <input type="file" class="form-control bg-light form-control-sm" (change)="onFileSelected($event)" accept="image/png, image/jpeg, image/webp">
@@ -145,7 +143,9 @@
                             </p>
                             @for (r of userRatings; track r.id) {
                                 <div class="bg-white p-2 mb-2 border rounded small shadow-sm">
-                                    <strong>{{ r.score }} ⭐️</strong>: <span class="fst-italic">{{ r.comments }}</span>
+                                    <strong>{{ r.score }} 
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    </strong>: <span class="fst-italic">{{ r.comments }}</span>
                                 </div>
                             } @empty {
                                 <p class="small text-muted mb-0">Aún no tienes valoraciones</p>
@@ -157,10 +157,12 @@
                             </p>
                             @for (rep of userReports; track rep.id) {
                                 <div class="bg-white p-2 mb-2 border rounded small text-danger shadow-sm">
-                                    🚩 {{ rep.reason }}
+                                    <i class="bi bi-flag-fill me-1"></i>
+                                     {{ rep.reason }}
                                 </div>
                             } @empty {
-                                <p class="small text-success mb-0">✔ Historial limpio.</p>
+                                <p class="small text-success mb-0">
+                                    <i class="bi bi-check-circle-fill me-1"></i> Historial limpio.</p>
                             }
                         </div>
                     </div>
