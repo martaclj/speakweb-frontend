@@ -153,6 +153,22 @@ export class EventDetailComponent {
     });
   }
 
+  // solo organizador del evento puede cancelarlo
+  cancelEvent() {
+    if (!this.event) return;
+    if (!confirm('Seguro que quieres cancelar este evento?')) return;
+
+    this.eventService.deleteEvent(this.event.id).subscribe({
+      next: () => {
+        this.msgService.show('Evento cancelado correctamente', 'success');
+        this.router.navigate(['/group', this.event!.group.id]);
+      },
+      error: () => {
+        this.msgService.show('No se pudo cancelar el evento', 'danger');
+      }
+    })
+  }
+
   isPastEvent(): boolean {
     if (!this.event) return false;
     return new Date(this.event.startTime) < new Date();

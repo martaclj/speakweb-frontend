@@ -5,14 +5,15 @@
             <img [src]="group.imageUrl" class="w-100 h-100 object-fit-cover" [alt]="group.name">
         } @else {
             <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light text-muted">
-                <span style="font-size: 3rem;">👥</span>
+                <i class="bi bi-people text-brand" style="font-size: 3rem;"></i>
             </div>
         }
 
         @if (isExpert) {
             <div class="position-absolute top-0 end-0 m-2">
                 <span class="badge bg-warning text-dark shadow-sm border border-light">
-                    🏅 Experto
+                    <i class="bi bi-award-fill me-1"></i> 
+                    Experto
                 </span>
             </div>
         }
@@ -35,9 +36,13 @@
         </p>
 
         <div class="d-grid gap-2 mt-3">
-            <a [routerLink]="['/group', group.id]" class="btn btn-outline-brand btn-sm">Ver info</a>
+            <a [routerLink]="['/group', group.id]" class="btn btn-outline-brand btn-sm">
+                <i class="bi bi-info-circle me-1"></i>
+                Ver info</a>
             @if (showJoinButton) {
-                <button class="btn btn-brand text-white btn-sm" (click)="onJoin()">Unirme ahora</button>
+                <button class="btn btn-brand text-white btn-sm" (click)="onJoin()">
+                    <i class="bi bi-person-plus-fill me-1"></i>
+                    Unirme ahora</button>
             }
         </div>
     </div>

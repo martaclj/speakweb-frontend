@@ -9,6 +9,7 @@
     url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1000&auto=format&fit=crop');
     background-size: cover;
     background-position: center;
+    min-height: 600px;
 }
 
 @media (max-width: 768px) {
