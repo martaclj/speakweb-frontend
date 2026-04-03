@@ -6,6 +6,7 @@
   color: #CFF4FF;
 }
 
+/* transforma el logo en blanco temporalmente */
 .white-logo {
   filter: brightness(0) invert(1);
 }
