@@ -59,6 +59,7 @@ export class PublicProfileComponent {
       },
       error: (err) => {
         console.error('Error cargando usuario', err);
+        this.isLoading = false; // para evitar cargando usuarios...
       }
     });
   }

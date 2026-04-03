@@ -5,3 +5,7 @@
 .navbar-dark .nav-link:hover {
   color: #CFF4FF;
 }
+
+.white-logo {
+  filter: brightness(0) invert(1);
+}
