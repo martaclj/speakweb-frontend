@@ -5,32 +5,38 @@
             <p class="mb-0 opacity-75">Gestión de usuarios, idiomas, grupos y eventos</p>
         </div>
         <button class="btn btn-outline-light rounded-pill px-4" (click)="loadAllData()">
+            <i class="bi bi-arrow-clockwise me-1"></i>
             Actualizar
         </button>
     </div>
     <ul class="nav nav-pills mb-4 gap-2 border-bottom pb-3">
         <li class="nav-item">
             <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'users'" [class.bg-brand]="activeTab === 'users'" (click)="switchTab('users')">
+                <i class="bi bi-people-fill me-1"></i>
                 Usuarios ({{ users.length }})
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'languages'" [class.bg-brand]="activeTab === 'languages'" (click)="switchTab('languages')">
+                <i class="bi bi-translate me-1"></i>
                 Idiomas ({{ languages.length }})
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'groups'" [class.bg-brand]="activeTab === 'groups'" (click)="switchTab('groups')">
+                <i class="bi bi-collection-fill me-1"></i>
                 Grupos ({{ groups.length }})
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'events'" [class.bg-brand]="activeTab === 'events'" (click)="switchTab('events')">
+                <i class="bi bi-calendar-event-fill me-1"></i>
                 Eventos ({{ events.length }})
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'deleted-users'" [class.bg-brand]="activeTab === 'deleted-users'" (click)="switchTab('deleted-users')">
+                <i class="bi bi-person-x-fill me-1"></i>
                 Eliminados ({{ deletedUsers.length }})
             </button>
         </li>
@@ -59,8 +65,8 @@
                         @for (user of users; track user.id) {
                             <tr>
                                 <td class="ps-4">
-                                    <a [routerLink]="['/profile', user.id]" class="d-flex align-items-center text-decoration-none-text-reset">
-                                        <img [src]="user.avatarUrl || 'https://ui-avatars.com/api/?name=' + user.name" class="rounded-circle me-3 object-fit-cover shadow sm" width="40" height="40">
+                                    <a [routerLink]="['/profile', user.id]" class="d-flex align-items-center text-decoration-none text-reset">
+                                        <img [src]="user.avatarUrl || 'https://ui-avatars.com/api/?name=' + user.name" class="rounded-circle me-3 object-fit-cover shadow-sm" width="40" height="40">
                                         <div>
                                             <div class="fw-bold text-navy">{{ user.name }} {{ user.surname }}</div>
                                             <div class="small text-muted">ID: {{ user.id }}</div>
@@ -70,19 +76,21 @@
                                 <td> {{ user.email }} </td>
                                 <td>
                                     @if (user.role === 'ADMIN') {
-                                        <span class="badge bg-warning text-dark border border-light shadow sm">ADMIN</span>
+                                        <span class="badge bg-warning text-dark border border-light shadow-sm">ADMIN</span>
                                     } @else {
                                         <span class="badge bg-light text-dark border">USER</span>
                                     }
                                 </td>
                                 <td>
                                     <span class="badge bg-light text-dark border">
-                                        ⭐️ {{ userReputations[user.id]?.score }} | {{ userReputations[user.id]?.count }} Reportes
+                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        {{ userReputations[user.id]?.score }} | {{ userReputations[user.id]?.count }} Reportes
                                     </span>
                                 </td>
                                 <td class="text-end pe-4">
                                     @if (user.role !== 'ADMIN') {
                                         <button class="btn btn-sm btn-outline-danger rounded-pill px-3" (click)="deleteUser(user)">
+                                            <i class="bi bi-person-dash-fill me-1"></i>
                                             Dar de baja
                                         </button>
                                     }
@@ -108,7 +116,9 @@
                         <label class="form-label small fw-bold text-muted">Nombre del idioma</label>
                         <input type="text" class="form-control" [(ngModel)]="newLangName" placeholder="Ej: Español">
                     </div>
-                    <button class="btn btn-brand text-white w-100 rounded-pill shadow-sm" (click)="addLanguage()">Guardar idioma</button>
+                    <button class="btn btn-brand text-white w-100 rounded-pill shadow-sm" (click)="addLanguage()">
+                        <i class="bi bi-save me-1"></i>
+                        Guardar idioma</button>
                 </div>
             </div>
             <div class="col-md-8">
@@ -129,7 +139,9 @@
                                     <td><span class="badge bg-secondary rounded-pill"> {{ lang.code }}</span></td>
                                     <td class="fw-bold">{{ lang.name }}</td>
                                     <td class="text-end pe-4">
-                                        <button class="btn btn-sm btn-light text-danger rounded-circle" title="borrar idioma" (click)="deleteLanguage(lang.id)">x</button>
+                                        <button class="btn btn-sm btn-light text-danger rounded-circle" title="borrar idioma" (click)="deleteLanguage(lang.id)">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             }
@@ -171,7 +183,9 @@
                             }
                         </select>
                     </div>
-                    <button class="btn btn-brand text-white w-100 rounded-pill shadow-sm" (click)="createGroup()">Guardar Grupo</button>
+                    <button class="btn btn-brand text-white w-100 rounded-pill shadow-sm" (click)="createGroup()">
+                        <i class="bi bi-check-lg me-1"></i>
+                        Guardar Grupo</button>
                 </div>
             </div>
             <div class="col-md-8">
@@ -198,8 +212,12 @@
                                         <span class="badge bg-light text-dark border">{{ group.language2.name }}</span>
                                     </td>
                                     <td class="text-end pe-4 d-flex gap-2 justify-content-end">
-                                        <button class="btn btn-sm btn-outline-brand rounded-pill" [routerLink]="['/group', group.id]">Ver</button>
-                                        <button class="btn btn-sm btn-light text-danger rounded-circle" (click)="deleteGroup(group.id)">x</button>
+                                        <button class="btn btn-sm btn-outline-brand rounded-pill" [routerLink]="['/group', group.id]">
+                                            <i class="bi bi-eye-fill me-1"></i>
+                                            Ver</button>
+                                        <button class="btn btn-sm btn-light text-danger rounded-circle" (click)="deleteGroup(group.id)">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             }
@@ -214,7 +232,9 @@
         <div class="row">
             <div class="col-md-4 mb-4">
                 <div class="card border-0 shadow-sm rounded-4 p-4">
-                    <h5 class="fw-bold text-navy mb-3">Añadir Evento</h5>
+                    <h5 class="fw-bold text-navy mb-3">
+                        <i class="bi bi-calendar-plus-fill me-2"></i>
+                        Añadir Evento</h5>
                     <div class="mb-3">
                         <label for="" class="form-label small fw-bold text-muted">Fecha y hora</label>
                         <input type="datetime-local" class="form-control" [(ngModel)]="newEventStartTime">
@@ -255,7 +275,9 @@
                             <input type="text" class="form-control" [(ngModel)]="newEventExternalLink" placeholder="https://meet.google.com/...">
                         </div>
                     }
-                    <button class="btn btn-brand text-white w-100 rounded-pill shadow-sm" (click)="createEvent()">Guardar evento</button>
+                    <button class="btn btn-brand text-white w-100 rounded-pill shadow-sm" (click)="createEvent()">
+                        <i class="bi bi-calendar-check-fill me-1"></i>
+                        Guardar evento</button>
                 </div>
             </div>
             <div class="col-md-8">
@@ -282,14 +304,20 @@
                                     </td>
                                     <td>
                                         @if (event.type === 'ONLINE') {
-                                            <span class="badge bg-info text-dark rounded-pill">Online</span>
+                                            <span class="badge bg-info text-dark rounded-pill">
+                                                <i class="bi bi-laptop me-1"></i>
+                                                Online</span>
                                         } @else {
-                                            <span class="badge bg-light text-dark border rounded-pill">Presencial</span>
+                                            <span class="badge bg-light text-dark border rounded-pill">
+                                                <i class="bi bi-geo-alt-fill me-1"></i>
+                                                Presencial</span>
                                         }
                                     </td>
                                     <td class="small text-muted">{{ event.startTime | date:'dd/MM/yyyy HH:mm' }}</td>
                                     <td class="text-end pe-4">
-                                        <button class="btn btn-sm btn-light text-danger rounded-circle" title="Eliminar" (click)="deleteEvent(event.id)">x</button>
+                                        <button class="btn btn-sm btn-light text-danger rounded-circle" title="Eliminar" (click)="deleteEvent(event.id)">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             } @empty {
@@ -331,11 +359,15 @@
                                         <span class="badge bg-light text-dark border">USER</span>
                                     }
                                 </td>
-                                <td class="text-muted small">{{ deleted.deletedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                                <td class="text-muted small">
+                                    <i class="bi bi-calendar-x me-1"></i>
+                                    {{ deleted.deletedAt | date:'dd/MM/yyyy HH:mm' }}</td>
                             </tr>
                         } @empty {
-                            <tr colspan="4" class="text-center text-muted py-4">
-                                No hay usuarios eliminados todavía.
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">
+                                    No hay usuarios eliminados todavía.
+                                </td>
                             </tr>
                         }
                     </tbody>
