@@ -1,3 +1,4 @@
+// entorno de producción - compilar para desplegar
 export const environment = {
     production: true,
     // URL futura: apiUrl: 'https://speakweb.martaclj.com/api'

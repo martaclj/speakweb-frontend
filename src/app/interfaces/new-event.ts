@@ -1,4 +1,4 @@
-// interface de creación de evento
+// interface de creación de evento --> backend
 export interface NewEvent {
     title: string;
     description: string;

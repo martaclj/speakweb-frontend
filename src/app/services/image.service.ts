@@ -1,3 +1,4 @@
+// service subir imágenes al servidor
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
@@ -12,7 +13,8 @@ export class ImageService {
 
   constructor() { }
 
-    // POST: /images/upload --> subir imagen ¡de perfil! física al servidor
+  // manda el archivo y recibe la url relativa
+  // POST: /images/upload --> subir imagen ¡de perfil! física al servidor
   uploadImage(file: File): Observable<{imageUrl: string}> {
     const formData = new FormData();
     formData.append('file', file);

@@ -15,23 +15,27 @@ import { environment } from '../../../environments/environment';
 })
 export class EventCardComponent {
 
+  // el input - evento a mostrar en la card
   @Input({ required: true }) event!: GroupEvent;
+  // input - si el usuario está apuntado o no
   @Input() joined: boolean = false;
 
   private participantService = inject(EventParticipantService);
   private msgService = inject(MessagesService);
 
+  // la imagen viene de internet o de /uploads
   getEventImageUrl(url: string | undefined): string {
     if(!url) {
       return ''; // no hay imagen
     }
     if (url.startsWith('http')) {
-      return url; // imagen internet
+      return url; // imagen internet -- para las imágenes que se crearon en la bbdd
     }
-    // archivo físico
+    // archivo físico de /uploads de Spring
     return `${environment.serverUrl}${url}`;
   }
 
+  // si el evento es ONLINE habilito el botón 15 minutos antes
   // función para saber si el evento online ya está abierto
   isEventOpen(): boolean {
     if (!this.event || !this.event.startTime) {
@@ -50,17 +54,19 @@ export class EventCardComponent {
     return now >= openTime;
   }
 
+  // apuntarse al evento:
   onRegister() {
     this.participantService.joinEvent(this.event.id).subscribe({
       next: () => {
         this.joined = true;
-        this.msgService.show('¡Te has apuntado al evento!🎉', 'success');
+        this.msgService.show('¡Te has apuntado al evento!', 'success');
       },
       error: (err) => {
         console.error(err);
+        // caso de error del backend en el que el usuario ya estaba apuntado
         if (err.error && typeof err.error === 'string' && err.error.includes('ya está apuntado')) {
           this.joined = true;
-        this.msgService.show('¡Ya estabas apuntado!🎉', 'success');
+        this.msgService.show('¡Ya estabas apuntado!', 'success');
         } else {
         this.msgService.show('¡Error al apuntarse. Vuelve a intentarlo!', 'danger');
           // alert('Error al intentar apuntarse. Inténtalo más tarde.');
@@ -69,6 +75,7 @@ export class EventCardComponent {
     });
   }
 
+  // Desapuntarse
   onLeave() {
     if(!confirm('¿Seguro que quieres desapuntarte?')) return;
 

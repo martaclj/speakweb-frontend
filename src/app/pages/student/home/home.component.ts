@@ -20,13 +20,18 @@ export class HomeComponent {
   // inyección de dependencias:
   private groupService = inject(GroupService);
   private groupMemberService = inject(GroupMemberService);
-
   private msgService = inject(MessagesService);
 
+  // Lista del backend
   groupList: Group[] = [] // recibo datos del backend
+  // lista filtrada
   filteredList: Group[] = [];
+  // término buscado
   searchTerm: string = '';
+
+  // para ocultar botón Unirme
   myGroupIds: number[] = []; // guardo ids de grupos dnd ya estoy
+  
   // para que el spinner no cargue infinito
   isLoading: boolean = true;
   loadError: boolean = false;
@@ -68,7 +73,8 @@ export class HomeComponent {
     return this.myGroupIds.includes(groupId);
   }
 
-
+  // buscador por nombre de grupo o por idioma 
+  // - ver carpeta utils - language aliases
   searchGroups() {
     if (!this.searchTerm) {
       this.filteredList = this.groupList;
@@ -93,7 +99,6 @@ export class HomeComponent {
   joinGroup(id: number) {
 
     if (this.isMember(id)) {
-      // alert('Ya eres miembro de este grupo!');
       this.msgService.show('Ya eres miembro de este grupo!', 'success');
       return;
     }
@@ -101,17 +106,14 @@ export class HomeComponent {
     this.groupService.joinGroup(id).subscribe({
       next: (data) => {
         console.log("Te has unido al grupo:", data);
-        // alert("Bien! Te has unido correctamente!");
       this.msgService.show('Bien! Te has unido correctamente!', 'success');
-      // actualizar la lista LOCALMENTE para que el botón cambie 
+      // actualizar la lista LOCALMENTE para que el botón cambie
+      // es d. actualizo ids en memoria para cambiar el botón sin recargar 
       this.myGroupIds.push(id);
-
       },
       error: (error) => {
         console.error("Error al unirse:", error);
-        // alert("Ya estás en ese grupo");
-      this.msgService.show('Ya formas parte del grupo!', 'danger');
-
+        this.msgService.show('Ya formas parte del grupo!', 'danger');
       }
     });
   }

@@ -1,3 +1,4 @@
+// interface de lectura de evento <-- backend
 import { Group } from "./group";
 import { User } from "./user";
 
