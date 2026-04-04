@@ -10,6 +10,8 @@ import { EventParticipantService } from '../../../services/event-participant.ser
 import { GroupMember } from '../../../interfaces/group-member';
 import { MessagesService } from '../../../services/messages.service';
 import { Location } from '@angular/common';
+// función para las banderas de los idiomas (desde utils)
+import { getFlagEmoji } from '../../../utils/language-aliases';
 
 @Component({
   selector: 'app-group-detail',
@@ -135,24 +137,9 @@ export class GroupDetailComponent {
     }
   }
 
-  // función para las banderas de los idiomas
+  // función para las banderas de los idiomas (desde utils)
   getFlagEmoji(code: string): string {
-    if (!code) return '🌏';
-
-    const upperCode = code.toUpperCase();
-
-    const flags: { [key: string]: string } = {
-      'ES': '🇪🇸',
-      'EN': '🇬🇧',
-      'FR': '🇫🇷',
-      'DE': '🇩🇪',
-      'IT': '🇮🇹',
-      'PT': '🇵🇹',
-      'JA': '🇯🇵'
-    }; // ampliar
-    // añadir a la database
-
-    return flags[upperCode] || '🌏';
+    return getFlagEmoji(code);
   }
 
 }

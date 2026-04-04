@@ -1,3 +1,5 @@
+<!-- card del evento con foto, fecha, información, botones.
+ si es online botón bloqueado hasta 15 min antes -->
 <div class="card border-0 shadow-sm mb-3 rounded-4 overflow-hidden">
 
     @if (event.imageUrl) {
@@ -49,11 +51,13 @@
                                 <i class="bi bi-lock-fill me-1"></i>
                                 La sala se abrirá 15 min antes
                             </button>
+                            <!-- sala bloqueada si aún no quedan 15 minutos para el evento -->
                         }
                     </div>
                 }
 
                 <div>
+                    <!-- alterna entre Asistiré y No asistiré -->
                     @if (!joined) {
                         <button class="btn btn-sm btn-outline-brand rounded-pill px-4" (click)="onRegister()">
                             <i class="bi bi-calendar-check me-1"></i>

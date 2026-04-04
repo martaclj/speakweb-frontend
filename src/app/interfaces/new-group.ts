@@ -1,4 +1,4 @@
-// interface de creación de group
+// interface de creación de group --> backend
 export interface NewGroup {
     name: string;
     description?: string;

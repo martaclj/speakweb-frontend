@@ -8,41 +8,48 @@ import { User } from '../interfaces/user';
   providedIn: 'root'
 })
 export class UserService {
-  uploadImage(selectedFile: File) {
-    throw new Error('Method not implemented.');
-  }
+
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/users`;
 
   constructor() { }
 
-  // GET: /api/users/profile
+/* Servicio de usuarios:
+perfil propio (privado)
+perfil público (utiliza id)
+lista / borra (admin)
+reputación (ratings y reportes)
+*/
+
+  // GET: /api/users/profile -> mi perfil
   getProfile(): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/profile`);
   }
 
-  // PUT: /api/users/profile
+  // PUT: /api/users/profile -> edito mi perfil
   updateProfile(user: User): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/profile`, user);
   }
 
-  // GET: /api/users
+  // GET: /api/users -> ADMIN: LISTA de usuarios
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);
   }
 
-    // GET: /api/users/{id}
+    // GET: /api/users/{id} -> perfil público (recibe id)
   getUserById(id: number): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 
-  // GET: /api/ratings/user/{id}/reputation
+  // GET: /api/ratings/user/{id}/reputation - Reputación
   // uso environment.apiUrl para no duplicar "/users"
   getUserReputation(id: number): Observable<any> {
     return this.http.get<any>(`${environment.apiUrl}/ratings/user/${id}/reputation`);
   }
 
-  // GET: /api/ratings/user/{id}/details (lista de estrellas y comentarios)
+  /* detalles de valoraciones 
+  (para el admin / para el perfil privado propio)
+  GET: /api/ratings/user/{id}/details (lista de estrellas y comentarios) */
   getUserRatingsDetailed(id: number): Observable<any[]> {
     return this.http.get<any[]>(`${environment.apiUrl}/ratings/user/${id}/details`);
   }
@@ -52,7 +59,7 @@ export class UserService {
     return this.http.get<any[]>(`${environment.apiUrl}/reports/user/${id}`);
   }
 
-  // DELETE: /api/users/**
+  // DELETE: /api/users/** (solo admin)
   deleteUser(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
   }

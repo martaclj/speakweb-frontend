@@ -1,4 +1,5 @@
+// interface reputación usuario
 export interface Reputation {
-    score: string;
-    count: number;
+    score: string; // media estrellas
+    count: number; // núm. denuncias
 }

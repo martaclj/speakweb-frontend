@@ -1,3 +1,4 @@
+// service de denuncias de usuarios
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
@@ -12,6 +13,7 @@ export class ReportService {
 
   constructor() { }
 
+  // POST: /api/reports - crea denuncia contra usuario
   createReport(reportData: any): Observable<any> {
     return this.http.post(this.baseUrl, reportData);
   }
