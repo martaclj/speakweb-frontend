@@ -7,11 +7,13 @@ import { GroupCardComponent } from '../../../components/group-card/group-card.co
 import { GroupMemberService } from '../../../services/group-member.service';
 import { MessagesService } from '../../../services/messages.service';
 import { LANGUAGE_ALIASES } from '../../../utils/language-aliases';
+// ajustes paginación
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule, GroupCardComponent],
+  imports: [FormsModule, GroupCardComponent, NgxPaginationModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -35,6 +37,9 @@ export class HomeComponent {
   // para que el spinner no cargue infinito
   isLoading: boolean = true;
   loadError: boolean = false;
+
+  // ajustes paginación
+  page: number = 1; // pág. actual
 
   ngOnInit(): void {
     this.getGroups();
@@ -76,6 +81,9 @@ export class HomeComponent {
   // buscador por nombre de grupo o por idioma 
   // - ver carpeta utils - language aliases
   searchGroups() {
+    // pag. 1 - vuelve a pág. 1 tras búsqueda
+    this.page = 1;
+
     if (!this.searchTerm) {
       this.filteredList = this.groupList;
       return;
