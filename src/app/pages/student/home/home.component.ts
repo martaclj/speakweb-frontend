@@ -8,6 +8,7 @@ import { GroupMemberService } from '../../../services/group-member.service';
 import { MessagesService } from '../../../services/messages.service';
 import { LANGUAGE_ALIASES } from '../../../utils/language-aliases';
 // ajustes paginación
+// https://github.com/Anuar-UNIR/DWEC_2024_2025/blob/main/proyectos_clase/DC_Universe/DCUapp/package.json
 import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
