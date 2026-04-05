@@ -45,7 +45,7 @@
     
 
     <div class="row">
-        @for (group of filteredList | paginate: { itemsPerPage: 6, currentPage: page } ;track group.id) {
+        @for (group of filteredList | paginate: { id: 'grupos-pagination', itemsPerPage: 6, currentPage: page, totalItems: filteredList.length} ;track group.id) {
             <div class="col-md-4 mb-4">
                 <app-group-card 
                 [group]="group" 
@@ -55,14 +55,35 @@
         }
     </div>
 
+    <!-- https://github.com/michaelbromley/ngx-pagination -->
+
+    <!-- <some-element ... | paginate: { id: 'foo',
+        itemsPerPage: pageSize,
+        currentPage: p,
+        totalItems: total }">...</some-element>
+    -->
+
     @if (filteredList.length > 0) {
-        <div class="d-flex justify-content-center mt-4 mb-5">
+        <div class="d-flex justify-content-center mt-4 mb-2">
             <pagination-controls
+            id="grupos-pagination"
             (pageChange)="page = $event"
             previousLabel="Anterior"
             nextLabel="Siguiente">
             </pagination-controls>
         </div>
     }
-
+<!-- <pagination-controls  id="some_id"
+                      (pageChange)="pageChanged($event)"
+                      (pageBoundsCorrection)="pageChanged($event)"
+                      maxSize="9"
+                      directionLinks="true"
+                      autoHide="true"
+                      responsive="true"
+                      previousLabel="Previous"
+                      nextLabel="Next"
+                      screenReaderPaginationLabel="Pagination"
+                      screenReaderPageLabel="page"
+                      screenReaderCurrentLabel="You're on page">
+</pagination-controls> -->
 </div>
