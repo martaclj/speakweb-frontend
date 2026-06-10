@@ -73,16 +73,17 @@
                     }
                 </div>
 
-                @if (events.length === 0) {
+                @for (event of events | upcoming; track event.id) {
+                    <app-event-card [event]="event"
+                                    [joined]="isJoined(event.id)"></app-event-card>
+                } @empty {
                     <div class="alert alert-light border text-center text-muted p-5 rounded-4">
                         <p class="mb-0">
-                            <svg lucideCalendarX class="fs-4 me-2 align-middle"></svg> Este grupo no tiene eventos programados.</p>
+                            <svg lucideCalendarX class="fs-4 me-2 align-middle"></svg> Este grupo no tiene eventos próximos.
+                        </p>
                     </div>
                 }
-                @for (event of events; track event.id) {
-                    <app-event-card [event]= "event" 
-                    [joined]="isJoined(event.id)"></app-event-card>
-                }
+
             </div>
 
             <div class="col-md-4">

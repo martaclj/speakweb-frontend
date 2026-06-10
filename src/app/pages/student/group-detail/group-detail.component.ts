@@ -13,9 +13,11 @@ import { Location } from '@angular/common';
 // función para las banderas de los idiomas (desde utils)
 import { getFlagCode } from '../../../utils/language-aliases';
 import { LucideArrowLeft, LucideCalendarX, LucideCirclePlus, LucideGem, LucideHouse, LucideLogOut } from '@lucide/angular';
+import { UpcomingPipe } from '../../../pipes/upcoming.pipe';
+
 @Component({
   selector: 'app-group-detail',
-  imports: [RouterLink, EventCardComponent, LucideArrowLeft, LucideCalendarX, LucideCirclePlus, LucideGem, LucideHouse, LucideLogOut],
+  imports: [RouterLink, EventCardComponent, UpcomingPipe, LucideArrowLeft, LucideCalendarX, LucideCirclePlus, LucideGem, LucideHouse, LucideLogOut],
   templateUrl: './group-detail.component.html',
   styleUrl: './group-detail.component.css'
 })
