@@ -8,7 +8,7 @@
 
     @if (!isLoading && event) {
         <button class="btn btn-light shadow-sm rounded-circle p-2 mb-4" [routerLink]="['/group', event.group?.id]">
-            <i class="bi bi-arrow-left me-1"></i> Volver
+            <svg lucideArrowLeft class="me-1"></svg> Volver
         </button>
 
         <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
@@ -23,10 +23,10 @@
                 <div class="mb-3">
                     @if (event.type === 'ONLINE') {
                         <span class="badge bg-info text-white rounded-pill px-3 py-2"> 
-                           <i class="bi bi-laptop me-1"></i> Evento Online</span>
+                           <svg lucideLaptop class="me-1"></svg> Evento Online</span>
                     } @else {
                         <span class="badge bg-success text-white rounded-pill px-3 py-2">
-                            <i class="bi bi-geo-alt-fill me-1"></i> Evento Presencial</span>
+                            <svg lucideMapPin class="me-1"></svg> Evento Presencial</span>
                     }
                 </div>
 
@@ -38,20 +38,20 @@
                         @if (myUserId === event.creator?.id) {
                             <!-- botón cancelar evento solo para organizador -->
                              <button class="btn btn-outline-danger px-4 py-2 rounded-pill shadow sm fw-bold flex-shrink-0" (click)="cancelEvent()">
-                                <i class="bi bi-trash3-fill me-1"></i> Cancelar evento
+                                <svg lucideTrash2 class="me-1"></svg> Cancelar evento
                              </button>
                         }
                         @else if (!isJoinedEvent) {
                             <button class="btn btn-brand text-white px-4 py-2 rounded-pill shadow-sm fw-bold flex-shrink-0" (click)="joinEvent()">
-                                <i class="bi bi-calendar-plus-fill me-1"></i> ¡Me apunto!
+                                <svg lucideCalendarPlus class="me-1"></svg> ¡Me apunto!
                             </button>
                         } @else {
                             <div class="d-flex gap-2 flex-shrink-0">
                                 <button class="btn btn-success text-white px-3 rounded-pill shadow-sm fw-bold" disabled>
-                                    <i class="bi bi-check-circle-fill me-1"></i> Ya estás apuntado
+                                    <svg lucideCircleCheck class="me-1"></svg> Ya estás apuntado
                                 </button>
                                 <button class="btn btn-outline-danger px-3 rounded-pill shadow-sm" (click)="leaveEvent()">
-                                <i class="bi bi-box-arrow-right me-1"></i> Abandonar
+                                <svg lucideLogOut class="me-1"></svg> Abandonar
                                 </button>
                             </div>
                         }
@@ -63,13 +63,13 @@
                 <div class="d-flex flex-wrap gap-4 mb-4 text-muted">
                     <div class="d-flex align-items-center">
                         <span class="fs-5 me-2">
-                            <i class="bi bi-calendar-event text-brand"></i>
+                            <svg lucideCalendar class="text-brand"></svg>
                         </span>
                         <strong>{{ event.startTime | date:'dd MMM yyyy, HH:mm' }}</strong>
                     </div>
                     <div class="d-flex align-items-center">
                         <span class="fs-5 me-2">
-                            <i class="bi bi-geo-alt-fill text-danger"></i>
+                            <svg lucideMapPin class="text-danger"></svg>
                         </span>
                         <strong>{{ event.location || 'Por determinar' }}</strong>
                     </div>
@@ -81,7 +81,7 @@
                     <div class="p-4 bg-light rounded-4 mb-4 border">
                         <h6 class="fw-bold text-navy mb-2">Enlace de la reunión:</h6>
                         <a [href]="event.externalLink" target="_blank" class="btn btn-info text-white rounded-pill shadow-sm px-4">
-                            <i class="bi bi-camera-video-fill me-1 text-brand bg-white rounded-circle p-1 me-2 shadow-sm" style="font-size: 0.9rem;"></i>
+                            <svg lucideVideo class="me-1 text-brand bg-white rounded-circle p-1 me-2 shadow-sm" style="font-size: 0.9rem;"></svg>
                             Entrar a la videollamada
                         </a>
                     </div>
@@ -117,7 +117,7 @@
                     } @empty {
                         <div class="col-12">
                             <p class="text-muted fst-italic">
-                                <i class="bi bi-info-circle me-1"></i> Aún no se ha apuntado nadie. ¡Apúntate!</p>
+                                <svg lucideInfo class="me-1"></svg> Aún no se ha apuntado nadie. ¡Apúntate!</p>
                         </div>
                     }
                 </div>

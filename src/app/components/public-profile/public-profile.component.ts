@@ -8,10 +8,10 @@ import { DatePipe, Location } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { ReportService } from '../../services/report.service';
 import { MessagesService } from '../../services/messages.service';
-
+import { LucideArrowLeft, LucideCircleCheck, LucideFlag, LucideGlobe, LucideHouse, LucideStar, LucideUserX } from '@lucide/angular';
 @Component({
   selector: 'app-public-profile',
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, DatePipe, LucideArrowLeft, LucideCircleCheck, LucideFlag, LucideGlobe, LucideHouse, LucideStar, LucideUserX],
   templateUrl: './public-profile.component.html',
   styleUrl: './public-profile.component.css'
 })

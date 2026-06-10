@@ -5,38 +5,38 @@
             <p class="mb-0 opacity-75">Gestión de usuarios, idiomas, grupos y eventos</p>
         </div>
         <button class="btn btn-outline-light rounded-pill px-4" (click)="loadAllData()">
-            <i class="bi bi-arrow-clockwise me-1"></i>
+            <svg lucideRefreshCw class="me-1"></svg>
             Actualizar
         </button>
     </div>
     <ul class="nav nav-pills mb-4 gap-2 border-bottom pb-3">
         <li class="nav-item">
             <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'users'" [class.bg-brand]="activeTab === 'users'" (click)="switchTab('users')">
-                <i class="bi bi-people-fill me-1"></i>
+                <svg lucideUsers class="me-1"></svg>
                 Usuarios ({{ users.length }})
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'languages'" [class.bg-brand]="activeTab === 'languages'" (click)="switchTab('languages')">
-                <i class="bi bi-translate me-1"></i>
+                <svg lucideLanguages class="me-1"></svg>
                 Idiomas ({{ languages.length }})
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'groups'" [class.bg-brand]="activeTab === 'groups'" (click)="switchTab('groups')">
-                <i class="bi bi-collection-fill me-1"></i>
+                <svg lucideLayers class="me-1"></svg>
                 Grupos ({{ groups.length }})
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'events'" [class.bg-brand]="activeTab === 'events'" (click)="switchTab('events')">
-                <i class="bi bi-calendar-event-fill me-1"></i>
+                <svg lucideCalendarDays class="me-1"></svg>
                 Eventos ({{ events.length }})
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link fw-bold px-4 rounded-pill" [class.active]="activeTab === 'deleted-users'" [class.bg-brand]="activeTab === 'deleted-users'" (click)="switchTab('deleted-users')">
-                <i class="bi bi-person-x-fill me-1"></i>
+                <svg lucideUserX class="me-1"></svg>
                 Eliminados ({{ deletedUsers.length }})
             </button>
         </li>
@@ -83,14 +83,14 @@
                                 </td>
                                 <td>
                                     <span class="badge bg-light text-dark border">
-                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        <svg lucideStar class="text-warning me-1"></svg>
                                         {{ userReputations[user.id]?.score }} | {{ userReputations[user.id]?.count }} Reportes
                                     </span>
                                 </td>
                                 <td class="text-end pe-4">
                                     @if (user.role !== 'ADMIN') {
                                         <button class="btn btn-sm btn-outline-danger rounded-pill px-3" (click)="deleteUser(user)">
-                                            <i class="bi bi-person-dash-fill me-1"></i>
+                                            <svg lucideUserMinus class="me-1"></svg>
                                             Dar de baja
                                         </button>
                                     }
@@ -117,7 +117,7 @@
                         <input type="text" class="form-control" [(ngModel)]="newLangName" placeholder="Ej: Español">
                     </div>
                     <button class="btn btn-brand text-white w-100 rounded-pill shadow-sm" (click)="addLanguage()">
-                        <i class="bi bi-save me-1"></i>
+                        <svg lucideSave class="me-1"></svg>
                         Guardar idioma</button>
                 </div>
             </div>
@@ -140,7 +140,7 @@
                                     <td class="fw-bold">{{ lang.name }}</td>
                                     <td class="text-end pe-4">
                                         <button class="btn btn-sm btn-light text-danger rounded-circle" title="borrar idioma" (click)="deleteLanguage(lang.id)">
-                                            <i class="bi bi-trash3-fill"></i>
+                                            <svg lucideTrash2></svg>
                                         </button>
                                     </td>
                                 </tr>
@@ -184,7 +184,7 @@
                         </select>
                     </div>
                     <button class="btn btn-brand text-white w-100 rounded-pill shadow-sm" (click)="createGroup()">
-                        <i class="bi bi-check-lg me-1"></i>
+                        <svg lucideCheck class="me-1"></svg>
                         Guardar Grupo</button>
                 </div>
             </div>
@@ -213,10 +213,10 @@
                                     </td>
                                     <td class="text-end pe-4 d-flex gap-2 justify-content-end">
                                         <button class="btn btn-sm btn-outline-brand rounded-pill" [routerLink]="['/group', group.id]">
-                                            <i class="bi bi-eye-fill me-1"></i>
+                                            <svg lucideEye class="me-1"></svg>
                                             Ver</button>
                                         <button class="btn btn-sm btn-light text-danger rounded-circle" (click)="deleteGroup(group.id)">
-                                            <i class="bi bi-trash3-fill"></i>
+                                            <svg lucideTrash2></svg>
                                         </button>
                                     </td>
                                 </tr>
@@ -233,7 +233,7 @@
             <div class="col-md-4 mb-4">
                 <div class="card border-0 shadow-sm rounded-4 p-4">
                     <h5 class="fw-bold text-navy mb-3">
-                        <i class="bi bi-calendar-plus-fill me-2"></i>
+                        <svg lucideCalendarPlus class="me-2"></svg>
                         Añadir Evento</h5>
                     <div class="mb-3">
                         <label for="" class="form-label small fw-bold text-muted">Fecha y hora</label>
@@ -276,7 +276,7 @@
                         </div>
                     }
                     <button class="btn btn-brand text-white w-100 rounded-pill shadow-sm" (click)="createEvent()">
-                        <i class="bi bi-calendar-check-fill me-1"></i>
+                        <svg lucideCalendarCheck class="me-1"></svg>
                         Guardar evento</button>
                 </div>
             </div>
@@ -305,18 +305,18 @@
                                     <td>
                                         @if (event.type === 'ONLINE') {
                                             <span class="badge bg-info text-dark rounded-pill">
-                                                <i class="bi bi-laptop me-1"></i>
+                                                <svg lucideLaptop class="me-1"></svg>
                                                 Online</span>
                                         } @else {
                                             <span class="badge bg-light text-dark border rounded-pill">
-                                                <i class="bi bi-geo-alt-fill me-1"></i>
+                                                <svg lucideMapPin class="me-1"></svg>
                                                 Presencial</span>
                                         }
                                     </td>
                                     <td class="small text-muted">{{ event.startTime | date:'dd/MM/yyyy HH:mm' }}</td>
                                     <td class="text-end pe-4">
                                         <button class="btn btn-sm btn-light text-danger rounded-circle" title="Eliminar" (click)="deleteEvent(event.id)">
-                                            <i class="bi bi-trash3-fill"></i>
+                                            <svg lucideTrash2></svg>
                                         </button>
                                     </td>
                                 </tr>
@@ -360,7 +360,7 @@
                                     }
                                 </td>
                                 <td class="text-muted small">
-                                    <i class="bi bi-calendar-x me-1"></i>
+                                    <svg lucideCalendarX class="me-1"></svg>
                                     {{ deleted.deletedAt | date:'dd/MM/yyyy HH:mm' }}</td>
                             </tr>
                         } @empty {

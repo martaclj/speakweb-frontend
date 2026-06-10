@@ -11,11 +11,11 @@ import { GroupMember } from '../../../interfaces/group-member';
 import { MessagesService } from '../../../services/messages.service';
 import { Location } from '@angular/common';
 // función para las banderas de los idiomas (desde utils)
-import { getFlagEmoji } from '../../../utils/language-aliases';
-
+import { getFlagCode } from '../../../utils/language-aliases';
+import { LucideArrowLeft, LucideCalendarX, LucideCirclePlus, LucideGem, LucideHouse, LucideLogOut } from '@lucide/angular';
 @Component({
   selector: 'app-group-detail',
-  imports: [RouterLink, EventCardComponent],
+  imports: [RouterLink, EventCardComponent, LucideArrowLeft, LucideCalendarX, LucideCirclePlus, LucideGem, LucideHouse, LucideLogOut],
   templateUrl: './group-detail.component.html',
   styleUrl: './group-detail.component.css'
 })
@@ -138,8 +138,8 @@ export class GroupDetailComponent {
   }
 
   // función para las banderas de los idiomas (desde utils)
-  getFlagEmoji(code: string): string {
-    return getFlagEmoji(code);
+  getFlagCode(code: string): string {
+    return getFlagCode(code);
   }
 
 }

@@ -10,10 +10,10 @@ import { MessagesService } from '../../../services/messages.service';
 import { UserService } from '../../../services/user.service';
 import { environment } from '../../../../environments/environment';
 import { ParticipantCardComponent } from '../../../components/participant-card/participant-card.component';
-
+import { LucideArrowLeft, LucideCalendar, LucideCalendarPlus, LucideCircleCheck, LucideInfo, LucideLaptop, LucideLogOut, LucideMapPin, LucideTrash2, LucideVideo } from '@lucide/angular';
 @Component({
   selector: 'app-event-detail',
-  imports: [DatePipe, RouterLink, ParticipantCardComponent],   // DatePipe para facilitar el trabajo con fechas
+  imports: [DatePipe, RouterLink, ParticipantCardComponent, LucideArrowLeft, LucideCalendar, LucideCalendarPlus, LucideCircleCheck, LucideInfo, LucideLaptop, LucideLogOut, LucideMapPin, LucideTrash2, LucideVideo],   // DatePipe para facilitar el trabajo con fechas
   templateUrl: './event-detail.component.html',
   styleUrl: './event-detail.component.css'
 })

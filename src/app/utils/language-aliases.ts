@@ -1,53 +1,52 @@
-// función para las banderas de los idiomas
-export function getFlagEmoji(code: string): string {
-    if (!code) return '🌏';
+/* función para las banderas:
+devuelve el código de país (iso) de flag-icons
+ej: inglés 'en' - país 'gb'
+    código idioma - código país
+*/
+export function getFlagCode(code: string): string {
+    if (!code) return '';
 
     const upperCode = code.toUpperCase();
 
     const flags: { [key: string]: string } = {
-      'ES': '🇪🇸',
-      'EN': '🇬🇧',
-      'FR': '🇫🇷',
-      'DE': '🇩🇪',
-      'IT': '🇮🇹',
-      'PT': '🇵🇹',
-      'JA': '🇯🇵'
+      'ES': 'es',
+      'EN': 'gb',
+      'FR': 'fr',
+      'DE': 'de',
+      'IT': 'it',
+      'PT': 'pt',
+      'NL': 'nl',
+      'SV': 'se',
+      'NO': 'no',
+      'DA': 'dk',
+      'FI': 'fi',
+      'PL': 'pl',
+      'CS': 'cz', // checo
+      'SK': 'sk', // eslovaco
+      'HU': 'hu',
+      'RO': 'ro', // rumano
+      'BG': 'bg',
+      'EL': 'gr', // griego
+      'UK': 'ua',
+      'RU': 'ru', // ruso
+      'HR': 'hr', // croata
+      'SR': 'rs', // serbio
+      'JA': 'jp',
+      'ZH': 'cn', // chino
+      'KO': 'kr',
+      'HI': 'in', // hindi
+      'TH': 'th', // tailandés
+      'VI': 'vn', // vietnamita
+      'ID': 'id', // indonesio
+      'MS': 'my', // malayo
+      'AR': 'sa', // árabe
+      'HE': 'il', // hebreo
+      'FA': 'ir', // persa
+      'TR': 'tr', // turco
+      'CA': 'es-ct', // catalán
+      'EU': 'es-pv', // eskera
+      'GL': 'es-ga', // gallego
     }; // ampliar según se vayan necesitando
 
-    return flags[upperCode] || '🌏';
+    return flags[upperCode] || '';
   }
-
-export const LANGUAGE_ALIASES: { [key: string]: string[] } = {
-//alias de traducciones y variantes para la búsqueda por idiomas
-    // Inglés
-    'ingles': ['inglés', 'ingles', 'english', 'en'],
-    'inglés': ['inglés', 'ingles', 'english', 'en'],
-    'english': ['inglés', 'ingles', 'english', 'en'],
-    'en': ['inglés', 'ingles', 'english', 'en'],
-
-    // Español
-    'español': ['español', 'espanol', 'spanish', 'es'],
-    'espanol': ['español', 'espanol', 'spanish', 'es'],
-    'spanish': ['español', 'espanol', 'spanish', 'es'],
-    'es': ['español', 'espanol', 'spanish', 'es'],
-
-    // Alemán
-    'alemán': ['alemán', 'aleman', 'deutsch', 'german', 'de'],
-    'aleman': ['alemán', 'aleman', 'deutsch', 'german', 'de'],
-    'deutsch': ['alemán', 'aleman', 'deutsch', 'german', 'de'],
-    'german': ['alemán', 'aleman', 'deutsch', 'german', 'de'],
-    'de': ['alemán', 'aleman', 'deutsch', 'german', 'de'],
-
-    // Francés
-    'francés': ['francés', 'frances', 'français', 'francais', 'french', 'fr'],
-    'frances': ['francés', 'frances', 'français', 'francais', 'french', 'fr'],
-    'français': ['francés', 'frances', 'français', 'francais', 'french', 'fr'],
-    'francais': ['francés', 'frances', 'français', 'francais', 'french', 'fr'],
-    'french': ['francés', 'frances', 'français', 'francais', 'french', 'fr'],
-    'fr': ['francés', 'frances', 'français', 'francais', 'french', 'fr'],
-
-    // Italiano
-    'italiano': ['italiano', 'italian', 'it'],
-    'italian': ['italiano', 'italian', 'it'],
-    'it': ['italiano', 'italian', 'it']
-  };

@@ -81,3 +81,10 @@ body, html {
     background-color: var(--mustard);
     color: var(--navy-blue);
 }
+/* Iconos Lucide con el mismo comportamiento que los Bootstrap Icons:
+   heredan el tamaño del texto que los rodea y usan el mismo ajuste vertical (-0.125em) */
+.lucide {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+}

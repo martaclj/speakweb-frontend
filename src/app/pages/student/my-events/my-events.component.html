@@ -2,7 +2,7 @@
     <div class="d-flex align-items-center justify-content-between mb-5 p-4 bg-white rounded-4 shadow-sm border-start border-5 border-brand">
         <div>
             <h1 class="fw-bold text-navy mb-1">
-                <i class="bi bi-calendar-event-fill text-brand me-2"></i>
+                <svg lucideCalendarDays class="text-brand me-2"></svg>
                 Mi Agenda</h1>
             <p class="text-muted mb-0">Eventos en los que estás inscrito.</p>
         </div>
@@ -21,7 +21,7 @@
     @if (!isLoading && myEvents.length === 0) {
         <div class="text-center py-5 bg-light rounded-4 border border-dashed">
             <h2 class="mt-3 text-navy">
-                <i class="bi bi-calendar-x text-muted me-2"></i>
+                <svg lucideCalendarX class="text-muted me-2"></svg>
                 No tienes planes todavía</h2>
             <p class="text-muted">Apúntate a un evento en tus grupos...</p>
             <a routerLink="/home" class="btn btn-brand text-white mt-2 px-4 py-2">Buscar eventos</a>
@@ -30,7 +30,7 @@
 
     @if (!isLoading && upcomingEvents().length > 0) {
         <h4 class="fw-bold text-muted mb-3">
-            <i class="bi bi-clock-history me-2"></i>
+             <svg lucideHistory class="me-2"></svg>
             Próximos eventos</h4>
         <div class="row mb-5">
             @for (event of upcomingEvents(); track event.id) {
@@ -44,7 +44,7 @@
 
     @if (!isLoading && pastEvents().length > 0) {
         <h4 class="fw-bold text-muted mb-3">
-            <i class="bi bi-check-circle me-2"></i>
+            <svg lucideCircleCheck class="me-2"></svg>
             Eventos pasados</h4>
             <span class="badge bg-warning text-dark border mb-3">¡No olvides valorarlos!</span>
         <div class="row">

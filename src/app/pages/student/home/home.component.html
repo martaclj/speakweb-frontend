@@ -4,7 +4,7 @@
         
         <div class="position-relative z-1">
             <h1 class="display-5 fw-bold mb-3">
-                <i class="bi bi-chat-quote me-2"></i>
+                <svg lucideMessageSquareQuote class="me-2"></svg>
                 ¡Encuentra compañeros de idiomas!</h1>
             <p class="lead mb-4">Únete a grupos de conversación, asiste a eventos y practica con otros estudiantes.</p>
             
@@ -15,7 +15,7 @@
                        [(ngModel)]="searchTerm"
                        (keyup)="searchGroups()">
                 <button class="btn btn-brand ms-2 px-4" (click)="searchGroups()">
-                    <i class="bi bi-search me-2"></i>
+                    <svg lucideSearch class="me-2"></svg>
                     Buscar
                 </button>
             </div>

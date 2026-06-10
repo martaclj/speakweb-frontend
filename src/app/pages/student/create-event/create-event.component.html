@@ -6,11 +6,11 @@
                 <div class="card-body">
                     <div class="text-center mb-4">
                         <h2 class="fw-bold text-navy">Nuevo evento 
-                            <i class="bi bi-calendar-plus text-brand ms-1"></i></h2>
+                            <svg lucideCalendarPlus class="text-brand ms-1"></svg></h2>
                         <p class="text-muted mb-1" style="font-size: 1.1rem;">Organiza una quedada para tu grupo</p>
                         <p class="text-muted small fst-italic">Puede ser presencial 
-                            <i class="bi bi-geo-alt-fill text-danger mx-1"></i> u online 
-                            <i class="bi bi-laptop text-info ms-1"></i></p>
+                            <svg lucideMapPin class="text-danger mx-1"></svg> u online 
+                            <svg lucideLaptop class="text-info ms-1"></svg></p>
                     </div>
 
                     <form (ngSubmit)="onSubmit()">
@@ -30,13 +30,13 @@
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="eventType" id="typePresential" value="PRESENTIAL" [(ngModel)]="newEvent.type">
                                     <label class="form-check-label fw-bold" for="typePresential">
-                                        <i class="bi bi-geo-alt-fill text-danger mx-1"></i>
+                                        <svg lucideMapPin class="text-danger mx-1"></svg>
                                         Presencial</label>
                                 </div>
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="eventType" id="typeOnline" value="ONLINE" [(ngModel)]="newEvent.type">
                                     <label class="form-check-label fw-bold" for="typeOnline">
-                                        <i class="bi bi-laptop text-info me-1"></i>
+                                        <svg lucideLaptop class="text-info me-1"></svg>
                                         Online</label>
                                 </div>
                             </div>
@@ -54,7 +54,7 @@
                                 <label class="form-label fw-bold small text-muted">Enlace de la reunión</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-white border-end-0">
-                                        <i class="bi bi-link-45deg text-muted fs-5"></i>
+                                        <svg lucideLink class="text-muted fs-5"></svg>
                                     </span>
                                     <input type="url" class="form-control bg-light border-start-0" [(ngModel)]="newEvent.externalLink" name="externalLink" placeholder="https://zoom.us/...">
                                 </div>

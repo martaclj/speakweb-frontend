@@ -4,10 +4,10 @@ import { RouterLink } from '@angular/router';
 import { EventService } from '../../../services/event.service';
 import { GroupEvent } from '../../../interfaces/group-event';
 import { EventParticipantService } from '../../../services/event-participant.service';
-
+import { LucideCalendarDays, LucideCalendarX, LucideCircleCheck, LucideHistory } from '@lucide/angular';
 @Component({
   selector: 'app-my-events',
-  imports: [EventCardComponent, RouterLink],
+  imports: [EventCardComponent, RouterLink, LucideCalendarDays, LucideCalendarX, LucideCircleCheck, LucideHistory],
   templateUrl: './my-events.component.html',
   styleUrl: './my-events.component.css'
 })

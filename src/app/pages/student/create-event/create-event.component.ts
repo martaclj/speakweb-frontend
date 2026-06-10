@@ -6,10 +6,10 @@ import { NewEvent } from '../../../interfaces/new-event';
 import { MessagesService } from '../../../services/messages.service';
 import { ImageService } from '../../../services/image.service';
 import { environment } from '../../../../environments/environment';
-
+import { LucideCalendarPlus, LucideLaptop, LucideLink, LucideMapPin } from '@lucide/angular';
 @Component({
   selector: 'app-create-event',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, LucideCalendarPlus, LucideLaptop, LucideLink, LucideMapPin],
   templateUrl: './create-event.component.html',
   styleUrl: './create-event.component.css'
 })

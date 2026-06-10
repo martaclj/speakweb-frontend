@@ -2,7 +2,7 @@
     [class]="label ? 'border-warning border-2 shadow' : 'border-0'">
     @if (label) {
         <span class="badge bg-warning text-dark rounded-pill mb-2 px-3">
-            <i class="bi bi-gem me-1"></i> {{ label }}</span>
+            <svg lucideGem class="me-1"></svg> {{ label }}</span>
     }
     <a [routerLink]="['/profile', user.id]" class="text-decoration-none">
         <img [src]="user.avatarUrl || 'https://ui-avatars.com/api/?name=' + user.name"       
@@ -13,7 +13,7 @@
     </a>
     @if (canRate) {
         <button class="btn btn-sm btn-outline-warning text-dark rounded-pill mt-2 bg-white" (click)="rate.emit()">
-            <i class="bi bi-star me-1"></i>
+            <svg lucideStar class="me-1"></svg>
             Valora
         </button>
     }

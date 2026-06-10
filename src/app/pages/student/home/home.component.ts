@@ -6,15 +6,15 @@ import { FormsModule } from '@angular/forms';
 import { GroupCardComponent } from '../../../components/group-card/group-card.component';
 import { GroupMemberService } from '../../../services/group-member.service';
 import { MessagesService } from '../../../services/messages.service';
-import { LANGUAGE_ALIASES } from '../../../utils/language-aliases';
+
 // ajustes paginación
 // https://github.com/Anuar-UNIR/DWEC_2024_2025/blob/main/proyectos_clase/DC_Universe/DCUapp/package.json
 import { NgxPaginationModule } from 'ngx-pagination';
-
+import { LucideMessageSquareQuote, LucideSearch } from '@lucide/angular';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule, GroupCardComponent, NgxPaginationModule],
+  imports: [FormsModule, GroupCardComponent, NgxPaginationModule, LucideMessageSquareQuote, LucideSearch],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -79,6 +79,13 @@ export class HomeComponent {
     return this.myGroupIds.includes(groupId);
   }
 
+  /* pasa a minúsculas y quita acentos: Francés - frances
+  NFD separa letra de acento, replace borra acentos
+  */
+  private normalize(s: string): string {
+    return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
   // buscador por nombre de grupo o por idioma 
   // - ver carpeta utils - language aliases
   searchGroups() {
@@ -90,18 +97,13 @@ export class HomeComponent {
       return;
     }
     
-    const term = this.searchTerm.toLowerCase();
-    const searchedTerms = LANGUAGE_ALIASES[term] || [term];
+    const term = this.normalize(this.searchTerm);
 
-    this.filteredList = this.groupList.filter(group => {
-      const name = group.name.toLowerCase();
-      const lang1 = group.language1.name.toLowerCase();
-      const lang2 = group.language2.name.toLowerCase();
-
-      return searchedTerms.some(t =>
-        name.includes(t) || lang1.includes(t) || lang2.includes(t)
-      );
-    });
+    this.filteredList = this.groupList.filter(group =>
+      this.normalize(group.name).includes(term) ||
+      this.normalize(group.language1.name).includes(term) ||
+      this.normalize(group.language2.name).includes(term)
+    );
   }
 
   // unirse a un grupo

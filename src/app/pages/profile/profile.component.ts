@@ -11,10 +11,10 @@ import { MessagesService } from '../../services/messages.service';
 import { DatePipe, Location } from '@angular/common';
 import { ImageService } from '../../services/image.service';
 import { environment } from '../../../environments/environment';
-
+import { LucideCircleCheck, LucideCircleX, LucideFlag, LucideGlobe, LucideStar } from '@lucide/angular';
 @Component({
   selector: 'app-profile',
-  imports: [FormsModule, RouterLink, DatePipe],
+  imports: [FormsModule, RouterLink, DatePipe, LucideCircleCheck, LucideCircleX, LucideFlag, LucideGlobe, LucideStar],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })

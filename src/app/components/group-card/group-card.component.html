@@ -5,14 +5,14 @@
             <img [src]="group.imageUrl" class="w-100 h-100 object-fit-cover" [alt]="group.name">
         } @else {
             <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light text-muted">
-                <i class="bi bi-people text-brand" style="font-size: 3rem;"></i>
+                <svg lucideUsers class="text-brand" style="font-size: 3rem;"></svg>
             </div>
         }
 
         @if (isExpert) {
             <div class="position-absolute top-0 end-0 m-2">
                 <span class="badge bg-warning text-dark shadow-sm border border-light">
-                    <i class="bi bi-award-fill me-1"></i> 
+                    <svg lucideAward class="me-1"></svg> 
                     Experto
                 </span>
             </div>
@@ -20,10 +20,10 @@
         
         <div class="position-absolute bottom-0 start-0 p-3">
             <span class="badge bg-white text-dark shadow-sm me-1 border">
-                {{ getFlag(group.language1.code) }} {{ group.language1.name }}
+                <span class="fi fi-{{ getFlag(group.language1.code)}} me-1"></span>{{ group.language1.name }}
             </span>
-            <span class="badge bg-white text-dark shadow-sm border">
-                {{ getFlag(group.language2.code) }} {{ group.language2.name }}
+            <span class="badge bg-white text-dark shadow-sm me-1 border">
+                <span class="fi fi-{{ getFlag(group.language2.code)}} me-1"></span>{{ group.language2.name }}
             </span>
         </div>
     </div>
@@ -37,11 +37,11 @@
 
         <div class="d-grid gap-2 mt-3">
             <a [routerLink]="['/group', group.id]" class="btn btn-outline-brand btn-sm">
-                <i class="bi bi-info-circle me-1"></i>
+                <svg lucideInfo class="me-1"></svg>
                 Ver info</a>
             @if (showJoinButton) {
                 <button class="btn btn-brand text-white btn-sm" (click)="onJoin()">
-                    <i class="bi bi-person-plus-fill me-1"></i>
+                    <svg lucideUserPlus class="me-1"></svg>
                     Unirme ahora</button>
             }
         </div>

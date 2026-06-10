@@ -6,10 +6,10 @@ import { EventParticipantService } from '../../services/event-participant.servic
 import { MessagesService } from '../../services/messages.service';
 import { RouterLink } from "@angular/router";
 import { environment } from '../../../environments/environment';
-
+import { LucideCalendarCheck, LucideCalendarX, LucideClock, LucideEye, LucideLaptop, LucideLock, LucideMapPin } from '@lucide/angular';
 @Component({
   selector: 'app-event-card',
-  imports: [DatePipe, UpperCasePipe, RouterLink],
+  imports: [DatePipe, UpperCasePipe, RouterLink, LucideCalendarCheck, LucideCalendarX, LucideClock, LucideEye, LucideLaptop, LucideLock, LucideMapPin],
   templateUrl: './event-card.component.html',
   styleUrl: './event-card.component.css'
 })

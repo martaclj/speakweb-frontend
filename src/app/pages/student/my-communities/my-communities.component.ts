@@ -3,11 +3,11 @@ import { GroupMember } from '../../../interfaces/group-member';
 import { RouterLink } from "@angular/router";
 import { GroupCardComponent } from '../../../components/group-card/group-card.component';
 import { GroupMemberService } from '../../../services/group-member.service';
-
+import { LucideInbox, LucideUsers } from '@lucide/angular';
 @Component({
   selector: 'app-my-communities',
   standalone: true,
-  imports: [RouterLink, GroupCardComponent],
+  imports: [RouterLink, GroupCardComponent, LucideInbox, LucideUsers],
   templateUrl: './my-communities.component.html',
   styleUrl: './my-communities.component.css'
 })

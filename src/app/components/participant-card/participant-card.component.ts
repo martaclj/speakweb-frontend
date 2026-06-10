@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
+import { LucideGem, LucideStar } from '@lucide/angular';
 @Component({
   selector: 'app-participant-card',
-  imports: [RouterLink],
+  imports: [RouterLink, LucideGem, LucideStar],
   templateUrl: './participant-card.component.html',
   styleUrl: './participant-card.component.css'
 })

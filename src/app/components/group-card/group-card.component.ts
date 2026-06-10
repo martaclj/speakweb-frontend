@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Group } from '../../interfaces/group';
-import { getFlagEmoji } from '../../utils/language-aliases';
-
+import { getFlagCode } from '../../utils/language-aliases';
+import { LucideAward, LucideInfo, LucideUserPlus, LucideUsers } from '@lucide/angular';
 @Component({
   selector: 'app-group-card',
-  imports: [RouterLink],
+  imports: [RouterLink, LucideAward, LucideInfo, LucideUserPlus, LucideUsers],
   templateUrl: './group-card.component.html',
   styleUrl: './group-card.component.css'
 })
@@ -31,7 +31,7 @@ export class GroupCardComponent {
 
   // función para obtener bandera según el código
   getFlag(code: string): string {
-    return getFlagEmoji(code);
+    return getFlagCode(code);
   }
 
 }

@@ -15,10 +15,10 @@ import { DeletedUserService } from '../../services/deleted-user.service';
 import { EventService } from '../../services/event.service';
 import { GroupEvent } from '../../interfaces/group-event';
 import { NewEvent } from '../../interfaces/new-event';
-
+import { LucideCalendarCheck, LucideCalendarDays, LucideCalendarPlus, LucideCalendarX, LucideCheck, LucideEye, LucideLanguages, LucideLaptop, LucideLayers, LucideMapPin, LucideRefreshCw, LucideSave, LucideStar, LucideTrash2, LucideUserMinus, LucideUserX, LucideUsers } from '@lucide/angular';
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [DatePipe, RouterLink, FormsModule, NgClass],
+  imports: [DatePipe, RouterLink, FormsModule, NgClass, LucideCalendarCheck, LucideCalendarDays, LucideCalendarPlus, LucideCalendarX, LucideCheck, LucideEye, LucideLanguages, LucideLaptop, LucideLayers, LucideMapPin, LucideRefreshCw, LucideSave, LucideStar, LucideTrash2, LucideUserMinus, LucideUserX, LucideUsers],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })
