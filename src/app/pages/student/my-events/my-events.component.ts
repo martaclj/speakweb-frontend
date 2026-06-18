@@ -5,9 +5,11 @@ import { EventService } from '../../../services/event.service';
 import { GroupEvent } from '../../../interfaces/group-event';
 import { EventParticipantService } from '../../../services/event-participant.service';
 import { LucideCalendarDays, LucideCalendarX, LucideCircleCheck, LucideHistory } from '@lucide/angular';
+import { UpcomingPipe } from '../../../pipes/upcoming.pipe';
+import { PastPipe } from '../../../pipes/past.pipe';
 @Component({
   selector: 'app-my-events',
-  imports: [EventCardComponent, RouterLink, LucideCalendarDays, LucideCalendarX, LucideCircleCheck, LucideHistory],
+  imports: [EventCardComponent, RouterLink, LucideCalendarDays, LucideCalendarX, LucideCircleCheck, LucideHistory, UpcomingPipe, PastPipe],
   templateUrl: './my-events.component.html',
   styleUrl: './my-events.component.css'
 })
@@ -33,14 +35,6 @@ export class MyEventsComponent {
         this.isLoading = false;
       }
     });
-  }
-
-  upcomingEvents(): GroupEvent[] {
-    return this.myEvents.filter(e => new Date(e.startTime) >= new Date());
-  }
-
-  pastEvents(): GroupEvent[] {
-    return this.myEvents.filter(e => new Date(e.startTime) < new Date());
   }
 
 }

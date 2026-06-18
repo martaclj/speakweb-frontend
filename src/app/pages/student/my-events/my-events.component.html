@@ -28,12 +28,12 @@
         </div>
     }
 
-    @if (!isLoading && upcomingEvents().length > 0) {
+    @if (!isLoading && (myEvents | upcoming).length > 0) {
         <h4 class="fw-bold text-muted mb-3">
              <svg lucideHistory class="me-2"></svg>
             Próximos eventos</h4>
         <div class="row mb-5">
-            @for (event of upcomingEvents(); track event.id) {
+            @for (event of myEvents | upcoming; track event.id) {
                 <div class="col-md-6 mb-3">
                     <app-event-card [event]="event" [joined]="true"></app-event-card>
                 </div>
@@ -42,13 +42,13 @@
         </div>
     }
 
-    @if (!isLoading && pastEvents().length > 0) {
+    @if (!isLoading && (myEvents | past).length > 0) {
         <h4 class="fw-bold text-muted mb-3">
             <svg lucideCircleCheck class="me-2"></svg>
             Eventos pasados</h4>
             <span class="badge bg-warning text-dark border mb-3">¡No olvides valorarlos!</span>
         <div class="row">
-            @for (event of pastEvents(); track event.id) {
+            @for (event of myEvents | past; track event.id) {
                 <div class="col-md-6 mb-3">
                     <app-event-card [event]="event" [joined]="true"></app-event-card>
                 </div>
