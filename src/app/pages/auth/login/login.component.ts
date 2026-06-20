@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MessagesService } from '../../../services/messages.service';
 import { environment } from '../../../../environments/environment';
 
@@ -12,16 +12,25 @@ import { environment } from '../../../../environments/environment';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   loginObj: any = { // guardo lo que escriba el usuario
     "email": "",
     "password": ""
   };
 
+  showLoginForm = false;
+
   http = inject(HttpClient);
   router = inject(Router);
+  private route = inject(ActivatedRoute);
   private msgService = inject(MessagesService);
+
+  ngOnInit() {
+    if (this.route.snapshot.queryParamMap.has('acceso')) {
+      this.showLoginForm = true;
+    }
+  }
 
   onLogin() {
 
@@ -53,6 +62,14 @@ export class LoginComponent {
         console.error(err);
       }
     })
+  }
+
+  joinAsGuest() {
+    this.loginObj = {
+      email: 'invitado@speakweb.com',
+      password: 'Invitado2026!'
+    };
+    this.onLogin();
   }
 
 }
